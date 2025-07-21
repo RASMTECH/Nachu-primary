@@ -589,6 +589,33 @@ button[onclick^="show"] {
 .btn-red:hover {
     background-color: #a71d2a;
 }
+@media print {
+  body {
+    margin: 0;
+    padding: 10px;
+    zoom: 80%; /* Shrinks content to fit on one page */
+  }
+
+  .container {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  table {
+    page-break-inside: avoid;
+  }
+
+  .no-break, .marks-table, .learners-table {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .print-button, .filter-bar, .form-group button {
+    display: none;
+  }
+}
 
     </style>
 </head>
@@ -2761,14 +2788,14 @@ filterMarksGrade.addEventListener("change", () => {
 });
 
 function getLevel(score) {
-    if (score >= 90) return "EE 1";
-    if (score >= 75) return "EE 2";
-    if (score >= 58) return "ME 1";
-    if (score >= 41) return "ME 2";
-    if (score >= 31) return "AE 1";
-    if (score >= 21) return "AE 2";
-    if (score >= 11) return "BE 1";
-    return "BE 2";
+    if (score >= 90) return "8";
+    if (score >= 75) return "7";
+    if (score >= 58) return "6";
+    if (score >= 41) return "5";
+    if (score >= 31) return "4";
+    if (score >= 21) return "3";
+    if (score >= 11) return "2";
+    return "1";
 }
 
 document.addEventListener("click", function (e) {
@@ -2919,6 +2946,20 @@ function generateSubjectChampionsReport(selectedGrade, selectedExamPeriod) {
         return "BE 2";
     }
 
+    function getPoints(level) {
+        switch (level) {
+            case "EE 1": return 8;
+            case "EE 2": return 7;
+            case "ME 1": return 6;
+            case "ME 2": return 5;
+            case "AE 1": return 4;
+            case "AE 2": return 3;
+            case "BE 1": return 2;
+            case "BE 2": return 1;
+            default: return 0;
+        }
+    }
+
     const sortedChampions = Object.entries(champions)
         .map(([subject, data]) => ({ subject, ...data }))
         .sort((a, b) => b.score - a.score);
@@ -2948,6 +2989,7 @@ function generateSubjectChampionsReport(selectedGrade, selectedExamPeriod) {
                     <th style="border: 2px solid black; padding: 10px;">Champion</th>
                     <th style="border: 2px solid black; padding: 10px;">Score</th>
                     <th style="border: 2px solid black; padding: 10px;">Performance Level</th>
+                    <th style="border: 2px solid black; padding: 10px;">Points</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -2955,6 +2997,7 @@ function generateSubjectChampionsReport(selectedGrade, selectedExamPeriod) {
     let count = 1;
     sortedChampions.forEach(({ subject, name, score }, index) => {
         const level = getLevel(score);
+        const points = getPoints(level);
         const isTop = index < 3;
         const medal = isTop ? medals[index] + ' 🎉' : '✨';
         const rowStyle = isTop ? 'background: #FFD700; font-weight: bold;' : '';
@@ -2964,6 +3007,7 @@ function generateSubjectChampionsReport(selectedGrade, selectedExamPeriod) {
             <td style="border: 2px solid black; padding: 10px;">${medal} ${name}</td>
             <td style="border: 2px solid black; padding: 10px;">${score >= 0 ? score : 'N/A'}</td>
             <td style="border: 2px solid black; padding: 10px;">${level}</td>
+            <td style="border: 2px solid black; padding: 10px;">${points}</td>
         </tr>`;
     });
 
@@ -2971,6 +3015,7 @@ function generateSubjectChampionsReport(selectedGrade, selectedExamPeriod) {
 
     const reportOutput = document.getElementById("reportOutput");
     reportOutput.innerHTML = html;
+
 
     // 🌀 Create animated style (once)
     if (!document.getElementById("celebrationStyles")) {
@@ -3314,7 +3359,6 @@ function generateLevelSummary(selectedGrade, selectedExamPeriod) {
 }
 
 
-
 function showSubjectRanking(selectedGrade, selectedExamPeriod) {
     const subjects = [
         'English', 'Mathematics', 'Pre-Technical Studies',
@@ -3359,6 +3403,20 @@ function showSubjectRanking(selectedGrade, selectedExamPeriod) {
         return "BE 2";
     }
 
+    function getPoints(level) {
+        switch (level) {
+            case "EE 1": return 8;
+            case "EE 2": return 7;
+            case "ME 1": return 6;
+            case "ME 2": return 5;
+            case "AE 1": return 4;
+            case "AE 2": return 3;
+            case "BE 1": return 2;
+            case "BE 2": return 1;
+            default: return 0;
+        }
+    }
+
     const today = new Date();
     const printDate = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
 
@@ -3380,6 +3438,7 @@ function showSubjectRanking(selectedGrade, selectedExamPeriod) {
                         <th style="border: 1px solid black; padding: 8px;">Name</th>
                         <th style="border: 1px solid black; padding: 8px;">Score</th>
                         <th style="border: 1px solid black; padding: 8px;">Performance Level</th>
+                        <th style="border: 1px solid black; padding: 8px;">Points</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -3387,12 +3446,14 @@ function showSubjectRanking(selectedGrade, selectedExamPeriod) {
 
         rankings[subject].forEach((entry, index) => {
             const level = getPerformanceLevel(entry.score);
+            const points = getPoints(level);
             rankingsHtml += `
                 <tr>
                     <td style="border: 1px solid black; padding: 8px;">${index + 1}</td>
                     <td style="border: 1px solid black; padding: 8px;">${entry.name}</td>
                     <td style="border: 1px solid black; padding: 8px;">${entry.score}</td>
                     <td style="border: 1px solid black; padding: 8px;">${level}</td>
+                    <td style="border: 1px solid black; padding: 8px;">${points}</td>
                 </tr>
             `;
         });
@@ -3418,13 +3479,21 @@ function showSubjectRanking(selectedGrade, selectedExamPeriod) {
         const style = document.createElement("style");
         style.id = styleId;
         style.textContent = `
-            @keyframes floatUpRank {0%{transform:translateY(0)}100%{transform:translateY(-120px);opacity:0}}
-            @keyframes zoomInFade {from{transform:scale(0.5);opacity:0;} to{transform:scale(1);opacity:1;}}
-            @keyframes fadeOut {from{opacity:1;} to{opacity:0;}}
+            @keyframes floatUpRank {
+                0% { transform: translateY(0); }
+                100% { transform: translateY(-120px); opacity: 0; }
+            }
+            @keyframes zoomInFade {
+                from { transform: scale(0.5); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
         `;
         document.head.appendChild(style);
     }
-
     function showFloatingEmojis() {
         const emojis = ['🎉', '🏅', '🥇', '✨', '🌟', '🎊', '🏆', '🥈', '🥉'];
         for (let i = 0; i < 50; i++) {
@@ -3532,11 +3601,13 @@ function generateSubjectPerformance(selectedGrade, selectedExamPeriod) {
     ];
     const subjectScores = {};
     const marks = document.getElementById("marksList");
+
     marks.querySelectorAll("tr").forEach(row => {
         const g = row.getAttribute("data-grade");
         const p = row.getAttribute("data-exam-period");
         if (selectedGrade && g !== selectedGrade) return;
         if (selectedExamPeriod && p !== selectedExamPeriod) return;
+
         subjectKeys.forEach((key, i) => {
             const sc = parseFloat(row.cells[3 + i * 2].textContent);
             if (!isNaN(sc)) {
@@ -3548,6 +3619,7 @@ function generateSubjectPerformance(selectedGrade, selectedExamPeriod) {
             }
         });
     });
+
     function getLevel(score) {
         if (score >= 90) return "EE 1";
         if (score >= 75) return "EE 2";
@@ -3558,15 +3630,34 @@ function generateSubjectPerformance(selectedGrade, selectedExamPeriod) {
         if (score >= 11) return "BE 1";
         return "BE 2";
     }
+
+    function getPoints(level) {
+        switch (level) {
+            case "EE 1": return 8;
+            case "EE 2": return 7;
+            case "ME 1": return 6;
+            case "ME 2": return 5;
+            case "AE 1": return 4;
+            case "AE 2": return 3;
+            case "BE 1": return 2;
+            case "BE 2": return 1;
+            default: return 0;
+        }
+    }
+
     const means = Object.keys(subjectScores).map(sub => {
         const { total, count } = subjectScores[sub];
         const mean = count > 0 ? total / count : 0;
-        return { subject: sub, mean: parseFloat(mean.toFixed(2)), level: getLevel(mean) };
+        const level = getLevel(mean);
+        const points = getPoints(level);
+        return { subject: sub, mean: parseFloat(mean.toFixed(2)), level, points };
     }).sort((a, b) => b.mean - a.mean);
+
     const top5 = means.slice(0, 5);
     const year = new Date().getFullYear();
     const today = new Date();
-    const printDate = `${today.getDate()}-${today.getMonth()+1}-${year}`;
+    const printDate = `${today.getDate()}-${today.getMonth() + 1}-${year}`;
+
     let html = `
         <div style="text-align: center; margin-bottom: 20px;">
             <img src="https://i.imgur.com/2bSAbwq.jpeg" alt="Logo" style="max-width:80px;margin:0 auto 10px;">
@@ -3579,21 +3670,26 @@ function generateSubjectPerformance(selectedGrade, selectedExamPeriod) {
                 <th style="border:2px solid black;padding:10px;">Subject</th>
                 <th style="border:2px solid black;padding:10px;">Mean Score</th>
                 <th style="border:2px solid black;padding:10px;">Level</th>
+                <th style="border:2px solid black;padding:10px;">Points</th>
             </tr></thead><tbody>`;
+
     means.forEach((m, i) => {
         const isTop = top5.find(t => t.subject === m.subject);
         const style = isTop ? 'background:#FFD700;font-weight:bold;' : '';
         html += `<tr style="${style}">
-            <td style="border:2px solid black;padding:10px;">${i+1}</td>
+            <td style="border:2px solid black;padding:10px;">${i + 1}</td>
             <td style="border:2px solid black;padding:10px;">${m.subject}</td>
             <td style="border:2px solid black;padding:10px;">${m.mean}</td>
             <td style="border:2px solid black;padding:10px;">${m.level}</td>
+            <td style="border:2px solid black;padding:10px;">${m.points}</td>
         </tr>`;
     });
+
     html += `</tbody></table>
         <div class="stamp print-only" style="margin-top:30px;">
             Nachu Junior School<br>Exam Dept — Date: ${printDate}
         </div>`;
+
     const out = document.getElementById("reportOutput");
     out.innerHTML = html;
 
@@ -3814,14 +3910,14 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
   }
 
   function getLevel(score) {
-    if (score >= 90) return "EE 1";
-    if (score >= 75) return "EE 2";
-    if (score >= 58) return "ME 1";
-    if (score >= 41) return "ME 2";
-    if (score >= 31) return "AE 1";
-    if (score >= 21) return "AE 2";
-    if (score >= 11) return "BE 1";
-    return "BE 2";
+    if (score >= 90) return "8";
+    if (score >= 75) return "7";
+    if (score >= 58) return "6";
+    if (score >= 41) return "5";
+    if (score >= 31) return "4";
+    if (score >= 21) return "3";
+    if (score >= 11) return "2";
+    return "1";
   }
 
   const gradeValue = selectedGrade || "All Grades";
@@ -4180,135 +4276,146 @@ function createCustomAlert(message, bgColor, textColor) {
 }
 
 function generateLearnerAssessmentReports(termDetails) {
-    const { year, term, closingDate, openingDate, classTeacherSignature, principalSignature } = termDetails;
+  const { year, term, closingDate, openingDate, classTeacherSignature, principalSignature } = termDetails;
 
-    const rows = document.querySelectorAll("#marksList tr");
-    const learnerRows = document.querySelectorAll("#learnersList tr");
-    const container = document.getElementById("assessmentReportsContainer");
-    container.innerHTML = "";
+  const rows = document.querySelectorAll("#marksList tr");
+  const learnerRows = document.querySelectorAll("#learnersList tr");
+  const container = document.getElementById("assessmentReportsContainer");
+  container.innerHTML = "";
 
-    const govtLogo = "https://i.imgur.com/KkbIFjL.png";
-    const schoolLogo ="https://i.imgur.com/2bSAbwq.jpeg";
-    const date = new Date().toLocaleDateString("en-GB");
+  const govtLogo = "https://i.imgur.com/KkbIFjL.png";
+  const schoolLogo = "https://i.imgur.com/2bSAbwq.jpeg";
+  const date = new Date().toLocaleDateString("en-GB");
 
-    const gradeFilter = document.getElementById("reportGradeSelect").value;
+  const gradeFilter = document.getElementById("reportGradeSelect").value;
 
-    rows.forEach(row => {
-        const cells = row.querySelectorAll("td");
-        if (cells.length < 22) return;
+  function getPoints(level) {
+    switch (level) {
+      case "EE 1": return 8;
+      case "EE 2": return 7;
+      case "ME 1": return 6;
+      case "ME 2": return 5;
+      case "AE 1": return 4;
+      case "AE 2": return 3;
+      case "BE 1": return 2;
+      case "BE 2": return 1;
+      default: return 0;
+    }
+  }
 
-        const learnerName = cells[1].textContent.trim();
-        const grade = cells[2].textContent.trim();
+  rows.forEach(row => {
+    const cells = row.querySelectorAll("td");
+    if (cells.length < 22) return;
 
-        // ? Filter by selected grade
-        if (grade !== gradeFilter) return;
+    const learnerName = cells[1].textContent.trim();
+    const grade = cells[2].textContent.trim();
+    if (grade !== gradeFilter) return;
 
-        const totalMarks = cells[21].textContent.trim();
-        const performance = getPerformanceLevel(totalMarks);
+    const totalMarks = cells[21].textContent.trim();
+    const performance = getPerformanceLevel(totalMarks);
 
-        let learnerPhoto = "";
-        learnerRows.forEach(lr => {
-            if (lr.cells[2]?.textContent.trim() === learnerName) {
-                const imgTag = lr.querySelector("img");
-                learnerPhoto = imgTag ? imgTag.src : "";
-            }
-        });
-
-        const subjects = [
-            { name: "English", mark: cells[3].textContent, level: cells[4].textContent },
-            { name: "Mathematics", mark: cells[5].textContent, level: cells[6].textContent },
-            { name: "Pre-Technical Studies", mark: cells[7].textContent, level: cells[8].textContent },
-            { name: "Kiswahili", mark: cells[9].textContent, level: cells[10].textContent },
-            { name: "Integrated Science", mark: cells[11].textContent, level: cells[12].textContent },
-            { name: "Social Studies", mark: cells[13].textContent, level: cells[14].textContent },
-            { name: "Agriculture", mark: cells[15].textContent, level: cells[16].textContent },
-            { name: "Religious Education", mark: cells[17].textContent, level: cells[18].textContent },
-            { name: "Creative Arts & Sports", mark: cells[19].textContent, level: cells[20].textContent },
-        ];
-
-        const report = document.createElement("div");
-        report.style.pageBreakAfter = "always";
-        report.style.border = "3px solid #000";
-        report.style.padding = "20px";
-        report.style.marginBottom = "30px";
-        report.style.background = "#fff";
-
-        report.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <img src="${govtLogo}" alt="Gov Logo" style="height: 80px;">
-                <div style="text-align: center; flex-grow: 1;">
-                    <h2 style="margin: 0;">NACHU JUNIOR SCHOOL</h2>
-                    <p style="margin: 2px;">PO BOX 561-00902 KIKUYU, KENYA</p>
-                    <p style="margin: 2px;">MINISTRY OF EDUCATION SCIENCE AND TECHNOLOGY</p>
-                    <strong style="font-size: 14px;">SCHOOL MOTTO: MY TALENT MY PASSION</strong>
-                </div>
-                <img src="${schoolLogo}" alt="School Logo" style="height: 80px;">
-            </div>
-
-            <hr style="margin: 10px 0;">
-
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div style="flex: 1;">
-                    <p><strong>GRADE:</strong> ${grade} &emsp; <strong>TERM:</strong> ${term} &emsp; <strong>YEAR:</strong> ${year}</p>
-                    <p><strong>Learner's Name:</strong> ${learnerName}</p>
-                </div>
-                <div>
-                    ${learnerPhoto ? `<img src="${learnerPhoto}" alt="Learner Photo" style="height: 100px; border-radius: 10px; border: 1px solid #333;">` : ""}
-                </div>
-            </div>
-
-      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;"> 
-  <thead>
-    <tr style="background: #f2f2f2; color: black;">
-      <th style="border: 3px solid #000; padding: 8px; color: black;">Subject</th>
-      <th style="border: 3px solid #000; padding: 8px; color: black;">Score</th>
-      <th style="border: 3px solid #000; padding: 8px; color: black;">Level</th>
-      <th style="border: 3px solid #000; padding: 8px; color: black;">Subject Teacher</th>
-      <th style="border: 3px solid #000; padding: 8px; color: black;">Signature</th>
-    </tr>
-  </thead>
-
-                <tbody>
-                    ${subjects.map(sub => `
-                        <tr>
-                            <td style="border: 3px solid #000; padding: 8px;">${sub.name}</td>
-                            <td style="border: 3px solid #000; padding: 8px;">${sub.mark}</td>
-                            <td style="border: 3px solid #000; padding: 8px;">${sub.level}</td>
-                            <td style="border: 3px solid #000; padding: 8px;">${subjectTeachers[sub.name] || "N/A"}</td>
-                            <td style="border: 3px solid #000; padding: 8px;">${getInitials(subjectTeachers[sub.name]) || "N/A"}</td>
-                        </tr>
-                    `).join("")}
-                </tbody>
-            </table>
-
-            <p style="margin-top: 15px;"><strong>Total Marks:</strong> ${totalMarks}</p>
-
-
-<p style="font-size: 14px;">
-  <strong>KEY:</strong><br>
-  1–10: BE2,&nbsp;&nbsp;11–20: BE1,&nbsp;&nbsp;21–30: AE2,&nbsp;&nbsp;31–40: AE1,<br>
-  41–57: ME2,&nbsp;&nbsp;58–74: ME1,&nbsp;&nbsp;75–89: EE2,&nbsp;&nbsp;90–99: EE1
-</p>
-
-
-            <p><strong>Teacher Comments:</strong><br>${getComment(totalMarks)}</p>
-
-            <p><strong>Learner's General Performance Level:</strong> ${performance}</p>
-
-            <div style="margin-top: 20px;">
-                <p><strong>CLOSING DATE:</strong> ${closingDate} &emsp; <strong>OPENING DATE:</strong> ${openingDate}</p>
-                <p><strong>Class Teacher Signature:</strong> ${classTeacherSignature} &emsp; <strong>Principal Signature:</strong> ${principalSignature}</p>
-
-                <div style="border: 2px solid blue; color: blue; padding: 10px; display: inline-block; text-align: center; font-style: italic; font-weight: bold; border-radius: 5px;">
-                    Nachu Junior School<br>
-                    P.O. Box 561-00902 Kikuyu<br>
-                    Date: ${date}
-                </div>
-            </div>
-        `;
-
-        container.appendChild(report);
+    let learnerPhoto = "";
+    learnerRows.forEach(lr => {
+      if (lr.cells[2]?.textContent.trim() === learnerName) {
+        const imgTag = lr.querySelector("img");
+        learnerPhoto = imgTag ? imgTag.src : "";
+      }
     });
+
+    const subjects = [
+      { name: "English", mark: cells[3].textContent, level: cells[4].textContent },
+      { name: "Mathematics", mark: cells[5].textContent, level: cells[6].textContent },
+      { name: "Pre-Technical Studies", mark: cells[7].textContent, level: cells[8].textContent },
+      { name: "Kiswahili", mark: cells[9].textContent, level: cells[10].textContent },
+      { name: "Integrated Science", mark: cells[11].textContent, level: cells[12].textContent },
+      { name: "Social Studies", mark: cells[13].textContent, level: cells[14].textContent },
+      { name: "Agriculture", mark: cells[15].textContent, level: cells[16].textContent },
+      { name: "Religious Education", mark: cells[17].textContent, level: cells[18].textContent },
+      { name: "Creative Arts & Sports", mark: cells[19].textContent, level: cells[20].textContent },
+    ].map(s => ({ ...s, points: getPoints(s.level) }));
+
+    const report = document.createElement("div");
+    report.style.pageBreakAfter = "always";
+    report.style.border = "3px solid #000";
+    report.style.padding = "20px";
+    report.style.marginBottom = "30px";
+    report.style.background = "#fff";
+
+    report.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <img src="${govtLogo}" alt="Gov Logo" style="height: 80px;">
+        <div style="text-align: center; flex-grow: 1;">
+          <h2 style="margin: 0;">NACHU JUNIOR SCHOOL</h2>
+          <p style="margin: 2px;">PO BOX 561-00902 KIKUYU, KENYA</p>
+          <p style="margin: 2px;">MINISTRY OF EDUCATION SCIENCE AND TECHNOLOGY</p>
+          <strong style="font-size: 14px;">SCHOOL MOTTO: MY TALENT MY PASSION</strong>
+        </div>
+        <img src="${schoolLogo}" alt="School Logo" style="height: 80px;">
+      </div>
+
+      <hr style="margin: 10px 0;">
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div style="flex: 1;">
+          <p><strong>GRADE:</strong> ${grade} &emsp; <strong>TERM:</strong> ${term} &emsp; <strong>YEAR:</strong> ${year}</p>
+          <p><strong>Learner's Name:</strong> ${learnerName}</p>
+        </div>
+        <div>
+          ${learnerPhoto ? `<img src="${learnerPhoto}" alt="Learner Photo" style="height: 100px; border-radius: 10px; border: 1px solid #333;">` : ""}
+        </div>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+  <tr style="background: #f2f2f2; color: black;">
+    <th style="border: 3px solid #000; padding: 8px;">Subject</th>
+    <th style="border: 3px solid #000; padding: 8px;">Score</th>
+    <th style="border: 3px solid #000; padding: 8px;">Level</th>
+    <th style="border: 3px solid #000; padding: 8px;">Points</th>
+    <th style="border: 3px solid #000; padding: 8px;">Subject Teacher</th>
+    <th style="border: 3px solid #000; padding: 8px;">Signature</th>
+  </tr>
+</thead>
+
+        <tbody>
+          ${subjects.map(sub => `
+            <tr>
+              <td style="border: 3px solid #000; padding: 8px;">${sub.name}</td>
+              <td style="border: 3px solid #000; padding: 8px;">${sub.mark}</td>
+              <td style="border: 3px solid #000; padding: 8px;">${sub.level}</td>
+              <td style="border: 3px solid #000; padding: 8px;">${sub.points}</td>
+              <td style="border: 3px solid #000; padding: 8px;">${subjectTeachers[sub.name] || "N/A"}</td>
+              <td style="border: 3px solid #000; padding: 8px;">${getInitials(subjectTeachers[sub.name]) || "N/A"}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+
+      <p style="margin-top: 15px;"><strong>Total Marks:</strong> ${totalMarks}</p>
+
+      <p style="font-size: 14px;">
+        <strong>KEY:</strong><br>
+        1–10: BE2,&nbsp;&nbsp;11–20: BE1,&nbsp;&nbsp;21–30: AE2,&nbsp;&nbsp;31–40: AE1,<br>
+        41–57: ME2,&nbsp;&nbsp;58–74: ME1,&nbsp;&nbsp;75–89: EE2,&nbsp;&nbsp;90–99: EE1
+      </p>
+
+      <p><strong>Teacher Comments:</strong><br>${getComment(totalMarks)}</p>
+      <p><strong>Learner's General Performance Level:</strong> ${performance}</p>
+
+      <div style="margin-top: 20px;">
+        <p><strong>CLOSING DATE:</strong> ${closingDate} &emsp; <strong>OPENING DATE:</strong> ${openingDate}</p>
+        <p><strong>Class Teacher Signature:</strong> ${classTeacherSignature} &emsp; <strong>Principal Signature:</strong> ${principalSignature}</p>
+
+        <div style="border: 2px solid blue; color: blue; padding: 10px; display: inline-block; text-align: center; font-style: italic; font-weight: bold; border-radius: 5px;">
+          Nachu Junior School<br>
+          P.O. Box 561-00902 Kikuyu<br>
+          Date: ${date}
+        </div>
+      </div>
+    `;
+
+    container.appendChild(report);
+  });
 
     // Add Print Button
     const printButton = document.createElement("button");
@@ -5655,41 +5762,66 @@ function printAssessmentReport() {
             <head>
                 <title>Assessment Report</title>
                 <style>
+                    @page {
+                        size: A4 portrait;
+                        margin: 10mm 8mm; /* smaller side margins = wider content */
+                    }
+
                     body {
                         font-family: Arial, sans-serif;
-                        margin: 20px;
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                        height: 100%;
                         color: #333;
                     }
+
+                    .report-container {
+                        padding: 20px 12px;
+                        width: 100%;
+                        max-width: 100%;
+                        box-sizing: border-box;
+                    }
+
                     table {
                         width: 100%;
                         border-collapse: collapse;
-                        margin-top: 15px;
+                        margin-top: 10px;
+                        page-break-inside: avoid;
+                        break-inside: avoid;
+                        font-size: 14px;
                     }
+
                     th, td {
                         border: 1px solid #000;
                         padding: 8px;
                         text-align: center;
                     }
+
                     th {
                         background-color: #007bff;
-                        color: #fff;
+                        color: white;
                     }
+
                     td {
                         background-color: #f9f9f9;
                     }
                 </style>
             </head>
             <body>
-                <div>
+                <div class="report-container">
                     ${reportContainer.innerHTML}
                 </div>
             </body>
         </html>
     `);
     printWindow.document.close();
-    printWindow.print();
-}
 
+    printWindow.onload = () => {
+        printWindow.focus();
+        printWindow.print();
+    };
+}
 
 // Attach event listener to the print button
 document.getElementById("printAssessmentReportBtn").addEventListener("click", printAssessmentReport);

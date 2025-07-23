@@ -616,6 +616,19 @@ button[onclick^="show"] {
     display: none;
   }
 }
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #007bff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
     </style>
 </head>
@@ -962,6 +975,10 @@ button[onclick^="show"] {
     </thead>
     <tbody id="learnersList"></tbody>
   </table>
+<div id="spinnerContainer" style="text-align:center; margin: 20px 0; display: none;">
+  <div class="spinner"></div>
+  <p id="spinnerCountdown" style="font-size: 14px; color: #555; margin-top: 10px;">Loading... 0s</p>
+</div>
 
   <!-- Class List Generator Section -->
   <div id="classListSection" class="table-container" style="display: none; margin-top: 20px;">
@@ -1931,24 +1948,24 @@ button[onclick^="show"] {
   <p style="margin-top: 10px;">Generating Report...</p>
 </div>
 
-  <script type="module">
+<script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhTehL7VIaGG-bC2n1AFILZeJJ-drmSC0",
+    authDomain: "rasm-school-management.firebaseapp.com",
+    databaseURL: "https://rasm-school-management-default-rtdb.firebaseio.com",
+    projectId: "rasm-school-management",
+    storageBucket: "rasm-school-management.appspot.com",
+    messagingSenderId: "1015313561987",
+    appId: "1:1015313561987:web:4329664df844c17ae59eb6",
+    measurementId: "G-MHKTNPG712"
+  };
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDhTehL7VIaGG-bC2n1AFILZeJJ-drmSC0",
-            authDomain: "rasm-school-management.firebaseapp.com",
-            databaseURL: "https://rasm-school-management-default-rtdb.firebaseio.com",
-            projectId: "rasm-school-management",
-            storageBucket: "rasm-school-management.appspot.com",
-            messagingSenderId: "1015313561987",
-            appId: "1:1015313561987:web:4329664df844c17ae59eb6",
-            measurementId: "G-MHKTNPG712"
-        };
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const learnersRef = ref(database, "learners");
 
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-const learnersRef = ref(database, "learners");
 
 document.getElementById('registerButton').addEventListener('click', () => {
     const name = document.getElementById('name').value.trim();
@@ -2004,131 +2021,187 @@ document.getElementById('registerButton').addEventListener('click', () => {
             });
         });
 });
-
-
 const tableBody = document.getElementById('learnersList');
-const filterGradeSelect = document.getElementById('filterGrade'); // Reference to the dropdown
+const filterGradeSelect = document.getElementById('filterGrade');
+const spinnerContainer = document.getElementById('spinnerContainer');
+const spinnerCountdown = document.getElementById('spinnerCountdown');
+const loadMoreBtn = document.getElementById('loadMoreBtn');
+const scrollContainer = document.getElementById('tableScrollContainer');
 
-onValue(learnersRef, (snapshot) => {
-    tableBody.innerHTML = "";
+let allLearners = [];
+let currentIndex = 0;
+const pageSize = 250;
+let countdownInterval;
+let seconds = 0;
+
+function showLoadingSpinner() {
+  if (spinnerContainer) {
+    spinnerContainer.style.display = 'block';
+    seconds = 0;
+    spinnerCountdown.innerHTML = `Loading... <span>${seconds}</span>s`;
+
+    countdownInterval = setInterval(() => {
+      seconds++;
+      spinnerCountdown.innerHTML = `Loading... <span>${seconds}</span>s`;
+    }, 1000);
+  }
+  tableBody.innerHTML = "";
+}
+
+function hideLoadingSpinner() {
+  if (spinnerContainer) {
+    spinnerContainer.style.display = 'none';
+    clearInterval(countdownInterval);
+  }
+}
+
+// 🚀 Load learners faster using `get()` instead of `onValue`
+async function loadLearners() {
+  try {
+    showLoadingSpinner();
+    const snapshot = await get(learnersRef);
+    allLearners = [];
     const grades = new Set();
-    let index = 1;
 
     snapshot.forEach(childSnapshot => {
-        const data = childSnapshot.val();
-        const learnerKey = childSnapshot.key;
-
+      const data = childSnapshot.val();
+      const learnerKey = childSnapshot.key;
+      if (data.name && data.grade) {
+        allLearners.push({ ...data, key: learnerKey });
         grades.add(data.grade);
+      }
+    });
 
-        const newRow = document.createElement('tr');
-        newRow.setAttribute('data-grade', data.grade);
-        newRow.innerHTML = `
-            <td>${index++}</td>
-            <td><img src="${data.photo || 'default.png'}" alt="Photo" width="60" height="60" class="learner-photo"></td>
-            <td contenteditable="true" class="editable">${data.name || ''}</td>
-            <td contenteditable="true" class="editable">${data.gender || ''}</td>
-            <td contenteditable="true" class="editable">${data.grade || ''}</td>
-            <td contenteditable="true" class="editable">${data.age || ''}</td>
-            <td contenteditable="true" class="editable">${data.parentName || ''}</td>
-            <td contenteditable="true" class="editable">${data.parentPhone || ''}</td>
-            <td contenteditable="true" class="editable">${data.birthCert || ''}</td>
-            <td contenteditable="true" class="editable">${data.admissionNo || ''}</td>
-            <td>
-  
-    <button class="edit-photo-btn btn-blue" data-key="${learnerKey}">
-        <i class="fas fa-camera"></i> Edit Photo
-    </button>
-</td>
-<td>
-    <button class="delete-btn btn-red" data-key="${learnerKey}">
-        <i class="fas fa-trash-alt"></i> Delete
-    </button>
-</td>
+    if (filterGradeSelect) {
+      filterGradeSelect.innerHTML = `<option value="">Filter by Grade</option>`;
+      grades.forEach(grade => {
+        const option = document.createElement('option');
+        option.value = grade;
+        option.textContent = grade;
+        filterGradeSelect.appendChild(option);
+      });
+    }
 
-        `;
+    currentIndex = 0;
+    tableBody.innerHTML = "";
+    loadNextBatch();
+    hideLoadingSpinner();
+  } catch (error) {
+    console.error("Error fetching learners:", error);
+    showToast("Failed to load learners. Please try again.", "error");
+    hideLoadingSpinner();
+  }
+}
 
-        tableBody.appendChild(newRow);
-// 🔄 Handle inline cell editing (Admin only)
-newRow.querySelectorAll('.editable').forEach(cell => {
-    const fieldIndex = cell.cellIndex;
-    const fieldNames = ['name', 'gender', 'grade', 'age', 'parentName', 'parentPhone', 'birthCert', 'admissionNo'];
-    const fieldName = fieldNames[fieldIndex - 2];
-    cell.setAttribute('data-original-field', fieldName);
+loadLearners(); // ✅ Trigger the fetch
 
-    cell.addEventListener('blur', () => {
+function loadNextBatch() {
+  const fragment = document.createDocumentFragment();
+  const end = Math.min(currentIndex + pageSize, allLearners.length);
+  let index = currentIndex + 1;
+
+  for (let i = currentIndex; i < end; i++) {
+    const data = allLearners[i];
+    const learnerKey = data.key;
+
+    const newRow = document.createElement('tr');
+    newRow.setAttribute('data-grade', data.grade);
+    newRow.innerHTML = `
+      <td>${index++}</td>
+      <td><img src="${data.photo || 'default.png'}" alt="Photo" width="60" height="60" class="learner-photo" loading="lazy"></td>
+      <td contenteditable="true" class="editable">${data.name || ''}</td>
+      <td contenteditable="true" class="editable">${data.gender || ''}</td>
+      <td contenteditable="true" class="editable">${data.grade || ''}</td>
+      <td contenteditable="true" class="editable">${data.age || ''}</td>
+      <td contenteditable="true" class="editable">${data.parentName || ''}</td>
+      <td contenteditable="true" class="editable">${data.parentPhone || ''}</td>
+      <td contenteditable="true" class="editable">${data.birthCert || ''}</td>
+      <td contenteditable="true" class="editable">${data.admissionNo || ''}</td>
+      <td>
+        <button class="edit-photo-btn btn-blue" data-key="${learnerKey}">
+          <i class="fas fa-camera"></i> Edit Photo
+        </button>
+      </td>
+      <td>
+        <button class="delete-btn btn-red" data-key="${learnerKey}">
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
+      </td>
+    `;
+
+    newRow.querySelectorAll('.editable').forEach(cell => {
+      const fieldIndex = cell.cellIndex;
+      const fieldNames = ['name', 'gender', 'grade', 'age', 'parentName', 'parentPhone', 'birthCert', 'admissionNo'];
+      const fieldName = fieldNames[fieldIndex - 2];
+      cell.setAttribute('data-original-field', fieldName);
+
+      cell.addEventListener('blur', () => {
         if (!isAdminLoggedIn) {
-            showToast("Only admins can update learner details.", "error");
-            cell.textContent = data[fieldName] || '';
-            return;
+          showToast("Only admins can update learner details.", "error");
+          cell.textContent = data[fieldName] || '';
+          return;
         }
 
         const value = cell.textContent.trim();
         if (!fieldName || value === '') {
-            showToast("Field cannot be empty.", "error");
-            return;
+          showToast("Field cannot be empty.", "error");
+          return;
         }
 
         const updatedLearner = { ...data, [fieldName]: value };
-
         set(ref(database, `learners/${learnerKey}`), updatedLearner)
-            .then(() => showToast(`${fieldName} updated successfully!`, "success"))
-            .catch(err => {
-                console.error("Error updating learner:", err);
-                showToast("Failed to update learner. Please try again.", "error");
-            });
+          .then(() => showToast(`${fieldName} updated successfully!`, "success"))
+          .catch(err => {
+            console.error("Error updating learner:", err);
+            showToast("Failed to update learner. Please try again.", "error");
+          });
+      });
     });
-});
 
-// ✅ 📸 Edit Photo (Admin only) — now moved **outside** the `.editable` loop
-const editPhotoBtn = newRow.querySelector(".edit-photo-btn");
-editPhotoBtn.addEventListener("click", () => {
-    if (!isAdminLoggedIn) {
+    newRow.querySelector(".edit-photo-btn").addEventListener("click", () => {
+      if (!isAdminLoggedIn) {
         Swal.fire("Access Denied", "Only admins can update learner photos.", "error");
         return;
-    }
+      }
 
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = "image/*";
-    fileInput.click();
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = "image/*";
+      fileInput.click();
 
-    fileInput.addEventListener("change", () => {
+      fileInput.addEventListener("change", () => {
         const file = fileInput.files[0];
         if (!file) return;
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            const updatedLearner = { ...data, photo: reader.result };
-            set(ref(database, `learners/${learnerKey}`), updatedLearner)
-                .then(() => {
-                    // update image src immediately
-                    newRow.querySelector("img.learner-photo").src = reader.result;
-                    showToast("Photo updated successfully!", "success");
-                })
-                .catch((err) => {
-                    console.error("Error updating photo:", err);
-                    showToast("Failed to update photo.", "error");
-                });
+          const updatedLearner = { ...data, photo: reader.result };
+          set(ref(database, `learners/${learnerKey}`), updatedLearner)
+            .then(() => {
+              newRow.querySelector("img.learner-photo").src = reader.result;
+              showToast("Photo updated successfully!", "success");
+            })
+            .catch((err) => {
+              console.error("Error updating photo:", err);
+              showToast("Failed to update photo.", "error");
+            });
         };
         reader.readAsDataURL(file);
+      });
     });
-});
 
-    // ❌ SweetAlert2 delete confirmation (Admin only)
-newRow.querySelector('.delete-btn').addEventListener('click', (e) => {
-    if (!isAdminLoggedIn) {
+    newRow.querySelector('.delete-btn').addEventListener('click', () => {
+      if (!isAdminLoggedIn) {
         Swal.fire({
-            icon: 'error',
-            title: 'Access Denied',
-            text: 'Only admins can delete learner records.',
-            confirmButtonColor: '#d33'
+          icon: 'error',
+          title: 'Access Denied',
+          text: 'Only admins can delete learner records.',
+          confirmButtonColor: '#d33'
         });
         return;
-    }
+      }
 
-    const learnerKey = e.currentTarget.getAttribute('data-key');
-
-    Swal.fire({
+      Swal.fire({
         title: 'Confirm Deletion',
         text: 'Are you sure you want to permanently delete this learner?',
         icon: 'warning',
@@ -2137,50 +2210,48 @@ newRow.querySelector('.delete-btn').addEventListener('click', (e) => {
         cancelButtonColor: '#3085d6',
         confirmButtonText: 'Yes, delete',
         cancelButtonText: 'Cancel'
-    }).then((result) => {
+      }).then((result) => {
         if (result.isConfirmed) {
-            remove(ref(database, `learners/${learnerKey}`))
-                .then(() => {
-                    Swal.fire('Deleted!', 'Learner has been deleted.', 'success');
-                })
-                .catch(err => {
-                    console.error("Error deleting learner:", err);
-                    Swal.fire('Error', 'Failed to delete learner.', 'error');
-       
-
-                        });
-                }
+          remove(ref(database, `learners/${learnerKey}`))
+            .then(() => Swal.fire('Deleted!', 'Learner has been deleted.', 'success'))
+            .catch(err => {
+              console.error("Error deleting learner:", err);
+              Swal.fire('Error', 'Failed to delete learner.', 'error');
             });
-        });
+        }
+      });
     });
 
-    // ✅ Populate the filterGrade dropdown
-    if (filterGradeSelect) {
-        filterGradeSelect.innerHTML = `<option value="">Filter by Grade</option>`;
-        grades.forEach(grade => {
-            const option = document.createElement('option');
-            option.value = grade;
-            option.textContent = grade;
-            filterGradeSelect.appendChild(option);
-        });
+    fragment.appendChild(newRow);
+  }
+
+  tableBody.appendChild(fragment);
+  currentIndex = end;
+}
+
+// 📜 Auto-load next on scroll
+if (scrollContainer) {
+  scrollContainer.addEventListener('scroll', () => {
+    const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
+    if (scrollTop + clientHeight >= scrollHeight - 10 && currentIndex < allLearners.length) {
+      loadNextBatch();
     }
-});
-// Filter learners table by name or admission number
-  document.getElementById("searchInput").addEventListener("input", function () {
-    const query = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#learnersList tr");
-
-    rows.forEach(row => {
-      const name = row.cells[2].textContent.toLowerCase();
-      const admissionNo = row.cells[9].textContent.toLowerCase();
-
-      if (name.includes(query) || admissionNo.includes(query)) {
-        row.style.display = "";
-      } else {
-        row.style.display = "none";
-      }
-    });
   });
+}
+
+// 🔍 Search filter
+document.getElementById("searchInput").addEventListener("input", function () {
+  const query = this.value.toLowerCase();
+  const rows = document.querySelectorAll("#learnersList tr");
+
+  rows.forEach(row => {
+    const name = row.cells[2].textContent.toLowerCase();
+    const admissionNo = row.cells[9].textContent.toLowerCase();
+    row.style.display = name.includes(query) || admissionNo.includes(query) ? "" : "none";
+  });
+});
+
+
 
 printButton.addEventListener('click', () => {
     const schoolName = "NACHU JUNIOR SCHOOL ";
@@ -2567,9 +2638,11 @@ filterLearnersWithMarks();
 const marksTableBody = document.getElementById("marksList");
 const filterMarksGrade = document.getElementById("filterMarksGrade");
 const marksExamPeriodSelect = document.getElementById("marksExamPeriodSelect");
+
 function loadMarksFromFirebase() {
   const examPeriod = marksExamPeriodSelect.value;
   const selectedGrade = filterMarksGrade.value;
+  const spinner = document.getElementById("marksSpinner");
 
   if (!examPeriod || !selectedGrade) {
     Swal.fire({
@@ -2583,6 +2656,10 @@ function loadMarksFromFirebase() {
     });
     return;
   }
+
+  // Show spinner
+  if (spinner) spinner.style.display = "block";
+  marksTableBody.innerHTML = "";
 
   onValue(learnersRef, (snapshot) => {
     marksTableBody.innerHTML = "";
@@ -2643,9 +2720,9 @@ function loadMarksFromFirebase() {
       sums.totalMarks += rowTotal;
 
       const row = document.createElement("tr");
-    row.setAttribute("data-grade", data.grade);
-row.setAttribute("data-exam-period", examPeriod);
-row.setAttribute("data-key", learner.key);
+      row.setAttribute("data-grade", data.grade);
+      row.setAttribute("data-exam-period", examPeriod);
+      row.setAttribute("data-key", learner.key);
 
       row.innerHTML = `
         <td>${index + 1}</td>
@@ -2671,13 +2748,16 @@ row.setAttribute("data-key", learner.key);
       marksTableBody.appendChild(row);
     });
 
-    // 👌 Enable inline editing if admin is logged in
     if (isAdminLoggedIn) enableMarksEditing();
 
     populateGradeSelectors(grades);
     updateTotalsAndAverages(sums, learnersArray.length);
+
+    // Hide spinner when done
+    if (spinner) spinner.style.display = "none";
   });
 }
+
 
 
 

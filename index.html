@@ -634,37 +634,38 @@ button[onclick^="show"] {
 </head>
 <body>
 <!-- LOGIN SECTION -->
-<div id="loginSection" style="display: block; text-align: center; margin-top: 50px;">
+<div id="loginSection" style="display: block; text-align: center; margin-top: 50px; background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 40px; border-radius: 8px;">
   <div class="logo">
     <img src="https://i.imgur.com/2bSAbwq.jpeg" alt="School Logo" class="logo-img" style="width: 100px;">
   </div>
-  <h1>RASM School Management System</h1>
-  <p style="color: red; font-weight: bold;">NACHU JUNIOR SCHOOL</p>
+  <h1 style="color: white;">RASM School Management System</h1>
+  <p style="color: red; font-weight: bold; color: white;">NACHU JUNIOR SCHOOL</p>
 
   <form id="loginForm">
-    <input type="text" id="username" placeholder="Username" required><br><br>
-    <input type="password" id="password" placeholder="Password" required><br><br>
-    <button type="submit" class="btn-login">
+    <input type="text" id="username" placeholder="Username" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.7); border: none; border-radius: 4px;"><br><br>
+    <input type="password" id="password" placeholder="Password" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.7); border: none; border-radius: 4px;"><br><br>
+    <button type="submit" class="btn-login" style="padding: 10px 14px; background: #3F51B5; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%;"> 
       <span class="material-icons">login</span> Login
     </button>
   </form>
   <div id="loginError" style="color: red; display: none;">Invalid username or password</div>
   <br>
-  <button onclick="showResetPasswordForm()">Forgot Password?</button>
+  <button onclick="showResetPasswordForm()" style="background: #FF5722; color: white; border: none; border-radius: 4px; padding: 10px 14px; cursor: pointer;">Forgot Password?</button>
 </div>
 
 <!-- RESET PASSWORD SECTION -->
-<div id="resetPasswordSection" style="display: none; text-align: center; margin-top: 50px;">
-  <h2>Reset Your Password</h2>
+<div id="resetPasswordSection" style="display: none; text-align: center; margin-top: 50px; background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 40px; border-radius: 8px;">
+  <h2 style="color: white;">Reset Your Password</h2>
   <form id="resetPasswordForm">
-    <input type="email" id="resetEmail" placeholder="Enter your email" required><br><br>
-    <button type="submit">Send Reset Link</button>
+    <input type="email" id="resetEmail" placeholder="Enter your email" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.7); border: none; border-radius: 4px;"><br><br>
+    <button type="submit" style="padding: 10px 14px; background: #3F51B5; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Send Reset Link</button>
   </form>
   <div id="resetSuccess" style="color: green; display: none;">✅ Reset email sent successfully!</div>
   <div id="resetError" style="color: red; display: none;">❌ Failed to send reset email. Try again.</div>
   <br>
-  <button onclick="showLoginForm()">Back to Login</button>
+  <button onclick="showLoginForm()" style="background: #FF5722; color: white; border: none; border-radius: 4px; padding: 10px 14px; cursor: pointer;">Back to Login</button>
 </div>
+
 
 
 <!-- MAIN CONTENT SECTION -->
@@ -811,7 +812,8 @@ button[onclick^="show"] {
       "
     >
       <i class="fas fa-chevron-down" style="margin-right: 6px;"></i>
-      Record Marks
+      
+
     </button>
   <!-- Button to Show/Hide Fee Management Menu -->
   <button onclick="toggleFeeActionsMenu()" style="background-color: #d32f2f; color: purple; border: none; padding: 10px 10px; font-size: 16px; cursor: pointer; border-radius: 5px; margin-bottom: 10px;">
@@ -853,42 +855,42 @@ button[onclick^="show"] {
 
 </div>
 <!-- Wrapped form, hidden by default -->
-<div id="registrationContainer" style="display: none; margin-top: 20px; max-width: 450px; margin: auto; background-color: #8BC34A; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-  <h2 style="color: white; background-color: gold; padding: 10px 12px; border-radius: 4px; text-align: center;">
+<div id="registrationContainer" style="display: none; margin-top: 20px; max-width: 450px; margin: auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  <h2 style="color: white; background-color: rgba(255, 215, 0, 0.8); padding: 10px 12px; border-radius: 4px; text-align: center;">
     Register Learner
   </h2>
 
   <form id="learnerForm">
-    <label>Name:</label>
-    <input type="text" id="name" placeholder="Enter name" required style="width: 100%; padding: 8px; margin: 6px 0;"><br>
+    <label style="color: white;">Name:</label>
+    <input type="text" id="name" placeholder="Enter name" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 4px;"><br>
 
-    <label>Gender:</label>
-    <select id="gender" required style="width: 100%; padding: 8px; margin: 6px 0;">
+    <label style="color: white;">Gender:</label>
+    <select id="gender" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 4px;">
       <option value="">Select Gender</option>
       <option value="Male">Male</option>
       <option value="Female">Female</option>
     </select><br>
 
-    <label>Grade:</label>
-    <input type="text" id="grade" placeholder="Enter grade e.g. Grade 9A" required style="width: 100%; padding: 8px; margin: 6px 0;"><br>
+    <label style="color: white;">Grade:</label>
+    <input type="text" id="grade" placeholder="Enter grade e.g. Grade 9A" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 4px;"><br>
 
-    <label>Age:</label>
-    <input type="number" id="age" placeholder="Enter age" required style="width: 100%; padding: 8px; margin: 6px 0;"><br>
+    <label style="color: white;">Age:</label>
+    <input type="number" id="age" placeholder="Enter age" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 4px;"><br>
 
-    <label>Parent Name:</label>
-    <input type="text" id="parentName" placeholder="Enter parent name" required style="width: 100%; padding: 8px; margin: 6px 0;"><br>
+    <label style="color: white;">Parent Name:</label>
+    <input type="text" id="parentName" placeholder="Enter parent name" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 4px;"><br>
 
-    <label>Parent Phone:</label>
-    <input type="tel" id="parentPhone" placeholder="Enter phone number" required style="width: 100%; padding: 8px; margin: 6px 0;"><br>
+    <label style="color: white;">Parent Phone:</label>
+    <input type="tel" id="parentPhone" placeholder="Enter phone number" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 4px;"><br>
 
-    <label>Birth Certificate No:</label>
-    <input type="text" id="birthCert" placeholder="Enter birth certificate no" required style="width: 100%; padding: 8px; margin: 6px 0;"><br>
+    <label style="color: white;">Birth Certificate No:</label>
+    <input type="text" id="birthCert" placeholder="Enter birth certificate no" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 4px;"><br>
 
-    <label>Admission Number:</label>
-    <input type="text" id="admissionNo" placeholder="Enter admission number" required style="width: 100%; padding: 8px; margin: 6px 0;"><br>
+    <label style="color: white;">Admission Number:</label>
+    <input type="text" id="admissionNo" placeholder="Enter admission number" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 4px;"><br>
 
-    <label>Learner Photo:</label>
-    <input type="file" id="photo" accept="image/*" required style="width: 100%; padding: 8px; margin: 6px 0;"><br>
+    <label style="color: white;">Learner Photo:</label>
+    <input type="file" id="photo" accept="image/*" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 4px;"><br>
 
     <button type="button" id="registerButton"
       style="padding: 10px 14px; background: #3F51B5; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 12px; width: 100%;">
@@ -897,63 +899,67 @@ button[onclick^="show"] {
   </form>
 </div>
 
+
   </div>
 <div id="tableContainer" style="display: none; margin-top: 20px;">
   <h2>Registered Learners</h2>
 
-<!-- Filter Bar -->
-<div class="filter-bar" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
-  <input 
-    type="text" 
-    id="searchInput" 
-    placeholder="Search Name / Adm No"
-    style="padding: 6px 8px; border: 2px solid #007BFF; border-radius: 5px; background-color: #e9f2ff; color: #333; font-size: 13px; min-width: 180px;"
-  >
+<!-- Filter Bar Box -->
+  <div class="filter-bar" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+    <input 
+      type="text" 
+      id="searchInput" 
+      placeholder="Search Name / Adm No"
+      style="padding: 6px 8px; border: 2px solid #007BFF; border-radius: 5px; background-color: #e9f2ff; color: #333; font-size: 13px; min-width: 180px; outline: none;">
+  
+    <select 
+      id="filterGrade"
+      style="padding: 6px 8px; border: 2px solid #28a745; border-radius: 5px; background-color: #e9ffe9; color: #333; font-size: 13px; width: 130px;">
+      <option value="">Filter by Grade</option>
+    </select>
+  
+    <select 
+      id="filterGender"
+      style="padding: 6px 8px; border: 2px solid #ffc107; border-radius: 5px; background-color: #fff8e1; color: #333; font-size: 13px; width: 130px;">
+      <option value="">Filter by Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+  </div>
 
-  <select 
-    id="filterGrade"
-    style="padding: 6px 8px; border: 2px solid #28a745; border-radius: 5px; background-color: #e9ffe9; color: #333; font-size: 13px; width: 130px;"
-  >
-    <option value="">Filter by Grade</option>
-  </select>
 
-  <select 
-    id="filterGender"
-    style="padding: 6px 8px; border: 2px solid #ffc107; border-radius: 5px; background-color: #fff8e1; color: #333; font-size: 13px; width: 130px;"
-  >
-    <option value="">Filter by Gender</option>
-    <option value="Male">Male</option>
-    <option value="Female">Female</option>
-  </select>
+
+ <!-- Action Box -->
+<div class="action-box" style="border: 2px solid #ccc; padding: 16px; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <!-- Action Buttons -->
+  <div class="action-buttons" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;">
+    
+    <button class="print-button action-btn" id="printButton" style="background-color: #4CAF50; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer;">
+      <i class="fas fa-print"></i> Print Filtered Learners
+    </button>
+    
+    <button class="print-button action-btn" id="printGroupedByGenderButton" style="background-color: #2196F3; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer;">
+      <i class="fas fa-venus-mars"></i> Print Grouped by Gender
+    </button>
+    
+    <button class="print-button action-btn" id="generateParentsListBtn" style="background-color: #FF9800; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer;">
+      <i class="fas fa-users"></i> Generate Parents List
+    </button>
+    
+    <button class="print-button action-btn" id="toggleClassListSectionBtn" style="background-color: #9C27B0; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer;">
+      <i class="fas fa-chevron-down"></i> Class List Generator
+    </button>
+    
+    <button class="print-button action-btn" onclick="promoteLearners()" style="background-color: #FF5722; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer;">
+      <i class="fas fa-level-up-alt"></i> Promote Learners
+    </button>
+    
+    <button class="print-button action-btn" onclick="undoPromotion()" style="background-color: #607D8B; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer;">
+      <i class="fas fa-undo-alt"></i> Undo Promotion
+    </button>
+  </div>
 </div>
 
-
- <!-- Action Buttons -->
-<div class="action-buttons" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;">
-  <button class="print-button action-btn" id="printButton">
-    <i class="fas fa-print"></i> Print Filtered Learners
-  </button>
-  
-  <button class="print-button action-btn" id="printGroupedByGenderButton">
-    <i class="fas fa-venus-mars"></i> Print Grouped by Gender
-  </button>
-  
-  <button class="print-button action-btn" id="generateParentsListBtn">
-    <i class="fas fa-users"></i> Generate Parents List
-  </button>
-  
-  <button class="print-button action-btn" id="toggleClassListSectionBtn">
-    <i class="fas fa-chevron-down"></i> Class List Generator
-  </button>
-  
-  <button class="print-button action-btn" onclick="promoteLearners()">
-    <i class="fas fa-level-up-alt"></i> Promote Learners
-  </button>
-  
-  <button class="print-button action-btn" onclick="undoPromotion()">
-    <i class="fas fa-undo-alt"></i> Undo Promotion
-  </button>
-</div>
 
   <!-- Learners Table -->
   <table class="learners-table" style="margin-top: 20px;">
@@ -1005,34 +1011,267 @@ button[onclick^="show"] {
     <div id="modalDetails"></div>
   </div>
 </div>
-
 <!-- Record Marks Section -->
-<div id="recordMarksSection" style="max-width: 400px; margin: auto; display: none; background-color: #8BC34A; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<div id="recordMarksSection" style="max-width: 400px; margin: auto; display: none; background-color: #8BC34A; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-image: url('https://i.imgur.com/qnmK7CR.jpeg'); background-size: cover; background-position: center;">
   <h2 style="color: white; background-color: gold; padding: 8px 8px; border-radius: 3px; text-align: center;">
     Record Learner Marks
   </h2>
 
-<form id="marksForm">
-  <label><strong>Grade:</strong></label>
-  <select id="gradeSelect" required 
-    style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px;">
-    <option value="">Select Grade</option>
-  </select><br>
-
-  <label><strong>Learner:</strong></label>
-  <select id="learnerSelect" required 
-    style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px;">
-    <option value="">Select Learner</option>
-  </select><br>
-
-  <!-- Exam Period Dropdown -->
-  <div class="form-group">
-    <label for="examPeriod"><strong>Select Period</strong></label>
-    <select id="examPeriod" required
+  <form id="marksForm">
+    <label><strong>Grade:</strong></label>
+    <select id="gradeSelect" required 
       style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px;">
-  
+      <option value="">Select Grade</option>
+    </select><br>
 
+    <label><strong>Learner:</strong></label>
+    <select id="learnerSelect" required 
+      style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px;">
+      <option value="">Select Learner</option>
+    </select><br>
+
+    <!-- Exam Period Dropdown -->
+    <div class="form-group">
+      <label for="examPeriod"><strong>Select Period</strong></label>
+      <select id="examPeriod" required
+        style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px;">
         <option value="">-- Select Period --</option>
+       <option value="2024, Term 1, Opener Exam">2024, Term 1, Opener Exam</option>
+<option value="2024, Term 1, Midterm Exam">2024, Term 1, Midterm Exam</option>
+<option value="2024, Term 1, End Term Exam">2024, Term 1, End Term Exam</option>
+<option value="2024, Term 2, Opener Exam">2024, Term 2, Opener Exam</option>
+<option value="2024, Term 2, Midterm Exam">2024, Term 2, Midterm Exam</option>
+<option value="2024, Term 2, End Term Exam">2024, Term 2, End Term Exam</option>
+<option value="2024, Term 3, Opener Exam">2024, Term 3, Opener Exam</option>
+<option value="2024, Term 3, Midterm Exam">2024, Term 3, Midterm Exam</option>
+<option value="2024, Term 3, End Term Exam">2024, Term 3, End Term Exam</option>
+
+<option value="2025, Term 1, Opener Exam">2025, Term 1, Opener Exam</option>
+<option value="2025, Term 1, Midterm Exam">2025, Term 1, Midterm Exam</option>
+<option value="2025, Term 1, End Term Exam">2025, Term 1, End Term Exam</option>
+<option value="2025, Term 2, Opener Exam">2025, Term 2, Opener Exam</option>
+<option value="2025, Term 2, Midterm Exam">2025, Term 2, Midterm Exam</option>
+<option value="2025, Term 2, End Term Exam">2025, Term 2, End Term Exam</option>
+<option value="2025, Term 3, Opener Exam">2025, Term 3, Opener Exam</option>
+<option value="2025, Term 3, Midterm Exam">2025, Term 3, Midterm Exam</option>
+<option value="2025, Term 3, End Term Exam">2025, Term 3, End Term Exam</option>
+
+<option value="2026, Term 1, Opener Exam">2026, Term 1, Opener Exam</option>
+<option value="2026, Term 1, Midterm Exam">2026, Term 1, Midterm Exam</option>
+<option value="2026, Term 1, End Term Exam">2026, Term 1, End Term Exam</option>
+<option value="2026, Term 2, Opener Exam">2026, Term 2, Opener Exam</option>
+<option value="2026, Term 2, Midterm Exam">2026, Term 2, Midterm Exam</option>
+<option value="2026, Term 2, End Term Exam">2026, Term 2, End Term Exam</option>
+<option value="2026, Term 3, Opener Exam">2026, Term 3, Opener Exam</option>
+<option value="2026, Term 3, Midterm Exam">2026, Term 3, Midterm Exam</option>
+<option value="2026, Term 3, End Term Exam">2026, Term 3, End Term Exam</option>
+
+<option value="2027, Term 1, Opener Exam">2027, Term 1, Opener Exam</option>
+<option value="2027, Term 1, Midterm Exam">2027, Term 1, Midterm Exam</option>
+<option value="2027, Term 1, End Term Exam">2027, Term 1, End Term Exam</option>
+<option value="2027, Term 2, Opener Exam">2027, Term 2, Opener Exam</option>
+<option value="2027, Term 2, Midterm Exam">2027, Term 2, Midterm Exam</option>
+<option value="2027, Term 2, End Term Exam">2027, Term 2, End Term Exam</option>
+<option value="2027, Term 3, Opener Exam">2027, Term 3, Opener Exam</option>
+<option value="2027, Term 3, Midterm Exam">2027, Term 3, Midterm Exam</option>
+<option value="2027, Term 3, End Term Exam">2027, Term 3, End Term Exam</option>
+<!-- 2028 -->
+<option value="2028, Term 1, Opener Exam">2028, Term 1, Opener Exam</option>
+<option value="2028, Term 1, Midterm Exam">2028, Term 1, Midterm Exam</option>
+<option value="2028, Term 1, End Term Exam">2028, Term 1, End Term Exam</option>
+<option value="2028, Term 2, Opener Exam">2028, Term 2, Opener Exam</option>
+<option value="2028, Term 2, Midterm Exam">2028, Term 2, Midterm Exam</option>
+<option value="2028, Term 2, End Term Exam">2028, Term 2, End Term Exam</option>
+<option value="2028, Term 3, Opener Exam">2028, Term 3, Opener Exam</option>
+<option value="2028, Term 3, Midterm Exam">2028, Term 3, Midterm Exam</option>
+<option value="2028, Term 3, End Term Exam">2028, Term 3, End Term Exam</option>
+
+<!-- 2029 -->
+<option value="2029, Term 1, Opener Exam">2029, Term 1, Opener Exam</option>
+<option value="2029, Term 1, Midterm Exam">2029, Term 1, Midterm Exam</option>
+<option value="2029, Term 1, End Term Exam">2029, Term 1, End Term Exam</option>
+<option value="2029, Term 2, Opener Exam">2029, Term 2, Opener Exam</option>
+<option value="2029, Term 2, Midterm Exam">2029, Term 2, Midterm Exam</option>
+<option value="2029, Term 2, End Term Exam">2029, Term 2, End Term Exam</option>
+<option value="2029, Term 3, Opener Exam">2029, Term 3, Opener Exam</option>
+<option value="2029, Term 3, Midterm Exam">2029, Term 3, Midterm Exam</option>
+<option value="2029, Term 3, End Term Exam">2029, Term 3, End Term Exam</option>
+
+<!-- 2030 -->
+<option value="2030, Term 1, Opener Exam">2030, Term 1, Opener Exam</option>
+<option value="2030, Term 1, Midterm Exam">2030, Term 1, Midterm Exam</option>
+<option value="2030, Term 1, End Term Exam">2030, Term 1, End Term Exam</option>
+<option value="2030, Term 2, Opener Exam">2030, Term 2, Opener Exam</option>
+<option value="2030, Term 2, Midterm Exam">2030, Term 2, Midterm Exam</option>
+<option value="2030, Term 2, End Term Exam">2030, Term 2, End Term Exam</option>
+<option value="2030, Term 3, Opener Exam">2030, Term 3, Opener Exam</option>
+<option value="2030, Term 3, Midterm Exam">2030, Term 3, Midterm Exam</option>
+<option value="2030, Term 3, End Term Exam">2030, Term 3, End Term Exam</option>
+
+<!-- 2031 -->
+<option value="2031, Term 1, Opener Exam">2031, Term 1, Opener Exam</option>
+<option value="2031, Term 1, Midterm Exam">2031, Term 1, Midterm Exam</option>
+<option value="2031, Term 1, End Term Exam">2031, Term 1, End Term Exam</option>
+<option value="2031, Term 2, Opener Exam">2031, Term 2, Opener Exam</option>
+<option value="2031, Term 2, Midterm Exam">2031, Term 2, Midterm Exam</option>
+<option value="2031, Term 2, End Term Exam">2031, Term 2, End Term Exam</option>
+<option value="2031, Term 3, Opener Exam">2031, Term 3, Opener Exam</option>
+<option value="2031, Term 3, Midterm Exam">2031, Term 3, Midterm Exam</option>
+<option value="2031, Term 3, End Term Exam">2031, Term 3, End Term Exam</option>
+
+<!-- 2032 -->
+<option value="2032, Term 1, Opener Exam">2032, Term 1, Opener Exam</option>
+<option value="2032, Term 1, Midterm Exam">2032, Term 1, Midterm Exam</option>
+<option value="2032, Term 1, End Term Exam">2032, Term 1, End Term Exam</option>
+<option value="2032, Term 2, Opener Exam">2032, Term 2, Opener Exam</option>
+<option value="2032, Term 2, Midterm Exam">2032, Term 2, Midterm Exam</option>
+<option value="2032, Term 2, End Term Exam">2032, Term 2, End Term Exam</option>
+<option value="2032, Term 3, Opener Exam">2032, Term 3, Opener Exam</option>
+<option value="2032, Term 3, Midterm Exam">2032, Term 3, Midterm Exam</option>
+<option value="2032, Term 3, End Term Exam">2032, Term 3, End Term Exam</option>
+<!-- 2033 -->
+<option value="2033, Term 1, Opener Exam">2033, Term 1, Opener Exam</option>
+<option value="2033, Term 1, Midterm Exam">2033, Term 1, Midterm Exam</option>
+<option value="2033, Term 1, End Term Exam">2033, Term 1, End Term Exam</option>
+<option value="2033, Term 2, Opener Exam">2033, Term 2, Opener Exam</option>
+<option value="2033, Term 2, Midterm Exam">2033, Term 2, Midterm Exam</option>
+<option value="2033, Term 2, End Term Exam">2033, Term 2, End Term Exam</option>
+<option value="2033, Term 3, Opener Exam">2033, Term 3, Opener Exam</option>
+<option value="2033, Term 3, Midterm Exam">2033, Term 3, Midterm Exam</option>
+<option value="2033, Term 3, End Term Exam">2033, Term 3, End Term Exam</option>
+
+<!-- 2034 -->
+<option value="2034, Term 1, Opener Exam">2034, Term 1, Opener Exam</option>
+<option value="2034, Term 1, Midterm Exam">2034, Term 1, Midterm Exam</option>
+<option value="2034, Term 1, End Term Exam">2034, Term 1, End Term Exam</option>
+<option value="2034, Term 2, Opener Exam">2034, Term 2, Opener Exam</option>
+<option value="2034, Term 2, Midterm Exam">2034, Term 2, Midterm Exam</option>
+<option value="2034, Term 2, End Term Exam">2034, Term 2, End Term Exam</option>
+<option value="2034, Term 3, Opener Exam">2034, Term 3, Opener Exam</option>
+<option value="2034, Term 3, Midterm Exam">2034, Term 3, Midterm Exam</option>
+<option value="2034, Term 3, End Term Exam">2034, Term 3, End Term Exam</option>
+
+<!-- 2035 -->
+<option value="2035, Term 1, Opener Exam">2035, Term 1, Opener Exam</option>
+<option value="2035, Term 1, Midterm Exam">2035, Term 1, Midterm Exam</option>
+<option value="2035, Term 1, End Term Exam">2035, Term 1, End Term Exam</option>
+<option value="2035, Term 2, Opener Exam">2035, Term 2, Opener Exam</option>
+<option value="2035, Term 2, Midterm Exam">2035, Term 2, Midterm Exam</option>
+<option value="2035, Term 2, End Term Exam">2035, Term 2, End Term Exam</option>
+<option value="2035, Term 3, Opener Exam">2035, Term 3, Opener Exam</option>
+<option value="2035, Term 3, Midterm Exam">2035, Term 3, Midterm Exam</option>
+<option value="2035, Term 3, End Term Exam">2035, Term 3, End Term Exam</option>
+
+<!-- 2036 -->
+<option value="2036, Term 1, Opener Exam">2036, Term 1, Opener Exam</option>
+<option value="2036, Term 1, Midterm Exam">2036, Term 1, Midterm Exam</option>
+<option value="2036, Term 1, End Term Exam">2036, Term 1, End Term Exam</option>
+<option value="2036, Term 2, Opener Exam">2036, Term 2, Opener Exam</option>
+<option value="2036, Term 2, Midterm Exam">2036, Term 2, Midterm Exam</option>
+<option value="2036, Term 2, End Term Exam">2036, Term 2, End Term Exam</option>
+<option value="2036, Term 3, Opener Exam">2036, Term 3, Opener Exam</option>
+<option value="2036, Term 3, Midterm Exam">2036, Term 3, Midterm Exam</option>
+<option value="2036, Term 3, End Term Exam">2036, Term 3, End Term Exam</option>
+
+<!-- 2037 -->
+<option value="2037, Term 1, Opener Exam">2037, Term 1, Opener Exam</option>
+<option value="2037, Term 1, Midterm Exam">2037, Term 1, Midterm Exam</option>
+<option value="2037, Term 1, End Term Exam">2037, Term 1, End Term Exam</option>
+<option value="2037, Term 2, Opener Exam">2037, Term 2, Opener Exam</option>
+<option value="2037, Term 2, Midterm Exam">2037, Term 2, Midterm Exam</option>
+<option value="2037, Term 2, End Term Exam">2037, Term 2, End Term Exam</option>
+<option value="2037, Term 3, Opener Exam">2037, Term 3, Opener Exam</option>
+<option value="2037, Term 3, Midterm Exam">2037, Term 3, Midterm Exam</option>
+<option value="2037, Term 3, End Term Exam">2037, Term 3, End Term Exam</option>
+
+<option value="2038, Term 1, Opener Exam">2038, Term 1, Opener Exam</option>
+<option value="2038, Term 1, Midterm Exam">2038, Term 1, Midterm Exam</option>
+<option value="2038, Term 1, End Term Exam">2038, Term 1, End Term Exam</option>
+<option value="2038, Term 2, Opener Exam">2038, Term 2, Opener Exam</option>
+<option value="2038, Term 2, Midterm Exam">2038, Term 2, Midterm Exam</option>
+<option value="2038, Term 2, End Term Exam">2038, Term 2, End Term Exam</option>
+<option value="2038, Term 3, Opener Exam">2038, Term 3, Opener Exam</option>
+<option value="2038, Term 3, Midterm Exam">2038, Term 3, Midterm Exam</option>
+<option value="2038, Term 3, End Term Exam">2038, Term 3, End Term Exam</option>
+
+
+<option value="2039, Term 1, Opener Exam">2039, Term 1, Opener Exam</option>
+<option value="2039, Term 1, Midterm Exam">2039, Term 1, Midterm Exam</option>
+<option value="2039, Term 1, End Term Exam">2039, Term 1, End Term Exam</option>
+<option value="2039, Term 2, Opener Exam">2039, Term 2, Opener Exam</option>
+<option value="2039, Term 2, Midterm Exam">2039, Term 2, Midterm Exam</option>
+<option value="2039, Term 2, End Term Exam">2039, Term 2, End Term Exam</option>
+<option value="2039, Term 3, Opener Exam">2039, Term 3, Opener Exam</option>
+<option value="2039, Term 3, Midterm Exam">2039, Term 3, Midterm Exam</option>
+<option value="2039, Term 3, End Term Exam">2039, Term 3, End Term Exam</option>
+
+<option value="2040, Term 1, Opener Exam">2040, Term 1, Opener Exam</option>
+<option value="2040, Term 1, Midterm Exam">2040, Term 1, Midterm Exam</option>
+<option value="2040, Term 1, End Term Exam">2040, Term 1, End Term Exam</option>
+<option value="2040, Term 2, Opener Exam">2040, Term 2, Opener Exam</option>
+<option value="2040, Term 2, Midterm Exam">2040, Term 2, Midterm Exam</option>
+<option value="2040, Term 2, End Term Exam">2040, Term 2, End Term Exam</option>
+<option value="2040, Term 3, Opener Exam">2040, Term 3, Opener Exam</option>
+<option value="2040, Term 3, Midterm Exam">2040, Term 3, Midterm Exam</option>
+<option value="2040, Term 3, End Term Exam">2040, Term 3, End Term Exam</option>
+
+      </select>
+    </div>
+
+    <div id="marksInputs">
+      <div class="form-group"><label>Eng</label><input type="number" id="eng" required></div>
+      <div class="form-group"><label>Math</label><input type="number" id="math" required></div>
+      <div class="form-group"><label>Pre-Tech</label><input type="number" id="preTech" required></div>
+      <div class="form-group"><label>Kiswahili</label><input type="number" id="kiswahili" required></div>
+      <div class="form-group"><label>Science</label><input type="number" id="science" required></div>
+      <div class="form-group"><label>Social</label><input type="number" id="social" required></div>
+      <div class="form-group"><label>Agriculture</label><input type="number" id="agriculture" required></div>
+      <div class="form-group"><label>CRE</label><input type="number" id="cre" required></div>
+      <div class="form-group"><label>Creative Art</label><input type="number" id="creativeArt" required></div>
+    </div>
+
+    <div class="form-group">
+      <button type="button" id="saveMarksButton">
+        <i class="fas fa-save"></i> Save Marks
+      </button>
+      <div id="marksCountBadge" style="margin: 8px 0; font-weight: bold; color: #333;"></div>
+    </div>
+  </form>
+</div>
+
+<!-- Action Box for Marks Display -->
+<div id="marksSection" style="display: none; margin-top: 20px;">
+  <div class="action-box" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background-image: url('https://i.imgur.com/WKwJ73A.jpeg'); background-size: cover; background-position: center; border-radius: 8px; color: white;">
+    <h2 style="background-color: rgba(255, 255, 255, 0.7); padding: 8px 16px; border-radius: 6px; display: inline-block; color: #2c3e50;">
+      <span style="color: #e74c3c;">Recorded Learner Marks</span>
+    </h2>
+
+    <!-- Search Input -->
+    <div class="form-group" style="flex: 1; min-width: 220px;">
+      <label for="searchMarksInput" style="font-weight: bold; color: #3498db;"><strong>Search by Name or Admission Number</strong></label>
+      <input 
+        type="text" 
+        id="searchMarksInput" 
+        placeholder="Enter learner name or admission number"
+        style="width: 100%; background-color: rgba(255, 255, 255, 0.8); border: 1px solid #ccc; padding: 6px; border-radius: 4px; color: #333;">
+    </div>
+
+    <!-- Filter by Grade -->
+    <div class="form-group" style="flex: 1; min-width: 220px;">
+      <label for="filterMarksGrade" style="font-weight: bold; color: #3498db;"><strong>Filter by Grade</strong></label>
+      <select id="filterMarksGrade" 
+        style="width: 100%; background-color: rgba(255, 255, 255, 0.8); border: 1px solid #ccc; padding: 6px; border-radius: 4px; color: #333;">
+        <option value="">-- Select Grade --</option>
+        <!-- Add Grade Options Dynamically -->
+      </select>
+    </div>
+
+    <!-- Filter by Exam Period -->
+    <div class="form-group" style="flex: 1; min-width: 220px;">
+      <label for="marksExamPeriodSelect" style="font-weight: bold; color: #3498db;"><strong>Filter by Exam Period</strong></label>
+      <select id="marksExamPeriodSelect" 
+        style="width: 100%; background-color: rgba(255, 255, 255, 0.8); border: 1px solid #ccc; padding: 6px; border-radius: 4px; color: #333;">
+        <option value="">-- Select Exam Period --</option>
     <option value="2024, Term 1, Opener Exam">2024, Term 1, Opener Exam</option>
 <option value="2024, Term 1, Midterm Exam">2024, Term 1, Midterm Exam</option>
 <option value="2024, Term 1, End Term Exam">2024, Term 1, End Term Exam</option>
@@ -1215,64 +1454,94 @@ button[onclick^="show"] {
       </select>
     </div>
 
-  <div id="marksInputs">
-  <div class="form-group"><label>Eng</label><input type="number" id="eng" required></div>
-  <div class="form-group"><label>Math</label><input type="number" id="math" required></div>
-  <div class="form-group"><label>Pre-Tech</label><input type="number" id="preTech" required></div>
-  <div class="form-group"><label>Kiswahili</label><input type="number" id="kiswahili" required></div>
-  <div class="form-group"><label>Science</label><input type="number" id="science" required></div>
-  <div class="form-group"><label>Social</label><input type="number" id="social" required></div>
-  <div class="form-group"><label>Agriculture</label><input type="number" id="agriculture" required></div>
-  <div class="form-group"><label>CRE</label><input type="number" id="cre" required></div>
-  <div class="form-group"><label>Creative Art</label><input type="number" id="creativeArt" required></div>
-</div>
-
-
-    <div class="form-group">
-      <button type="button" id="saveMarksButton">
-        <i class="fas fa-save"></i> Save Marks
+    <!-- Load Marks Button -->
+    <div class="form-group" style="flex: 1; min-width: 220px;">
+      <label>&nbsp;</label> <!-- Empty label for alignment -->
+      <button id="loadMarksByPeriodBtn" class="print-button" style="width: 100%; padding: 10px; background-color: #1abc9c; border: 1px solid #16a085; border-radius: 4px; display: block; color: white;">
+        <i class="fas fa-download"></i> Load Marks
       </button>
-<div id="marksCountBadge" style="margin: 8px 0; font-weight: bold; color: #333;"></div>
     </div>
-  </form>
+
+    <!-- Print Marks Button -->
+    <div class="form-group" style="flex: 1; min-width: 220px;">
+      <label>&nbsp;</label> <!-- Empty label for alignment -->
+      <button id="printFilteredMarksBtn" class="print-button" style="width: 100%; padding: 10px; background-color: #f39c12; border: 1px solid #e67e22; border-radius: 4px; display: block; color: white;">
+        <i class="fas fa-print"></i> Print Merit List
+      </button>
+    </div>
+  </div>
+
+  <!-- Marks Table -->
+  <table class="marks-table" style="margin-top: 20px;">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Name</th>
+        <th>Grade</th>
+        <th>Eng</th><th>Lev</th>
+        <th>Math</th><th>Lev</th>
+        <th>Pre-Tech</th><th>Lev</th>
+        <th>Kiswa</th><th>Lev</th>
+        <th>Scie</th><th>Lev</th>
+        <th>Sst</th><th>Lev</th>
+        <th>Agric</th><th>Lev</th>
+        <th>Cre</th><th>Lev</th>
+        <th>C/A</th><th>Lev</th>
+        <th>Total Marks</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="marksList"></tbody>
+    <tfoot>
+      <tr id="totalsRow"></tr>
+      <tr id="averagesRow"></tr>
+    </tfoot>
+  </table>
 </div>
 
 
-<!-- Marks Display Section -->
-<div id="marksSection" style="display: none; margin-top: 20px;">
+<!-- Performance Reports Section -->
+<div id="performanceReportsSection" style="display: none;">
+
   <h2 style="background-color: #ffff00; padding: 8px 16px; border-radius: 6px; display: inline-block;">
-    Recorded Learner Marks
+    Exam Reports
   </h2>
 
-  <div class="filter-bar" style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px; align-items: flex-end;">
+  <!-- RASM Reminder FIRST -->
+  <div style="
+    background-color: #2ecc71;
+    color: #5a5300;
+    border: 1px solid #ffe58f;
+    padding: 12px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 16px;
+  ">
+    <i class="fas fa-bullhorn" style="color: #000; font-size: 24px; margin-right: 10px;"></i>
+    <strong>RASM Reminder:</strong>&nbsp;Please select  grade,exam period and subject before generating any report ,Thankyou.
+  </div>
+<!-- Action Box Container -->
+<div style="background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); max-width: 400px; margin: auto;">
 
-  <!-- Search Input -->
-<div class="form-group">
-  <label for="searchMarksInput"><strong>Search by Name or Admission Number</strong></label>
-  <input 
-    type="text" 
-    id="searchMarksInput" 
-    placeholder="Enter learner name or admission number"
-    style="width: 220px; background-color: #fff8c6; border: 1px solid #ccc; padding: 6px; border-radius: 4px;"
-  >
-</div>
+  <!-- Grade Selection Section -->
+  <div style="margin-bottom: 16px;">
+    <label for="reportGradeSelect" style="font-weight: bold; display: block; margin-bottom: 4px; color: white;">Select Grade:</label>
+    <select id="reportGradeSelect" style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 100%; background-color: rgba(255, 255, 255, 0.7);">
+      <option value="">Select Grade</option>
+    </select>
+    <div style="font-size: 13px; color: #fff; margin-top: 4px;">
+      <i class="fas fa-info-circle" style="margin-right: 5px; color: #333;"></i>
+      Select the learner grade whose report you wish to generate.
+    </div>
+  </div>
 
-<!-- Filter by Grade -->
-<div class="form-group">
-  <label for="filterMarksGrade"><strong>Filter by Grade</strong></label>
-  <select id="filterMarksGrade" 
-    style="width: 220px; background-color: #fff8c6; border: 1px solid #ccc; padding: 6px; border-radius: 4px;">
-    <option value="">-- Select Grade --</option>
-  </select>
-</div>
- <!-- Filter by Exam Period -->
-<div class="form-group">
-  <label for="marksExamPeriodSelect"><strong>Filter by Exam Period</strong></label>
-  <select id="marksExamPeriodSelect" 
-    style="width: 220px; background-color: #fff8c6; border: 1px solid #ccc; padding: 6px; border-radius: 4px;">
-    <option value="">-- Select Exam Period --</option>
-
-        <option value="">-- Select Exam Period --</option>
+  <!-- Exam Period Selection Section -->
+  <div style="margin-bottom: 16px;">
+    <label for="reportExamPeriodSelect" style="font-weight: bold; display: block; margin-bottom: 4px; color: white;">Select Exam Period:</label>
+    <select id="reportExamPeriodSelect" style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 100%; background-color: rgba(255, 255, 255, 0.7);">
+      <option value="">-- Select Exam Period --</option>
  <option value="2024, Term 1, Opener Exam">2024, Term 1, Opener Exam</option>
 <option value="2024, Term 1, Midterm Exam">2024, Term 1, Midterm Exam</option>
 <option value="2024, Term 1, End Term Exam">2024, Term 1, End Term Exam</option>
@@ -1453,469 +1722,177 @@ button[onclick^="show"] {
 <option value="2040, Term 3, End Term Exam">2040, Term 3, End Term Exam</option>
 
     </select>
+    <div style="font-size: 13px; color: #fff; margin-top: 4px;">
+      <i class="fas fa-info-circle" style="margin-right: 5px; color: #333;"></i>
+      Select the exam period for the report generation.
     </div>
+ 
 
-    <!-- Load Marks Button -->
-    <div class="form-group">
-      <label>&nbsp;</label> <!-- Empty label for alignment -->
- <button id="loadMarksByPeriodBtn" class="print-button" style="display: block; width: 180px;">
-    <i class="fas fa-download"></i> Load Marks
-  </button>
+  <!-- Subject Selection Section -->
+  <div style="margin-bottom: 16px;">
+    <label for="rankingSubjectSelect" style="font-weight: bold; display: block; margin-bottom: 4px; color: white;">Select Subject:</label>
+    <select id="rankingSubjectSelect" style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 100%; background-color: rgba(255, 255, 255, 0.7);">
+      <option value="">Select Subject</option>
+      <option value="eng">English</option>
+      <option value="math">Mathematics</option>
+      <option value="preTech">Pre-Technical Studies</option>
+      <option value="kiswahili">Kiswahili</option>
+      <option value="science">Integrated Science</option>
+      <option value="social">Social Studies</option>
+      <option value="agriculture">Agriculture</option>
+      <option value="cre">Religious Education</option>
+      <option value="creativeArt">Creative Art</option>
+    </select>
+    <div style="font-size: 13px; color: #fff; margin-top: 4px;">
+      <i class="fas fa-info-circle" style="margin-right: 5px; color: #333;"></i>
+      Select the subject you want to analyze performance for.
     </div>
-
-    <!-- Print Marks Button -->
-    <div class="form-group">
-      <label>&nbsp;</label> <!-- Empty label for alignment -->
- <button id="printFilteredMarksBtn" class="print-button" style="display: block; width: 180px;">
-    <i class="fas fa-print"></i> Print Merit List
-  </button>
-<div 
-  id="thankYouNote" 
-  style="
-    position: relative;
-    margin: 15px 0; 
-    padding: 14px 20px; 
-    background-color: #fdecea; 
-    border-left: 5px solid #d32f2f; 
-    color: #b71c1c; 
-    border-radius: 5px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  "
->
-  🙏 <strong>Thank you for using our system!</strong> We truly appreciate your trust and support.<br><br>
-  🌸 <em>Have a great day and see you next time!</em>
-
-  <span 
-    onclick="this.parentElement.style.display='none';" 
-    style="
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      cursor: pointer;
-      color: #b71c1c;
-      font-weight: bold;
-    "
-  >&times;</span>
-</div>
-
-    </div>
-
   </div>
-
-  <!-- Marks Table -->
-  <table class="marks-table" style="margin-top: 20px;">
-    <thead>
-      <tr>
-
-        <th>No.</th>
-        <th>Name</th>
-        <th>Grade</th>
-        <th>Eng</th><th>Lev</th>
-        <th>Math</th><th>Lev</th>
-        <th>Pre-Tech</th><th>Lev</th>
-        <th>Kiswa</th><th>Lev</th>
-        <th>Scie</th><th>Lev</th>
-        <th>Sst</th><th>Lev</th>
-        <th>Agric</th><th>Lev</th>
-        <th>Cre</th><th>Lev</th>
-        <th>C/A</th><th>Lev</th>
-        <th>Total Marks</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="marksList"></tbody>
-    <tfoot>
-      <tr id="totalsRow"></tr>
-      <tr id="averagesRow"></tr>
-    </tfoot>
-  </table>
-</div>
-
-<!-- Performance Reports Section -->
-<div id="performanceReportsSection" style="display: none;">
-
-  <h2 style="background-color: #ffff00; padding: 8px 16px; border-radius: 6px; display: inline-block;">
-    Exam Reports
-  </h2>
-
-  <!-- RASM Reminder FIRST -->
-  <div style="
-    background-color: #2ecc71;
-    color: #5a5300;
-    border: 1px solid #ffe58f;
-    padding: 12px 16px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-    font-size: 16px;
-  ">
-    <i class="fas fa-bullhorn" style="color: #000; font-size: 24px; margin-right: 10px;"></i>
-    <strong>RASM Reminder:</strong>&nbsp;Please select  grade,exam period and subject before generating any report ,Thankyou.
-  </div>
-<!-- Grade Selection -->
-<div style="margin-bottom: 16px;">
-  <label for="reportGradeSelect" style="font-weight: bold; display: block; margin-bottom: 4px;">Select Grade:</label>
-  <select id="reportGradeSelect" 
-    style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 20%; background-color: #fff8c6;">
-    <option value="">Select Grade</option>
-  </select>
-  <div style="font-size: 13px; color: #555; margin-top: 4px;">
-    <i class="fas fa-info-circle" style="margin-right: 5px; color: #333;"></i>
-    Select the learner grade whose report you wish to generate.
-<div style="margin-bottom: 16px;">
-  <label for="reportExamPeriodSelect" style="font-weight: bold; display: block; margin-bottom: 4px;">Select Exam Period:</label>
-  <select id="reportExamPeriodSelect" 
-    style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 20%; background-color: #fff8c6;">
-    <option value="">-- Select Exam Period --</option>
-    <option value="2024, Term 1, Opener Exam">2024, Term 1, Opener Exam</option>
-<option value="2024, Term 1, Midterm Exam">2024, Term 1, Midterm Exam</option>
-<option value="2024, Term 1, End Term Exam">2024, Term 1, End Term Exam</option>
-<option value="2024, Term 2, Opener Exam">2024, Term 2, Opener Exam</option>
-<option value="2024, Term 2, Midterm Exam">2024, Term 2, Midterm Exam</option>
-<option value="2024, Term 2, End Term Exam">2024, Term 2, End Term Exam</option>
-<option value="2024, Term 3, Opener Exam">2024, Term 3, Opener Exam</option>
-<option value="2024, Term 3, Midterm Exam">2024, Term 3, Midterm Exam</option>
-<option value="2024, Term 3, End Term Exam">2024, Term 3, End Term Exam</option>
-
-<option value="2025, Term 1, Opener Exam">2025, Term 1, Opener Exam</option>
-<option value="2025, Term 1, Midterm Exam">2025, Term 1, Midterm Exam</option>
-<option value="2025, Term 1, End Term Exam">2025, Term 1, End Term Exam</option>
-<option value="2025, Term 2, Opener Exam">2025, Term 2, Opener Exam</option>
-<option value="2025, Term 2, Midterm Exam">2025, Term 2, Midterm Exam</option>
-<option value="2025, Term 2, End Term Exam">2025, Term 2, End Term Exam</option>
-<option value="2025, Term 3, Opener Exam">2025, Term 3, Opener Exam</option>
-<option value="2025, Term 3, Midterm Exam">2025, Term 3, Midterm Exam</option>
-<option value="2025, Term 3, End Term Exam">2025, Term 3, End Term Exam</option>
-
-<option value="2026, Term 1, Opener Exam">2026, Term 1, Opener Exam</option>
-<option value="2026, Term 1, Midterm Exam">2026, Term 1, Midterm Exam</option>
-<option value="2026, Term 1, End Term Exam">2026, Term 1, End Term Exam</option>
-<option value="2026, Term 2, Opener Exam">2026, Term 2, Opener Exam</option>
-<option value="2026, Term 2, Midterm Exam">2026, Term 2, Midterm Exam</option>
-<option value="2026, Term 2, End Term Exam">2026, Term 2, End Term Exam</option>
-<option value="2026, Term 3, Opener Exam">2026, Term 3, Opener Exam</option>
-<option value="2026, Term 3, Midterm Exam">2026, Term 3, Midterm Exam</option>
-<option value="2026, Term 3, End Term Exam">2026, Term 3, End Term Exam</option>
-
-<option value="2027, Term 1, Opener Exam">2027, Term 1, Opener Exam</option>
-<option value="2027, Term 1, Midterm Exam">2027, Term 1, Midterm Exam</option>
-<option value="2027, Term 1, End Term Exam">2027, Term 1, End Term Exam</option>
-<option value="2027, Term 2, Opener Exam">2027, Term 2, Opener Exam</option>
-<option value="2027, Term 2, Midterm Exam">2027, Term 2, Midterm Exam</option>
-<option value="2027, Term 2, End Term Exam">2027, Term 2, End Term Exam</option>
-<option value="2027, Term 3, Opener Exam">2027, Term 3, Opener Exam</option>
-<option value="2027, Term 3, Midterm Exam">2027, Term 3, Midterm Exam</option>
-<option value="2027, Term 3, End Term Exam">2027, Term 3, End Term Exam</option>
-<!-- 2028 -->
-<option value="2028, Term 1, Opener Exam">2028, Term 1, Opener Exam</option>
-<option value="2028, Term 1, Midterm Exam">2028, Term 1, Midterm Exam</option>
-<option value="2028, Term 1, End Term Exam">2028, Term 1, End Term Exam</option>
-<option value="2028, Term 2, Opener Exam">2028, Term 2, Opener Exam</option>
-<option value="2028, Term 2, Midterm Exam">2028, Term 2, Midterm Exam</option>
-<option value="2028, Term 2, End Term Exam">2028, Term 2, End Term Exam</option>
-<option value="2028, Term 3, Opener Exam">2028, Term 3, Opener Exam</option>
-<option value="2028, Term 3, Midterm Exam">2028, Term 3, Midterm Exam</option>
-<option value="2028, Term 3, End Term Exam">2028, Term 3, End Term Exam</option>
-
-<!-- 2029 -->
-<option value="2029, Term 1, Opener Exam">2029, Term 1, Opener Exam</option>
-<option value="2029, Term 1, Midterm Exam">2029, Term 1, Midterm Exam</option>
-<option value="2029, Term 1, End Term Exam">2029, Term 1, End Term Exam</option>
-<option value="2029, Term 2, Opener Exam">2029, Term 2, Opener Exam</option>
-<option value="2029, Term 2, Midterm Exam">2029, Term 2, Midterm Exam</option>
-<option value="2029, Term 2, End Term Exam">2029, Term 2, End Term Exam</option>
-<option value="2029, Term 3, Opener Exam">2029, Term 3, Opener Exam</option>
-<option value="2029, Term 3, Midterm Exam">2029, Term 3, Midterm Exam</option>
-<option value="2029, Term 3, End Term Exam">2029, Term 3, End Term Exam</option>
-
-<!-- 2030 -->
-<option value="2030, Term 1, Opener Exam">2030, Term 1, Opener Exam</option>
-<option value="2030, Term 1, Midterm Exam">2030, Term 1, Midterm Exam</option>
-<option value="2030, Term 1, End Term Exam">2030, Term 1, End Term Exam</option>
-<option value="2030, Term 2, Opener Exam">2030, Term 2, Opener Exam</option>
-<option value="2030, Term 2, Midterm Exam">2030, Term 2, Midterm Exam</option>
-<option value="2030, Term 2, End Term Exam">2030, Term 2, End Term Exam</option>
-<option value="2030, Term 3, Opener Exam">2030, Term 3, Opener Exam</option>
-<option value="2030, Term 3, Midterm Exam">2030, Term 3, Midterm Exam</option>
-<option value="2030, Term 3, End Term Exam">2030, Term 3, End Term Exam</option>
-
-<!-- 2031 -->
-<option value="2031, Term 1, Opener Exam">2031, Term 1, Opener Exam</option>
-<option value="2031, Term 1, Midterm Exam">2031, Term 1, Midterm Exam</option>
-<option value="2031, Term 1, End Term Exam">2031, Term 1, End Term Exam</option>
-<option value="2031, Term 2, Opener Exam">2031, Term 2, Opener Exam</option>
-<option value="2031, Term 2, Midterm Exam">2031, Term 2, Midterm Exam</option>
-<option value="2031, Term 2, End Term Exam">2031, Term 2, End Term Exam</option>
-<option value="2031, Term 3, Opener Exam">2031, Term 3, Opener Exam</option>
-<option value="2031, Term 3, Midterm Exam">2031, Term 3, Midterm Exam</option>
-<option value="2031, Term 3, End Term Exam">2031, Term 3, End Term Exam</option>
-
-<!-- 2032 -->
-<option value="2032, Term 1, Opener Exam">2032, Term 1, Opener Exam</option>
-<option value="2032, Term 1, Midterm Exam">2032, Term 1, Midterm Exam</option>
-<option value="2032, Term 1, End Term Exam">2032, Term 1, End Term Exam</option>
-<option value="2032, Term 2, Opener Exam">2032, Term 2, Opener Exam</option>
-<option value="2032, Term 2, Midterm Exam">2032, Term 2, Midterm Exam</option>
-<option value="2032, Term 2, End Term Exam">2032, Term 2, End Term Exam</option>
-<option value="2032, Term 3, Opener Exam">2032, Term 3, Opener Exam</option>
-<option value="2032, Term 3, Midterm Exam">2032, Term 3, Midterm Exam</option>
-<option value="2032, Term 3, End Term Exam">2032, Term 3, End Term Exam</option>
-<!-- 2033 -->
-<option value="2033, Term 1, Opener Exam">2033, Term 1, Opener Exam</option>
-<option value="2033, Term 1, Midterm Exam">2033, Term 1, Midterm Exam</option>
-<option value="2033, Term 1, End Term Exam">2033, Term 1, End Term Exam</option>
-<option value="2033, Term 2, Opener Exam">2033, Term 2, Opener Exam</option>
-<option value="2033, Term 2, Midterm Exam">2033, Term 2, Midterm Exam</option>
-<option value="2033, Term 2, End Term Exam">2033, Term 2, End Term Exam</option>
-<option value="2033, Term 3, Opener Exam">2033, Term 3, Opener Exam</option>
-<option value="2033, Term 3, Midterm Exam">2033, Term 3, Midterm Exam</option>
-<option value="2033, Term 3, End Term Exam">2033, Term 3, End Term Exam</option>
-
-<!-- 2034 -->
-<option value="2034, Term 1, Opener Exam">2034, Term 1, Opener Exam</option>
-<option value="2034, Term 1, Midterm Exam">2034, Term 1, Midterm Exam</option>
-<option value="2034, Term 1, End Term Exam">2034, Term 1, End Term Exam</option>
-<option value="2034, Term 2, Opener Exam">2034, Term 2, Opener Exam</option>
-<option value="2034, Term 2, Midterm Exam">2034, Term 2, Midterm Exam</option>
-<option value="2034, Term 2, End Term Exam">2034, Term 2, End Term Exam</option>
-<option value="2034, Term 3, Opener Exam">2034, Term 3, Opener Exam</option>
-<option value="2034, Term 3, Midterm Exam">2034, Term 3, Midterm Exam</option>
-<option value="2034, Term 3, End Term Exam">2034, Term 3, End Term Exam</option>
-
-<!-- 2035 -->
-<option value="2035, Term 1, Opener Exam">2035, Term 1, Opener Exam</option>
-<option value="2035, Term 1, Midterm Exam">2035, Term 1, Midterm Exam</option>
-<option value="2035, Term 1, End Term Exam">2035, Term 1, End Term Exam</option>
-<option value="2035, Term 2, Opener Exam">2035, Term 2, Opener Exam</option>
-<option value="2035, Term 2, Midterm Exam">2035, Term 2, Midterm Exam</option>
-<option value="2035, Term 2, End Term Exam">2035, Term 2, End Term Exam</option>
-<option value="2035, Term 3, Opener Exam">2035, Term 3, Opener Exam</option>
-<option value="2035, Term 3, Midterm Exam">2035, Term 3, Midterm Exam</option>
-<option value="2035, Term 3, End Term Exam">2035, Term 3, End Term Exam</option>
-
-<!-- 2036 -->
-<option value="2036, Term 1, Opener Exam">2036, Term 1, Opener Exam</option>
-<option value="2036, Term 1, Midterm Exam">2036, Term 1, Midterm Exam</option>
-<option value="2036, Term 1, End Term Exam">2036, Term 1, End Term Exam</option>
-<option value="2036, Term 2, Opener Exam">2036, Term 2, Opener Exam</option>
-<option value="2036, Term 2, Midterm Exam">2036, Term 2, Midterm Exam</option>
-<option value="2036, Term 2, End Term Exam">2036, Term 2, End Term Exam</option>
-<option value="2036, Term 3, Opener Exam">2036, Term 3, Opener Exam</option>
-<option value="2036, Term 3, Midterm Exam">2036, Term 3, Midterm Exam</option>
-<option value="2036, Term 3, End Term Exam">2036, Term 3, End Term Exam</option>
-
-<!-- 2037 -->
-<option value="2037, Term 1, Opener Exam">2037, Term 1, Opener Exam</option>
-<option value="2037, Term 1, Midterm Exam">2037, Term 1, Midterm Exam</option>
-<option value="2037, Term 1, End Term Exam">2037, Term 1, End Term Exam</option>
-<option value="2037, Term 2, Opener Exam">2037, Term 2, Opener Exam</option>
-<option value="2037, Term 2, Midterm Exam">2037, Term 2, Midterm Exam</option>
-<option value="2037, Term 2, End Term Exam">2037, Term 2, End Term Exam</option>
-<option value="2037, Term 3, Opener Exam">2037, Term 3, Opener Exam</option>
-<option value="2037, Term 3, Midterm Exam">2037, Term 3, Midterm Exam</option>
-<option value="2037, Term 3, End Term Exam">2037, Term 3, End Term Exam</option>
-
-<option value="2038, Term 1, Opener Exam">2038, Term 1, Opener Exam</option>
-<option value="2038, Term 1, Midterm Exam">2038, Term 1, Midterm Exam</option>
-<option value="2038, Term 1, End Term Exam">2038, Term 1, End Term Exam</option>
-<option value="2038, Term 2, Opener Exam">2038, Term 2, Opener Exam</option>
-<option value="2038, Term 2, Midterm Exam">2038, Term 2, Midterm Exam</option>
-<option value="2038, Term 2, End Term Exam">2038, Term 2, End Term Exam</option>
-<option value="2038, Term 3, Opener Exam">2038, Term 3, Opener Exam</option>
-<option value="2038, Term 3, Midterm Exam">2038, Term 3, Midterm Exam</option>
-<option value="2038, Term 3, End Term Exam">2038, Term 3, End Term Exam</option>
-
-
-<option value="2039, Term 1, Opener Exam">2039, Term 1, Opener Exam</option>
-<option value="2039, Term 1, Midterm Exam">2039, Term 1, Midterm Exam</option>
-<option value="2039, Term 1, End Term Exam">2039, Term 1, End Term Exam</option>
-<option value="2039, Term 2, Opener Exam">2039, Term 2, Opener Exam</option>
-<option value="2039, Term 2, Midterm Exam">2039, Term 2, Midterm Exam</option>
-<option value="2039, Term 2, End Term Exam">2039, Term 2, End Term Exam</option>
-<option value="2039, Term 3, Opener Exam">2039, Term 3, Opener Exam</option>
-<option value="2039, Term 3, Midterm Exam">2039, Term 3, Midterm Exam</option>
-<option value="2039, Term 3, End Term Exam">2039, Term 3, End Term Exam</option>
-
-<option value="2040, Term 1, Opener Exam">2040, Term 1, Opener Exam</option>
-<option value="2040, Term 1, Midterm Exam">2040, Term 1, Midterm Exam</option>
-<option value="2040, Term 1, End Term Exam">2040, Term 1, End Term Exam</option>
-<option value="2040, Term 2, Opener Exam">2040, Term 2, Opener Exam</option>
-<option value="2040, Term 2, Midterm Exam">2040, Term 2, Midterm Exam</option>
-<option value="2040, Term 2, End Term Exam">2040, Term 2, End Term Exam</option>
-<option value="2040, Term 3, Opener Exam">2040, Term 3, Opener Exam</option>
-<option value="2040, Term 3, Midterm Exam">2040, Term 3, Midterm Exam</option>
-<option value="2040, Term 3, End Term Exam">2040, Term 3, End Term Exam</option>
-
-  </select>
-
-
-  </div>
-</div>
-
-<!-- Subject Selection -->
-<div style="margin-bottom: 16px;">
-  <label for="rankingSubjectSelect" style="font-weight: bold; display: block; margin-bottom: 4px;">Select Subject:</label>
-  <select id="rankingSubjectSelect" 
-    style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 20%; background-color: #fff8c6;">
-    <option value="">Select Subject</option>
-    <option value="eng">English</option>
-    <option value="math">Mathematics</option>
-    <option value="preTech">Pre-Technical Studies</option>
-    <option value="kiswahili">Kiswahili</option>
-    <option value="science">Integrated Science</option>
-    <option value="social">Social Studies</option>
-    <option value="agriculture">Agriculture</option>
-    <option value="cre">Religious Education</option>
-    <option value="creativeArt">Creative Art</option>
-  </select>
-  <div style="font-size: 13px; color: #555; margin-top: 4px;">
-    <i class="fas fa-info-circle" style="margin-right: 5px; color: #333;"></i>
-    Select the subject you want to analyze performance for.
-  </div>
-<div class="form-group" style="margin-top: 20px;">
-  <label for="meritGradeSelect"><strong>Select Grade for Blank Merit List:</strong></label>
-  <select id="meritGradeSelect" style="padding: 6px; border-radius: 4px; width: 250px;">
+<!-- Merit Grade Selection Section -->
+<div class="form-group" style="margin-top: 20px; background-color: #fff8c6; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 20px auto;">
+  
+  <label for="meritGradeSelect" style="font-weight: bold; display: block; margin-bottom: 4px;">Select Grade for Blank Merit List:</label>
+  
+  <select id="meritGradeSelect" 
+    style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 50%; background-color: #fff8c6;">
     <option value="">Loading grades...</option>
   </select>
-
-
-   <div style="
-  background-color:#fff8c6;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 320px;
-  margin: 0;
-">
-
-<button class="report-button red" id="subjectChampionsBtn" style="width: 60%;">
-  <i class="fas fa-trophy"></i> Subjects Champions
-</button>
-
-<button class="report-button blue" id="subjectPerformanceBtn" style="width: 60%;">
-  <i class="fas fa-chart-line"></i> Subject Performance
-</button>
-
-<button class="report-button green" id="genderPerformanceBtn" style="width: 60%;">
-  <i class="fas fa-venus-mars"></i> Gender Performance
-</button>
-
-<button class="report-button purple" id="levelSummaryBtn" style="width: 65%;">
-  <i class="fas fa-layer-group"></i> Subject Level Summary
-</button>
-
-<button class="report-button orange" id="combineMarksByGradeBtn" style="width: 70%;">
-  <i class="fas fa-object-group"></i> Combine Marks Per Grade
-</button>
-
-<button class="report-button teal" id="groupByPathwaysBtn" style="width: 80%;">
-  <i class="fas fa-project-diagram"></i> Group Learners Per Pathways
-</button>
-
-<button class="report-button green" id="generateAssessmentReportsBtn" style="width: 80%;">
-  <i class="fas fa-file-alt"></i> Generate  Assessment Reports
-</button>
-
-<button class="report-button gray" id="subjectRankingReportBtn" style="width: 80%;">
-  <i class="fas fa-list-ol"></i> Track Learner Progress
-</button>
-
-<button class="report-button gray" id="generateBlankMeritBtn" style="width: 68%;">
-  <i class="fas fa-file-alt"></i> Generate Blank Merit Lists
-</button>
-<button onclick="countMarksStatusPerGrade()">Generate Marks Summary</button>
-
-<button class="print-button" id="generateSubjectRankBtn" style="width: 65%;">
-  <i class="fas fa-list-ol"></i> Generate Subject Tracker Analysis 
-</button>
-
-<button id="printAssessmentReportBtn" class="print-button" style="width: 65%;">
-  <i class="fas fa-print"></i> Print Assessment Report
-</button>
-<button onclick="countMarksStatusPerGrade()" class="print-button">
-  <i class="fas fa-eye"></i> View Summary by Grade & Period
-</button>
-
-<button id="showMarksStatusBtn" style="
-  padding: 10px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 65%;
-">
-  <i id="toggleIcon" class="fas fa-eye" style="color: white;"></i>
-  Show Marks Recording Status Per Grade
-</button>
-
-
-    </div>
-
+  
+  <div style="font-size: 13px; color: #555; margin-top: 4px;">
+    <i class="fas fa-info-circle" style="margin-right: 5px; color: #333;"></i>
+    Select the grade for which you want to generate the blank merit list.
   </div>
+
 </div>
 
+<!-- Button Container with Two Boxes -->
+<div class="button-container" style="display: flex; gap: 20px; flex-wrap: wrap;">
+
+  <!-- First Box with Background Image and Equal Height -->
+  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
+    
+    <button class="report-button red" id="subjectChampionsBtn" style="width: 65%; margin-bottom: 12px;">
+      <i class="fas fa-trophy"></i> Subjects Champions
+    </button>
+
+    <button class="report-button blue" id="subjectPerformanceBtn" style="width: 65%; margin-bottom: 12px;">
+      <i class="fas fa-chart-line"></i> Subject Performance
+    </button>
+
+    <button class="report-button green" id="genderPerformanceBtn" style="width: 65%; margin-bottom: 12px;">
+      <i class="fas fa-venus-mars"></i> Gender Performance
+    </button>
+
+    <button class="report-button purple" id="levelSummaryBtn" style="width:65%; margin-bottom: 12px;">
+      <i class="fas fa-layer-group"></i> Subject Level Summary
+    </button>
+
+    <button class="report-button orange" id="combineMarksByGradeBtn" style="width: 65%; margin-bottom: 12px;">
+      <i class="fas fa-object-group"></i> Combine Marks Per Grade
+    </button>
+
+    <button class="report-button teal" id="groupByPathwaysBtn" style="width: 68%; margin-bottom: 12px;">
+      <i class="fas fa-project-diagram"></i> Group Learners Per Pathways
+    </button>
+
+    <button class="report-button green" id="generateAssessmentReportsBtn" style="width: 68%; margin-bottom: 12px;">
+      <i class="fas fa-file-alt"></i> Generate Assessment Reports
+    </button>
+
+  </div>
+
+  <!-- Second Box with Background Image and Equal Height -->
+  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
+    
+    <button class="report-button gray" id="subjectRankingReportBtn" style="width: 65%; margin-bottom: 12px;">
+      <i class="fas fa-list-ol"></i> Track Learner Progress
+    </button>
+
+    <button class="report-button gray" id="generateBlankMeritBtn" style="width: 65%; margin-bottom: 12px;">
+      <i class="fas fa-file-alt"></i> Generate Blank Merit Lists
+    </button>
+
+   <button onclick="countMarksStatusPerGrade()" style="width: 65%; padding: 10px 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+  <i class="fas fa-file-alt" style="font-size: 16px;"></i> Generate Marks Summary
+</button>
+
+    <button class="print-button" id="generateSubjectRankBtn" style="width: 70%; margin-bottom: 12px;">
+      <i class="fas fa-list-ol"></i> Generate Subject Tracker Analysis
+    </button>
+
+    <button id="printAssessmentReportBtn" class="print-button" style="width: 65%; margin-bottom: 12px;">
+      <i class="fas fa-print"></i> Print Assessment Report
+    </button>
+
+    <button onclick="countMarksStatusPerGrade()" class="print-button" style="width: 80%; margin-bottom: 12px;">
+      <i class="fas fa-eye"></i> View Summary by Grade & Period
+    </button>
+
+    <button id="showMarksStatusBtn" style="padding: 10px 16px; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; width: 95%; margin-bottom: 12px;">
+      <i id="toggleIcon" class="fas fa-eye" style="color: white;"></i>
+      Show Marks Recording Status Per Grade
+    </button>
 
 
+  </div>
+  </div>
 <!-- Output Containers -->
 <div id="reportOutput"></div>
 <div id="assessmentReportsContainer" style="margin-top: 30px;"></div>
 
 <!-- Teacher Modal -->
 <div id="teacherModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeTeacherModal()">&times;</span>
-    <h3 class="modal-title">Enter Term and Subject Teacher Details</h3>
+  <div class="modal-content" style="background-image: url('https://i.imgur.com/WKwJ73A.jpeg'); background-size: cover; background-position: center; border-radius: 10px; padding: 20px; color: #fff;">
+    <span class="close-btn" onclick="closeTeacherModal()" style="color: #fff; font-size: 1.5rem; cursor: pointer; font-weight: bold;">&times;</span>
+    
+    <h3 class="modal-title" style="font-size: 24px; font-weight: 600; margin-bottom: 20px;">
+      Enter Term and Subject Teacher Details
+    </h3>
 
-    <form id="teacherForm">
+    <form id="teacherForm" style="display: flex; flex-direction: column; gap: 15px;">
       <!-- Dynamic Inputs -->
-      <div id="teacherInputs" class="dynamic-inputs"></div>
+      <div id="teacherInputs" class="dynamic-inputs" style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Dynamic fields will be injected here -->
+      </div>
 
       <!-- Static Fields -->
-      <div class="form-section">
+      <div class="form-section" style="display: flex; flex-direction: column; gap: 15px; background-color: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 10px;">
         <div class="form-group">
-          <label for="year">Year</label>
-          <input type="number" id="year" required>
+          <label for="year" style="font-size: 1rem; font-weight: 500;">Year</label>
+          <input type="number" id="year" required style="padding: 10px; border-radius: 6px; border: none; font-size: 1rem;">
         </div>
         <div class="form-group">
-          <label for="term">Term</label>
-          <input type="text" id="term" required>
+          <label for="term" style="font-size: 1rem; font-weight: 500;">Term</label>
+          <input type="text" id="term" required style="padding: 10px; border-radius: 6px; border: none; font-size: 1rem;">
         </div>
         <div class="form-group">
-          <label for="closingDate">Closing Date</label>
-          <input type="date" id="closingDate" required>
+          <label for="closingDate" style="font-size: 1rem; font-weight: 500;">Closing Date</label>
+          <input type="date" id="closingDate" required style="padding: 10px; border-radius: 6px; border: none; font-size: 1rem;">
         </div>
         <div class="form-group">
-          <label for="openingDate">Opening Date</label>
-          <input type="date" id="openingDate" required>
+          <label for="openingDate" style="font-size: 1rem; font-weight: 500;">Opening Date</label>
+          <input type="date" id="openingDate" required style="padding: 10px; border-radius: 6px; border: none; font-size: 1rem;">
         </div>
         <div class="form-group">
-          <label for="classTeacherSignature">Class Teacher Signature</label>
-          <input type="text" id="classTeacherSignature" placeholder="Type your name or signature" required>
+          <label for="classTeacherSignature" style="font-size: 1rem; font-weight: 500;">Class Teacher Signature</label>
+          <input type="text" id="classTeacherSignature" placeholder="Type your name or signature" required style="padding: 10px; border-radius: 6px; border: none; font-size: 1rem;">
         </div>
         <div class="form-group">
-          <label for="principalSignature">Principal Signature</label>
-          <input type="text" id="principalSignature" placeholder="Type your name or signature" required>
+          <label for="principalSignature" style="font-size: 1rem; font-weight: 500;">Principal Signature</label>
+          <input type="text" id="principalSignature" placeholder="Type your name or signature" required style="padding: 10px; border-radius: 6px; border: none; font-size: 1rem;">
         </div>
       </div>
 
       <!-- Submit Button -->
-      <div class="form-actions">
-        <button type="submit" class="print-button">
+      <div class="form-actions" style="display: flex; justify-content: flex-end; margin-top: 20px;">
+        <button type="submit" class="print-button" style="padding: 12px 25px; background-color: #f39c12; color: #fff; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background-color 0.3s;">
           <i class="fas fa-arrow-right"></i> Continue to Reports
         </button>
       </div>
     </form>
   </div>
 </div>
+
 <div id="marksStatusSummary" style="margin-top: 20px; padding: 10px; background: #eef; border-radius: 6px;"></div>
 
 <div id="customPrompt" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
@@ -2030,7 +2007,7 @@ const scrollContainer = document.getElementById('tableScrollContainer');
 
 let allLearners = [];
 let currentIndex = 0;
-const pageSize = 250;
+const pageSize = 1;
 let countdownInterval;
 let seconds = 0;
 
@@ -7170,7 +7147,23 @@ document.getElementById('searchMarksInput').addEventListener('input', function (
   });
 });
 
+function displayLearnersCount() {
+    const learnersRef = ref(db, 'learners'); // Adjust the path if needed
+    get(learnersRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            const learners = snapshot.val();
+            const totalLearners = Object.keys(learners).length; // Get the number of learners
+            document.getElementById('totalLearners').textContent = totalLearners;
+        } else {
+            document.getElementById('totalLearners').textContent = "No learners found.";
+        }
+    }).catch((error) => {
+        console.error("Error fetching learners count: ", error);
+    });
+}
 
+// Call the function to display the learners count
+displayLearnersCount();
 
 
 

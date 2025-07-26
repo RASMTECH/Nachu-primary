@@ -1488,6 +1488,7 @@ button[onclick^="show"] {
         <th>Cre</th><th>Lev</th>
         <th>C/A</th><th>Lev</th>
         <th>Total Marks</th>
+         <th>Points</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -2007,7 +2008,7 @@ const scrollContainer = document.getElementById('tableScrollContainer');
 
 let allLearners = [];
 let currentIndex = 0;
-const pageSize = 1;
+const pageSize = 250;
 let countdownInterval;
 let seconds = 0;
 
@@ -2648,6 +2649,19 @@ const marksTableBody = document.getElementById("marksList");
 const filterMarksGrade = document.getElementById("filterMarksGrade");
 const marksExamPeriodSelect = document.getElementById("marksExamPeriodSelect");
 
+function calculateTotalLevel(marks) {
+  return (
+    parseInt(getLevel(marks.eng)) +
+    parseInt(getLevel(marks.math)) +
+    parseInt(getLevel(marks.preTech)) +
+    parseInt(getLevel(marks.kiswahili)) +
+    parseInt(getLevel(marks.science)) +
+    parseInt(getLevel(marks.social)) +
+    parseInt(getLevel(marks.agriculture)) +
+    parseInt(getLevel(marks.cre)) +
+    parseInt(getLevel(marks.creativeArt))
+  );
+}
 function loadMarksFromFirebase() {
   const examPeriod = marksExamPeriodSelect.value;
   const selectedGrade = filterMarksGrade.value;
@@ -2666,9 +2680,10 @@ function loadMarksFromFirebase() {
     return;
   }
 
-  // Show spinner
   if (spinner) spinner.style.display = "block";
   marksTableBody.innerHTML = "";
+
+  let noMarksFound = true; // Flag to check if no marks are found
 
   onValue(learnersRef, (snapshot) => {
     marksTableBody.innerHTML = "";
@@ -2677,7 +2692,7 @@ function loadMarksFromFirebase() {
     let sums = {
       eng: 0, math: 0, preTech: 0, kiswahili: 0,
       science: 0, social: 0, agriculture: 0,
-      cre: 0, creativeArt: 0, totalMarks: 0
+      cre: 0, creativeArt: 0, totalMarks: 0, totalLevel: 0
     };
 
     const learnersArray = [];
@@ -2687,11 +2702,11 @@ function loadMarksFromFirebase() {
       const marksData = data.marks || {};
       const marks = marksData[examPeriod] || null;
 
-      if (data.grade) {
-        grades.add(data.grade);
-      }
+      if (data.grade) grades.add(data.grade);
 
       if (marks && data.grade === selectedGrade) {
+        noMarksFound = false; // Marks found, set the flag to false
+
         const rowTotal =
           (parseFloat(marks.eng) || 0) +
           (parseFloat(marks.math) || 0) +
@@ -2716,6 +2731,7 @@ function loadMarksFromFirebase() {
 
     learnersArray.forEach((learner, index) => {
       const { data, marks, rowTotal } = learner;
+      const rowLevelTotal = calculateTotalLevel(marks);
 
       sums.eng += (parseFloat(marks.eng) || 0);
       sums.math += (parseFloat(marks.math) || 0);
@@ -2727,6 +2743,7 @@ function loadMarksFromFirebase() {
       sums.cre += (parseFloat(marks.cre) || 0);
       sums.creativeArt += (parseFloat(marks.creativeArt) || 0);
       sums.totalMarks += rowTotal;
+      sums.totalLevel += rowLevelTotal;
 
       const row = document.createElement("tr");
       row.setAttribute("data-grade", data.grade);
@@ -2747,6 +2764,7 @@ function loadMarksFromFirebase() {
         <td data-editable="true">${marks.cre || ''}</td><td>${marks.creLev || ''}</td>
         <td data-editable="true">${marks.creativeArt || ''}</td><td>${marks.creativeArtLev || ''}</td>
         <td><strong>${rowTotal}</strong></td>
+        <td><strong>${rowLevelTotal}</strong></td>
         <td>
           <button class="deleteMarksBtn" data-key="${learner.key}" data-exam="${examPeriod}">
             <i class="fas fa-trash-alt"></i> Delete Marks
@@ -2762,25 +2780,29 @@ function loadMarksFromFirebase() {
     populateGradeSelectors(grades);
     updateTotalsAndAverages(sums, learnersArray.length);
 
-    // Hide spinner when done
+    // Check if no marks found
+    if (noMarksFound) {
+      Swal.fire({
+        icon: 'info',
+        title: 'No Marks Found',
+        text: `No marks found for ${selectedGrade} in ${examPeriod}. Please ensure that marks have been recorded.`,
+        confirmButtonColor: '#d33'
+      });
+    }
+
     if (spinner) spinner.style.display = "none";
   });
 }
 
 
-
-
-
-// Attach to button click
 document.getElementById("loadMarksByPeriodBtn").addEventListener("click", loadMarksFromFirebase);
+
 function loadAllGrades() {
   const grades = new Set();
   onValue(learnersRef, (snapshot) => {
     snapshot.forEach(childSnapshot => {
       const data = childSnapshot.val();
-      if (data.grade) {
-        grades.add(data.grade);
-      }
+      if (data.grade) grades.add(data.grade);
     });
     populateGradeSelectors(grades);
   });
@@ -2788,104 +2810,124 @@ function loadAllGrades() {
 
 window.addEventListener("DOMContentLoaded", loadAllGrades);
 
-
-// ? Helper function   populate all grade dropdown selectors at once
 function populateGradeSelectors(grades) {
-    const selectors = [
-        document.getElementById("filterMarksGrade"),
-        document.getElementById("reportGradeSelect")
-    ];
-    selectors.forEach(select => {
-        if (select) {
-            select.innerHTML = `<option value="">Select Grade</option>`;
-            grades.forEach(grade => {
-                const option = document.createElement("option");
-                option.value = grade;
-                option.textContent = grade;
-                select.appendChild(option);
-            });
-        }
-    });
+  const selectors = [
+    document.getElementById("filterMarksGrade"),
+    document.getElementById("reportGradeSelect")
+  ];
+  selectors.forEach(select => {
+    if (select) {
+      select.innerHTML = `<option value="">Select Grade</option>`;
+      grades.forEach(grade => {
+        const option = document.createElement("option");
+        option.value = grade;
+        option.textContent = grade;
+        select.appendChild(option);
+      });
+    }
+  });
 }
 
-// Reusable function to display totals & averages
+// Get the level based on the score
+function getLevel(score) {
+  if (score >= 90) return 8;
+  if (score >= 75) return 7;
+  if (score >= 58) return 6;
+  if (score >= 41) return 5;
+  if (score >= 31) return 4;
+  if (score >= 21) return 3;
+  if (score >= 11) return 2;
+  return 1;
+}
+
+// Update totals and averages for the filtered data
 function updateTotalsAndAverages(sums, count) {
-    const divisor = count > 0 ? count : 1;
+  const divisor = count > 0 ? count : 1;
 
-    document.getElementById("totalsRow").innerHTML = `
-        <td colspan="3"><strong>Totals</strong></td>
-        <td>${sums.eng}</td><td></td>
-        <td>${sums.math}</td><td></td>
-        <td>${sums.preTech}</td><td></td>
-        <td>${sums.kiswahili}</td><td></td>
-        <td>${sums.science}</td><td></td>
-        <td>${sums.social}</td><td></td>
-        <td>${sums.agriculture}</td><td></td>
-        <td>${sums.cre}</td><td></td>
-        <td>${sums.creativeArt}</td><td></td>
-        <td><strong>${sums.totalMarks}</strong></td>
-    `;
+  // Update totals row including total levels
+  document.getElementById("totalsRow").innerHTML = `
+    <td colspan="3"><strong>Totals</strong></td>
+    <td>${sums.eng}</td><td></td>
+    <td>${sums.math}</td><td></td>
+    <td>${sums.preTech}</td><td></td>
+    <td>${sums.kiswahili}</td><td></td>
+    <td>${sums.science}</td><td></td>
+    <td>${sums.social}</td><td></td>
+    <td>${sums.agriculture}</td><td></td>
+    <td>${sums.cre}</td><td></td>
+    <td>${sums.creativeArt}</td><td></td>
+    <td><strong>${sums.totalMarks}</strong></td>
+    <td><strong>${sums.totalLevel}</strong></td> <!-- Add totalLevel here -->
+    <td></td>
+  `;
 
-    document.getElementById("averagesRow").innerHTML = `
-        <td colspan="3"><strong>Averages</strong></td>
-        <td>${(sums.eng / divisor).toFixed(2)}</td><td></td>
-        <td>${(sums.math / divisor).toFixed(2)}</td><td></td>
-        <td>${(sums.preTech / divisor).toFixed(2)}</td><td></td>
-        <td>${(sums.kiswahili / divisor).toFixed(2)}</td><td></td>
-        <td>${(sums.science / divisor).toFixed(2)}</td><td></td>
-        <td>${(sums.social / divisor).toFixed(2)}</td><td></td>
-        <td>${(sums.agriculture / divisor).toFixed(2)}</td><td></td>
-        <td>${(sums.cre / divisor).toFixed(2)}</td><td></td>
-        <td>${(sums.creativeArt / divisor).toFixed(2)}</td><td></td>
-        <td><strong>${(sums.totalMarks / divisor).toFixed(2)}</strong></td>
-    `;
+  // Update averages row including average of levels
+  document.getElementById("averagesRow").innerHTML = `
+    <td colspan="3"><strong>Averages</strong></td>
+    <td>${(sums.eng / divisor).toFixed(2)}</td><td></td>
+    <td>${(sums.math / divisor).toFixed(2)}</td><td></td>
+    <td>${(sums.preTech / divisor).toFixed(2)}</td><td></td>
+    <td>${(sums.kiswahili / divisor).toFixed(2)}</td><td></td>
+    <td>${(sums.science / divisor).toFixed(2)}</td><td></td>
+    <td>${(sums.social / divisor).toFixed(2)}</td><td></td>
+    <td>${(sums.agriculture / divisor).toFixed(2)}</td><td></td>
+    <td>${(sums.cre / divisor).toFixed(2)}</td><td></td>
+    <td>${(sums.creativeArt / divisor).toFixed(2)}</td><td></td>
+    <td><strong>${(sums.totalMarks / divisor).toFixed(2)}</strong></td>
+    <td><strong>${(sums.totalLevel / divisor).toFixed(2)}</strong></td> <!-- Add average level here -->
+    <td></td>
+  `;
 }
 
-// Grade filter listener   recalculate on selection
+// Grade filter listener to recalculate on selection
 filterMarksGrade.addEventListener("change", () => {
-    const selectedGrade = filterMarksGrade.value;
-    const rows = marksTableBody.querySelectorAll("tr");
+  const selectedGrade = filterMarksGrade.value;
+  const rows = marksTableBody.querySelectorAll("tr");
 
-    let sums = {
-        eng: 0, math: 0, preTech: 0, kiswahili: 0,
-        science: 0, social: 0, agriculture: 0, cre: 0, creativeArt: 0, totalMarks: 0
-    };
-    let filteredCount = 0;
+  let sums = {
+    eng: 0, math: 0, preTech: 0, kiswahili: 0,
+    science: 0, social: 0, agriculture: 0, cre: 0, creativeArt: 0, totalMarks: 0, totalLevel: 0
+  };
+  let filteredCount = 0;
 
-    rows.forEach(row => {
-        const rowGrade = row.getAttribute("data-grade");
-        const visible = selectedGrade === "" || rowGrade === selectedGrade;
-        row.style.display = visible ? "" : "none";
+  rows.forEach(row => {
+    const rowGrade = row.getAttribute("data-grade");
+    const visible = selectedGrade === "" || rowGrade === selectedGrade;
+    row.style.display = visible ? "" : "none";
 
-        if (visible) {
-            const cells = row.querySelectorAll("td");
-            sums.eng += parseFloat(cells[3].textContent) || 0;
-            sums.math += parseFloat(cells[5].textContent) || 0;
-            sums.preTech += parseFloat(cells[7].textContent) || 0;
-            sums.kiswahili += parseFloat(cells[9].textContent) || 0;
-            sums.science += parseFloat(cells[11].textContent) || 0;
-            sums.social += parseFloat(cells[13].textContent) || 0;
-            sums.agriculture += parseFloat(cells[15].textContent) || 0;
-            sums.cre += parseFloat(cells[17].textContent) || 0;
-            sums.creativeArt += parseFloat(cells[19].textContent) || 0;
-            sums.totalMarks += parseFloat(cells[21].textContent) || 0;
-            filteredCount++;
-        }
-    });
+    if (visible) {
+      const cells = row.querySelectorAll("td");
+      sums.eng += parseFloat(cells[3].textContent) || 0;
+      sums.math += parseFloat(cells[5].textContent) || 0;
+      sums.preTech += parseFloat(cells[7].textContent) || 0;
+      sums.kiswahili += parseFloat(cells[9].textContent) || 0;
+      sums.science += parseFloat(cells[11].textContent) || 0;
+      sums.social += parseFloat(cells[13].textContent) || 0;
+      sums.agriculture += parseFloat(cells[15].textContent) || 0;
+      sums.cre += parseFloat(cells[17].textContent) || 0;
+      sums.creativeArt += parseFloat(cells[19].textContent) || 0;
+      sums.totalMarks += parseFloat(cells[21].textContent) || 0;
 
-    updateTotalsAndAverages(sums, filteredCount);
+      // Calculate levels for each subject and accumulate them
+      sums.totalLevel += getLevel(parseFloat(cells[3].textContent) || 0); // English level
+      sums.totalLevel += getLevel(parseFloat(cells[5].textContent) || 0); // Math level
+      sums.totalLevel += getLevel(parseFloat(cells[7].textContent) || 0); // PreTech level
+      sums.totalLevel += getLevel(parseFloat(cells[9].textContent) || 0); // Kiswahili level
+      sums.totalLevel += getLevel(parseFloat(cells[11].textContent) || 0); // Science level
+      sums.totalLevel += getLevel(parseFloat(cells[13].textContent) || 0); // Social level
+      sums.totalLevel += getLevel(parseFloat(cells[15].textContent) || 0); // Agriculture level
+      sums.totalLevel += getLevel(parseFloat(cells[17].textContent) || 0); // CRE level
+      sums.totalLevel += getLevel(parseFloat(cells[19].textContent) || 0); // CreativeArt level
+
+      filteredCount++;
+    }
+  });
+
+  // Update totals and averages with the filtered data
+  updateTotalsAndAverages(sums, filteredCount);
 });
 
-function getLevel(score) {
-    if (score >= 90) return "8";
-    if (score >= 75) return "7";
-    if (score >= 58) return "6";
-    if (score >= 41) return "5";
-    if (score >= 31) return "4";
-    if (score >= 21) return "3";
-    if (score >= 11) return "2";
-    return "1";
-}
+
 
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("deleteMarksBtn")) {
@@ -4007,6 +4049,20 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
     return "1";
   }
 
+  function getTotalLevel(entry) {
+    return (
+      parseInt(getLevel(entry.english)) +
+      parseInt(getLevel(entry.math)) +
+      parseInt(getLevel(entry.preTech)) +
+      parseInt(getLevel(entry.kiswahili)) +
+      parseInt(getLevel(entry.science)) +
+      parseInt(getLevel(entry.social)) +
+      parseInt(getLevel(entry.agriculture)) +
+      parseInt(getLevel(entry.cre)) +
+      parseInt(getLevel(entry.art))
+    );
+  }
+
   const gradeValue = selectedGrade || "All Grades";
   const examPeriodValue = selectedExamPeriod || "All Periods";
 
@@ -4027,19 +4083,32 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
     })
     .map(row => {
       const cells = row.querySelectorAll("td");
+      const english = parseInt(cells[3]?.textContent.trim()) || 0;
+      const math = parseInt(cells[5]?.textContent.trim()) || 0;
+      const preTech = parseInt(cells[7]?.textContent.trim()) || 0;
+      const kiswahili = parseInt(cells[9]?.textContent.trim()) || 0;
+      const science = parseInt(cells[11]?.textContent.trim()) || 0;
+      const social = parseInt(cells[13]?.textContent.trim()) || 0;
+      const agriculture = parseInt(cells[15]?.textContent.trim()) || 0;
+      const cre = parseInt(cells[17]?.textContent.trim()) || 0;
+      const art = parseInt(cells[19]?.textContent.trim()) || 0;
+
+      // Calculate totalMarks by summing up individual subject scores
+      const totalMarks = english + math + preTech + kiswahili + science + social + agriculture + cre + art;
+
       return {
         learner: cells[1]?.textContent.trim(),
         grade: cells[2]?.textContent.trim(),
-        english: parseInt(cells[3]?.textContent.trim()) || 0,
-        math: parseInt(cells[5]?.textContent.trim()) || 0,
-        preTech: parseInt(cells[7]?.textContent.trim()) || 0,
-        kiswahili: parseInt(cells[9]?.textContent.trim()) || 0,
-        science: parseInt(cells[11]?.textContent.trim()) || 0,
-        social: parseInt(cells[13]?.textContent.trim()) || 0,
-        agriculture: parseInt(cells[15]?.textContent.trim()) || 0,
-        cre: parseInt(cells[17]?.textContent.trim()) || 0,
-        art: parseInt(cells[19]?.textContent.trim()) || 0,
-        totalMarks: parseInt(cells[cells.length - 2]?.textContent.trim()) || 0
+        english,
+        math,
+        preTech,
+        kiswahili,
+        science,
+        social,
+        agriculture,
+        cre,
+        art,
+        totalMarks,
       };
     });
 
@@ -4047,8 +4116,8 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
   marks.forEach(entry => {
     const learner = learners.find(l => l.name === entry.learner);
     if (learner) {
-      if (learner.gender === "male") genderPerformance.male.push(entry);
-      if (learner.gender === "female") genderPerformance.female.push(entry);
+      entry.totalLevel = getTotalLevel(entry); // Add total level to entry
+      genderPerformance[learner.gender]?.push(entry);
     }
   });
 
@@ -4066,7 +4135,7 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
     const totals = {
       english: 0, math: 0, preTech: 0, kiswahili: 0,
       science: 0, social: 0, agriculture: 0, cre: 0,
-      art: 0, totalMarks: 0
+      art: 0, totalMarks: 0, totalLevel: 0
     };
 
     let html = `
@@ -4087,13 +4156,16 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
             <th style="border:2px solid black;">Agric</th><th>Lev</th>
             <th style="border:2px solid black;">CRE</th><th>Lev</th>
             <th style="border:2px solid black;">C/A</th><th>Lev</th>
-            <th style="border:2px solid black;">Total</th>
+            <th style="border:2px solid black;">Total Marks</th>
+            <th style="border:2px solid black;">Points</th>
           </tr>
         </thead><tbody>`;
 
     data.forEach((entry, index) => {
       const isTop = top5.find(t => t.learner === entry.learner);
       const rowStyle = isTop ? "background:#FFD700;font-weight:bold;" : "";
+      const totalLevel = entry.totalLevel;
+
       html += `<tr style="${rowStyle}">
         <td>${index + 1}</td>
         <td>${entry.learner}</td>
@@ -4108,6 +4180,7 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
         <td>${entry.cre}</td><td>${getLevel(entry.cre)}</td>
         <td>${entry.art}</td><td>${getLevel(entry.art)}</td>
         <td><strong>${entry.totalMarks}</strong></td>
+        <td><strong>${totalLevel}</strong></td>
       </tr>`;
 
       totals.english += entry.english;
@@ -4120,6 +4193,7 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
       totals.cre += entry.cre;
       totals.art += entry.art;
       totals.totalMarks += entry.totalMarks;
+      totals.totalLevel += totalLevel;
     });
 
     const count = data.length;
@@ -4129,14 +4203,16 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
         <td>${totals.preTech}</td><td>-</td><td>${totals.kiswahili}</td><td>-</td>
         <td>${totals.science}</td><td>-</td><td>${totals.social}</td><td>-</td>
         <td>${totals.agriculture}</td><td>-</td><td>${totals.cre}</td><td>-</td>
-        <td>${totals.art}</td><td>-</td><td>${totals.totalMarks}</td>
+        <td>${totals.art}</td><td>-</td>
+        <td>${totals.totalMarks}</td><td>${totals.totalLevel}</td>
       </tr>
       <tr style="background:lightblue;font-weight:bold;"><td colspan="3">Averages</td>
         <td>${(totals.english/count).toFixed(1)}</td><td>-</td><td>${(totals.math/count).toFixed(1)}</td><td>-</td>
         <td>${(totals.preTech/count).toFixed(1)}</td><td>-</td><td>${(totals.kiswahili/count).toFixed(1)}</td><td>-</td>
         <td>${(totals.science/count).toFixed(1)}</td><td>-</td><td>${(totals.social/count).toFixed(1)}</td><td>-</td>
         <td>${(totals.agriculture/count).toFixed(1)}</td><td>-</td><td>${(totals.cre/count).toFixed(1)}</td><td>-</td>
-        <td>${(totals.art/count).toFixed(1)}</td><td>-</td><td>${(totals.totalMarks/count).toFixed(1)}</td>
+        <td>${(totals.art/count).toFixed(1)}</td><td>-</td>
+        <td>${(totals.totalMarks/count).toFixed(1)}</td><td>${(totals.totalLevel/count).toFixed(1)}</td>
       </tr>
     </tbody></table>
     <div style="text-align:center;margin-top:15px;">
@@ -4361,6 +4437,7 @@ function createCustomAlert(message, bgColor, textColor) {
     // Append the custom alert to the body
     document.body.appendChild(customAlert);
 }
+
 function generateLearnerAssessmentReports(termDetails) {
   const { year, term, closingDate, openingDate, classTeacherSignature, principalSignature } = termDetails;
 
@@ -4371,7 +4448,9 @@ function generateLearnerAssessmentReports(termDetails) {
 
   const govtLogo = "https://i.imgur.com/KkbIFjL.png";
   const schoolLogo = "https://i.imgur.com/2bSAbwq.jpeg";
+  const defaultAvatar = "https://i.imgur.com/AXrekYa.jpeg";
   const date = new Date().toLocaleDateString("en-GB");
+  const footerDate = new Date().toLocaleDateString("en-GB");
 
   const gradeFilter = document.getElementById("reportGradeSelect").value;
 
@@ -4418,11 +4497,11 @@ function generateLearnerAssessmentReports(termDetails) {
     const totalMarks = parseInt(rawTotalMarks) || 0;
     const performance = getPerformanceLevel(totalMarks);
 
-    let learnerPhoto = "";
+    let learnerPhoto = defaultAvatar;
     learnerRows.forEach(lr => {
       if (lr.cells[2]?.textContent.trim() === learnerName) {
         const imgTag = lr.querySelector("img");
-        learnerPhoto = imgTag ? imgTag.src : "";
+        learnerPhoto = imgTag?.src || defaultAvatar;
       }
     });
 
@@ -4455,11 +4534,12 @@ function generateLearnerAssessmentReports(termDetails) {
     report.style.padding = "20px";
     report.style.marginBottom = "30px";
     report.style.background = "#fff";
+    report.style.color = "#000";
 
     report.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <img src="${govtLogo}" alt="Gov Logo" style="height: 80px;">
-        <div style="text-align: center; flex-grow: 1;">
+        <div style="text-align: center; flex-grow: 1; color: #000;">
           <h2 style="margin: 0;">NACHU JUNIOR SCHOOL</h2>
           <p style="margin: 2px;">PO BOX 561-00902 KIKUYU, KENYA</p>
           <p style="margin: 2px;">MINISTRY OF EDUCATION SCIENCE AND TECHNOLOGY</p>
@@ -4476,21 +4556,22 @@ function generateLearnerAssessmentReports(termDetails) {
           <p><strong>Learner's Name:</strong> ${learnerName}</p>
         </div>
         <div>
-          ${learnerPhoto ? `<img src="${learnerPhoto}" alt="Learner Photo" style="height: 100px; border-radius: 10px; border: 1px solid #333;">` : ""}
+          <img src="${learnerPhoto}" alt="Learner Photo" style="height: 100px; border-radius: 10px; border: 1px solid #333;">
         </div>
       </div>
 
-      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-        <thead>
-          <tr style="background: #f2f2f2; color: black;">
-            <th style="border: 3px solid #000; padding: 8px;">Subject</th>
-            <th style="border: 3px solid #000; padding: 8px;">Score</th>
-            <th style="border: 3px solid #000; padding: 8px;">Level</th>
-            <th style="border: 3px solid #000; padding: 8px;">Points</th>
-            <th style="border: 3px solid #000; padding: 8px;">Subject Teacher</th>
-            <th style="border: 3px solid #000; padding: 8px;">Signature</th>
-          </tr>
-        </thead>
+      <table style="width: 100%; border-collapse: collapse; margin-top: 10px; color: #000;">
+       <thead>
+  <tr style="background: #f2f2f2;">
+    <th style="border: 3px solid #000; padding: 8px; color: #000;">Subject</th>
+    <th style="border: 3px solid #000; padding: 8px; color: #000;">Score</th>
+    <th style="border: 3px solid #000; padding: 8px; color: #000;">Level</th>
+    <th style="border: 3px solid #000; padding: 8px; color: #000;">Points</th>
+    <th style="border: 3px solid #000; padding: 8px; color: #000;">Subject Teacher</th>
+    <th style="border: 3px solid #000; padding: 8px; color: #000;">Signature</th>
+  </tr>
+</thead>
+
         <tbody>
           ${subjects.map(sub => `
             <tr>
@@ -4511,8 +4592,7 @@ function generateLearnerAssessmentReports(termDetails) {
         </tbody>
       </table>
 
-      <p style="font-size: 14px; margin-top: 10px;">
-        <strong>KEY:</strong><br>
+      <p style="font-size: 14px; margin-top: 10px;"><strong>KEY:</strong><br>
         1–10: BE2,&nbsp;&nbsp;11–20: BE1,&nbsp;&nbsp;21–30: AE2,&nbsp;&nbsp;31–40: AE1,<br>
         41–57: ME2,&nbsp;&nbsp;58–74: ME1,&nbsp;&nbsp;75–89: EE2,&nbsp;&nbsp;90–99: EE1
       </p>
@@ -4530,11 +4610,15 @@ function generateLearnerAssessmentReports(termDetails) {
           Date: ${date}
         </div>
       </div>
+
+      <div style="margin-top: 20px; text-align: center; font-size: 12px; page-break-inside: avoid; color: #000;">
+        Printed on: ${footerDate} • End of Report<br>
+        <span style="font-style: italic;">Generated by Rasmtech</span>
+      </div>
     `;
 
     container.appendChild(report);
   });
-
 
     // Add Print Button
     const printButton = document.createElement("button");
@@ -4770,7 +4854,7 @@ function combineMarksByGradeWithDetails(mainGrade, selectedPeriod) {
     const learnersData = [];
     const totals = {
         eng: 0, math: 0, preTech: 0, kiswahili: 0,
-        science: 0, social: 0, agriculture: 0, cre: 0, creativeArt: 0, totalMarks: 0
+        science: 0, social: 0, agriculture: 0, cre: 0, creativeArt: 0, totalMarks: 0, totalLevel: 0
     };
     let learnerCount = 0;
 
@@ -4800,6 +4884,11 @@ function combineMarksByGradeWithDetails(mainGrade, selectedPeriod) {
             };
 
             learnerData.totalMarks = Object.values(learnerData).slice(2).reduce((sum, mark) => sum + mark, 0);
+            learnerData.totalLevel = 
+                getLevel(learnerData.eng) + getLevel(learnerData.math) + getLevel(learnerData.preTech) +
+                getLevel(learnerData.kiswahili) + getLevel(learnerData.science) + getLevel(learnerData.social) +
+                getLevel(learnerData.agriculture) + getLevel(learnerData.cre) + getLevel(learnerData.creativeArt);
+
             learnersData.push(learnerData);
             for (let key in totals) totals[key] += learnerData[key];
             learnerCount++;
@@ -4845,6 +4934,7 @@ function combineMarksByGradeWithDetails(mainGrade, selectedPeriod) {
                 <th style="border:3px solid black;">${sub}</th>
                 <th style="border:3px solid black;">Level</th>`).join('')}
                 <th style="border:3px solid black;">Total</th>
+                <th style="border:3px solid black;">Total Level</th> <!-- Added Total Level column -->
             </tr>
         </thead>
         <tbody>`;
@@ -4857,6 +4947,7 @@ function combineMarksByGradeWithDetails(mainGrade, selectedPeriod) {
             ${['eng','math','preTech','kiswahili','science','social','agriculture','cre','creativeArt']
             .map(k => `<td style="border:3px solid black;">${l[k]}</td><td style="border:3px solid black;">${getLevel(l[k])}</td>`).join('')}
             <td style="border:3px solid black;">${l.totalMarks}</td>
+            <td style="border:3px solid black;">${l.totalLevel}</td> <!-- Added Total Level value -->
         </tr>`;
     });
 
@@ -4866,12 +4957,14 @@ function combineMarksByGradeWithDetails(mainGrade, selectedPeriod) {
         ${['eng','math','preTech','kiswahili','science','social','agriculture','cre','creativeArt']
         .map(k => `<td style="border:3px solid black;">${totals[k]}</td><td style="border:3px solid black;"></td>`).join('')}
         <td style="border:3px solid black;">${totals.totalMarks}</td>
+        <td style="border:3px solid black;">${totals.totalLevel}</td> <!-- Added Total Level value -->
     </tr>
     <tr style="background:#fcf8e3; font-weight:bold;">
         <td colspan="3" style="border:3px solid black;">AVERAGE</td>
         ${['eng','math','preTech','kiswahili','science','social','agriculture','cre','creativeArt']
         .map(k => `<td style="border:3px solid black;">${avg(totals[k])}</td><td style="border:3px solid black;"></td>`).join('')}
         <td style="border:3px solid black;">${avg(totals.totalMarks)}</td>
+        <td style="border:3px solid black;">${avg(totals.totalLevel)}</td> <!-- Added Average Level value -->
     </tr></tbody></table>`;
 
     const reportOutput = document.getElementById("reportOutput");
@@ -5738,135 +5831,165 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 });
 
 document.getElementById("printFilteredMarksBtn").addEventListener("click", () => {
-    const visibleRows = Array.from(document.querySelectorAll("#marksList tr"))
-        .filter(row => row.style.display !== "none");
+  const visibleRows = Array.from(document.querySelectorAll("#marksList tr"))
+    .filter(row => row.style.display !== "none");
 
-    if (visibleRows.length === 0) {
-        const alertBox = document.createElement("div");
-        alertBox.innerHTML = "No marks to print. Please adjust your filters.";
-        alertBox.style.position = "fixed";
-        alertBox.style.top = "20px";
-        alertBox.style.right = "20px";
-        alertBox.style.backgroundColor = "#ffcccb";
-        alertBox.style.color = "#b71c1c";
-        alertBox.style.padding = "15px";
-        alertBox.style.border = "1px solid #b71c1c";
-        alertBox.style.borderRadius = "8px";
-        alertBox.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
-        alertBox.style.fontFamily = "Arial, sans-serif";
-        alertBox.style.fontSize = "16px";
-        alertBox.style.zIndex = "1000";
+  if (visibleRows.length === 0) {
+    const alertBox = document.createElement("div");
+    alertBox.innerHTML = "No marks to print. Please adjust your filters.";
+    alertBox.style.position = "fixed";
+    alertBox.style.top = "20px";
+    alertBox.style.right = "20px";
+    alertBox.style.backgroundColor = "#ffcccb";
+    alertBox.style.color = "#b71c1c";
+    alertBox.style.padding = "15px";
+    alertBox.style.border = "1px solid #b71c1c";
+    alertBox.style.borderRadius = "8px";
+    alertBox.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+    alertBox.style.fontFamily = "Arial, sans-serif";
+    alertBox.style.fontSize = "16px";
+    alertBox.style.zIndex = "1000";
 
-        document.body.appendChild(alertBox);
+    document.body.appendChild(alertBox);
 
-        setTimeout(() => {
-            document.body.removeChild(alertBox);
-        }, 5000);
+    setTimeout(() => {
+      document.body.removeChild(alertBox);
+    }, 5000);
+    return;
+  }
 
-        return;
-    }
+  const selectedGrade = document.getElementById("filterMarksGrade").value || "All";
+  const year = new Date().getFullYear();
+  const term = document.getElementById("term")?.value || "Term 2";
 
-    const selectedGrade = document.getElementById("filterMarksGrade").value || "All";
-    const year = new Date().getFullYear();
-    const term = document.getElementById("term")?.value || "Term 2";
+  // Extract row data excluding Delete button
+  let totalMarksSum = 0;
+  let totalLevelsSum = 0;
 
-    // Extract clean row data excluding the last column (Delete button)
-    const cleanedRows = visibleRows.map(row => {
-        const cells = Array.from(row.cells).slice(0, row.cells.length - 1); // Remove last <td>
-        return `<tr>${cells.map(cell => `<td>${cell.innerHTML}</td>`).join("")}</tr>`;
+  const scoreColumns = [3, 5, 7, 9, 11, 13, 15, 17, 19]; // Score indices
+  const totals = Array(scoreColumns.length).fill(0);
+
+  const cleanedRows = visibleRows.map(row => {
+    const cells = Array.from(row.cells);
+    const filteredCells = cells.slice(0, cells.length - 1); // exclude delete btn
+
+    // Extract and sum marks
+    let rowTotal = 0;
+    scoreColumns.forEach((index, i) => {
+      const mark = parseFloat(cells[index].innerText) || 0;
+      totals[i] += mark;
+      rowTotal += mark;
     });
+    totalMarksSum += rowTotal;
 
-    // Compute totals and averages, including Total Marks column
-    const scoreColumns = [3, 5, 7, 9, 11, 13, 15, 17, 19]; // Indices of score columns
-    const totals = Array.from({ length: scoreColumns.length }, () => 0);
-    let totalMarksSum = 0;
+    // Extract and sum total level from 2nd-last cell (before delete btn)
+    const totalLevel = parseInt(cells[cells.length - 2]?.innerText) || 0;
+    totalLevelsSum += totalLevel;
 
-    visibleRows.forEach(row => {
-        let rowTotal = 0;
-        scoreColumns.forEach((colIndex, index) => {
-            const cell = row.cells[colIndex];
-            const value = parseFloat(cell.innerText) || 0;
-            totals[index] += value;
-            rowTotal += value;
-        });
-        totalMarksSum += rowTotal;
-    });
+    return `<tr>${filteredCells.map(cell => `<td>${cell.innerHTML}</td>`).join("")}</tr>`;
+  });
 
-    const learnerCount = visibleRows.length;
-    const totalsRow = `<tr><td colspan="3">Total</td>${scoreColumns.map((_, index) => `<td>${totals[index]}</td><td></td>`).join("")}
-        <td>${totalMarksSum}</td><td></td></tr>`;
-    const averagesRow = `<tr><td colspan="3">Average</td>${scoreColumns.map((_, index) => `<td>${(totals[index] / learnerCount).toFixed(2)}</td><td></td>`).join("")}
-        <td>${(totalMarksSum / learnerCount).toFixed(2)}</td><td></td></tr>`;
+  const learnerCount = visibleRows.length;
 
-    const tableHtml = `
-        <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Name</th>
-                    <th>Grade</th>
-                    <th>Eng</th><th>Lev</th>
-                    <th>Math</th><th>Lev</th>
-                    <th>Pre-Tech</th><th>Lev</th>
-                    <th>Kisw</th><th>Lev</th>
-                    <th>Scie</th><th>Lev</th>
-                    <th>Sst</th><th>Lev</th>
-                    <th>Agric</th><th>Lev</th>
-                    <th>Cre</th><th>Lev</th>
-                    <th>C/A</th><th>Lev</th>
-                    <th>Total Marks</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${cleanedRows.join("")}
-                ${totalsRow}
-                ${averagesRow}
-            </tbody>
-        </table>
-    `;
+  const totalsRow = `
+    <tr>
+      <td colspan="3">Total</td>
+      ${scoreColumns.map((_, i) => `<td>${totals[i]}</td><td></td>`).join("")}
+      <td>${totalMarksSum}</td>
+      <td>${totalLevelsSum}</td>
+    </tr>`;
 
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(`
-        <html>
-            <head>
-                <title>Filtered Marks Report</title>
-                <style>
-                    body { font-family: Arial, sans-serif; margin: 20px; }
-                    table { width: 100%; border-collapse: collapse; font-size: 16px; }
-                    th, td {
-                        border: 2px solid black;
-                        padding: 6px;
-                        text-align: center;
-                    }
-                    th {
-                        background-color: #f0f0f0;
-                        font-weight: bold;
-                    }
-                    .header {
-                        text-align: center;
-                        margin-bottom: 20px;
-                    }
-                    .header img {
-                        max-width: 80px;
-                        margin-bottom: 10px;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="header">
-                     <img src="https://i.imgur.com/2bSAbwq.jpeg" alt="School Logo" style="display: block; margin: 0 auto 10px; max-width: 80px; height: auto;">                 
-                      <h2>NACHU JUNIOR SCHOOL</h2>
-                    <p><em>My Talent My Passion</em></p>
-                    <p><strong>Term:</strong> ${term} &nbsp;&nbsp; <strong>Grade:</strong> ${selectedGrade} &nbsp;&nbsp; <strong>Year:</strong> ${year}</p>
-                </div>
-                ${tableHtml}
-            </body>
-        </html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
+  const averagesRow = `
+    <tr>
+      <td colspan="3">Average</td>
+      ${scoreColumns.map((_, i) => `<td>${(totals[i] / learnerCount).toFixed(2)}</td><td></td>`).join("")}
+      <td>${(totalMarksSum / learnerCount).toFixed(2)}</td>
+      <td>${(totalLevelsSum / learnerCount).toFixed(2)}</td>
+    </tr>`;
+
+  const tableHtml = `
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name</th>
+          <th>Grade</th>
+          <th>Eng</th><th>Lev</th>
+          <th>Math</th><th>Lev</th>
+          <th>Pre-Tech</th><th>Lev</th>
+          <th>Kisw</th><th>Lev</th>
+          <th>Scie</th><th>Lev</th>
+          <th>Sst</th><th>Lev</th>
+          <th>Agric</th><th>Lev</th>
+          <th>Cre</th><th>Lev</th>
+          <th>C/A</th><th>Lev</th>
+          <th>Total Marks</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${cleanedRows.join("")}
+        ${totalsRow}
+        ${averagesRow}
+      </tbody>
+    </table>
+  `;
+
+const printWindow = window.open('', '_blank');
+printWindow.document.write(`
+  <html>
+    <head>
+      <title>Filtered Marks Report</title>
+      <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 16px; }
+        th, td {
+          border: 2px solid black;
+          padding: 6px;
+          text-align: center;
+        }
+        th {
+          background-color: #f0f0f0;
+          font-weight: bold;
+        }
+        .header-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+        }
+        .school-info {
+          text-align: left;
+        }
+        .school-logo img {
+          max-width: 100px;
+          height: auto;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header-container">
+        <div class="school-info">
+          <h2 style="margin: 0;">NACHU JUNIOR SCHOOL</h2>
+          <p style="margin: 0;"><em>My Talent My Passion</em></p>
+          <p style="margin: 5px 0 0 0;">
+            <strong>Term:</strong> ${term} &nbsp;&nbsp;
+            <strong>Grade:</strong> ${selectedGrade} &nbsp;&nbsp;
+            <strong>Year:</strong> ${year}
+          </p>
+        </div>
+        <div class="school-logo">
+          <img src="https://i.imgur.com/2bSAbwq.jpeg" alt="School Logo">
+        </div>
+      </div>
+      ${tableHtml}
+    </body>
+  </html>
+`);
+printWindow.document.close();
+printWindow.print();
+
 });
-
 function printAssessmentReport() {
     const reportContainer = document.getElementById("assessmentReportsContainer");
 
@@ -5875,18 +5998,49 @@ function printAssessmentReport() {
         return;
     }
 
+    const reports = reportContainer.querySelectorAll(".single-report");
     const printWindow = window.open("", "_blank");
+    const printedDate = "26/07/2025";
+
+    let allReportsHTML = "";
+
+    if (reports.length > 0) {
+        reports.forEach(report => {
+            allReportsHTML += `
+                <div class="report-wrapper">
+                    <div class="report-content">
+                        ${report.innerHTML}
+                    </div>
+                    <div class="footer-section">
+                        Printed on: ${printedDate} • End of Report<br>
+                        <span class="generated-by">Generated by Rasmtech</span>
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        allReportsHTML = `
+            <div class="report-wrapper">
+                <div class="report-content">
+                    ${reportContainer.innerHTML}
+                </div>
+                <div class="footer-section">
+                    Printed on: ${printedDate} • End of Report<br>
+                    <span class="generated-by">Generated by Rasmtech</span>
+                </div>
+            </div>
+        `;
+    }
 
     printWindow.document.write(`
         <html>
         <head>
-            <title>Assessment Report</title>
+            <title>Assessment Reports</title>
             <style>
                 @page {
                     size: A4 portrait;
-                    margin: 10mm 10mm;
+                    margin: 10mm;
                 }
-
                 html, body {
                     margin: 0;
                     padding: 0;
@@ -5894,80 +6048,56 @@ function printAssessmentReport() {
                     font-size: 13px;
                     color: #333;
                 }
-
                 .report-container {
                     display: block;
                     width: 100%;
-                    padding: 0;
-                    margin: 0;
-                    box-sizing: border-box;
                 }
-
+                .report-wrapper {
+                    page-break-inside: avoid;
+                    break-inside: avoid;
+                    margin-bottom: 20px;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                }
                 table {
                     width: 100%;
                     border-collapse: collapse;
                     margin-top: 10px;
-                    page-break-inside: auto;
                 }
-
                 th, td {
                     border: 1px solid #000;
                     padding: 6px;
                     text-align: center;
                     vertical-align: middle;
                 }
-
                 th {
                     background-color: #007bff;
                     color: white;
                 }
-
                 td {
                     background-color: #f9f9f9;
                 }
-
                 .footer-section {
                     margin-top: 12px;
                     text-align: center;
                     font-size: 12px;
                     page-break-inside: avoid;
-                    page-break-before: auto;
-                    break-inside: avoid;
-                    break-before: auto;
                 }
-
                 .generated-by {
                     font-style: italic;
                     color: #555;
-                }
-
-                /* Prevent page break before footer */
-                tr:last-child {
-                    page-break-after: avoid;
-                }
-
-                /* Reduce white space below table to allow footer to fit */
-                .report-content {
-                    margin-bottom: 8px;
                 }
             </style>
         </head>
         <body>
             <div class="report-container">
-                <div class="report-content">
-                    ${reportContainer.innerHTML}
-                </div>
-                <div class="footer-section">
-                    Printed on: ${new Date().toLocaleDateString()} • End of Report<br>
-                    <span class="generated-by">Generated by Rasmtech</span>
-                </div>
+                ${allReportsHTML}
             </div>
         </body>
         </html>
     `);
 
     printWindow.document.close();
-
     printWindow.onload = () => {
         printWindow.focus();
         printWindow.print();
@@ -6496,7 +6626,7 @@ function loadMarksTableForPeriod(examPeriod) {
   let sums = {
     eng: 0, math: 0, preTech: 0, kiswahili: 0,
     science: 0, social: 0, agriculture: 0,
-    cre: 0, creativeArt: 0, totalMarks: 0
+    cre: 0, creativeArt: 0, totalMarks: 0, totalLevels: 0
   };
 
   let learnersWithMarks = 0;
@@ -6521,11 +6651,23 @@ function loadMarksTableForPeriod(examPeriod) {
           (parseFloat(marks.cre) || 0) +
           (parseFloat(marks.creativeArt) || 0);
 
+        const totalLevel =
+          (parseInt(marks.engLev) || 0) +
+          (parseInt(marks.mathLev) || 0) +
+          (parseInt(marks.preTechLev) || 0) +
+          (parseInt(marks.kiswahiliLev) || 0) +
+          (parseInt(marks.scienceLev) || 0) +
+          (parseInt(marks.socialLev) || 0) +
+          (parseInt(marks.agricultureLev) || 0) +
+          (parseInt(marks.creLev) || 0) +
+          (parseInt(marks.creativeArtLev) || 0);
+
         const learnerObj = {
           key: childSnapshot.key,
           data,
           marks,
-          rowTotal
+          rowTotal,
+          totalLevel
         };
 
         const grade = data.grade;
@@ -6536,7 +6678,6 @@ function loadMarksTableForPeriod(examPeriod) {
       }
     });
 
-    // For each grade group
     Object.keys(gradeGroups).forEach(grade => {
       const learners = gradeGroups[grade];
       learners.sort((a, b) => b.rowTotal - a.rowTotal);
@@ -6544,7 +6685,7 @@ function loadMarksTableForPeriod(examPeriod) {
       learners.forEach((learner, i) => {
         learnersWithMarks++;
 
-        const { data, marks, rowTotal } = learner;
+        const { data, marks, rowTotal, totalLevel } = learner;
 
         sums.eng += (parseFloat(marks.eng) || 0);
         sums.math += (parseFloat(marks.math) || 0);
@@ -6556,12 +6697,12 @@ function loadMarksTableForPeriod(examPeriod) {
         sums.cre += (parseFloat(marks.cre) || 0);
         sums.creativeArt += (parseFloat(marks.creativeArt) || 0);
         sums.totalMarks += rowTotal;
+        sums.totalLevels += totalLevel;
 
         const row = document.createElement("tr");
-   row.setAttribute("data-grade", data.grade);
-row.setAttribute("data-exam-period", examPeriod);
-row.setAttribute("data-key", learner.key);
-
+        row.setAttribute("data-grade", data.grade);
+        row.setAttribute("data-exam-period", examPeriod);
+        row.setAttribute("data-key", learner.key);
 
         row.innerHTML = `
           <td>${i + 1}</td>
@@ -6577,6 +6718,7 @@ row.setAttribute("data-key", learner.key);
           <td data-editable="true">${marks.cre}</td><td>${marks.creLev || ''}</td>
           <td data-editable="true">${marks.creativeArt}</td><td>${marks.creativeArtLev || ''}</td>
           <td><strong>${rowTotal}</strong></td>
+          <td><strong>${totalLevel}</strong></td>
           <td>
             <button class="deleteMarksBtn" data-key="${learner.key}" data-exam="${examPeriod}">Delete</button>
           </td>
@@ -6600,6 +6742,7 @@ row.setAttribute("data-key", learner.key);
       <td>${sums.cre}</td><td></td>
       <td>${sums.creativeArt}</td><td></td>
       <td><strong>${sums.totalMarks}</strong></td>
+      <td><strong>${sums.totalLevels}</strong></td>
       <td></td>
     `;
 
@@ -6615,14 +6758,13 @@ row.setAttribute("data-key", learner.key);
       <td>${(sums.cre / divisor).toFixed(2)}</td><td></td>
       <td>${(sums.creativeArt / divisor).toFixed(2)}</td><td></td>
       <td><strong>${(sums.totalMarks / divisor).toFixed(2)}</strong></td>
+      <td><strong>${(sums.totalLevels / divisor).toFixed(2)}</strong></td>
       <td></td>
     `;
 
-    // 👌 Enable inline editing if admin is logged in
     if (isAdminLoggedIn) enableMarksEditing();
   });
 }
-
 
 function showToast(message, type = 'info') {
   const toast = document.getElementById("toast");

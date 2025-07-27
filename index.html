@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Learners with Firebase</title>
+    <title>Nachu Junior school</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -667,193 +667,85 @@ button[onclick^="show"] {
 </div>
 
 
-
 <!-- MAIN CONTENT SECTION -->
-<div id="mainContent" style="display: none;">
- 
-<!-- Learners Database Master Toggle -->
-<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
-  <button 
-    type="button" 
-    id="masterToggleBtn"
-    style="
-      background-color: #673AB7; 
-      color: white; 
-      height: 50px; 
-      padding: 0 20px; 
-      border: none; 
-      border-radius: 4px; 
-      font-size: 1rem; 
-      display: inline-flex; 
-      align-items: center; 
-      cursor: pointer;
-    "
-  >
-    <i class="fas fa-database" style="margin-right: 8px; font-size: 1.2em;"></i>
-    Learners Database
-  </button>
+<div id="mainContent" style="display: none; padding: 20px;">
 
-  <div 
-    id="learnersButtons" 
-    style="display: none; flex-direction: column; gap: 8px; width: 100%;"
-  >
-    <button 
-      type="button" 
-      id="toggleTableBtn"
-      style="
-        background-color: #2196F3; 
-        color: white; 
-        height: 48px; 
-        padding: 0 16px; 
-        border: none; 
-        border-radius: 4px; 
-        font-size: 1rem; 
-        display: inline-flex; 
-        align-items: center; 
-        cursor: pointer;
-      "
+  <!-- Learners Database Master Toggle -->
+  <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+    <button
+      type="button"
+      id="masterToggleBtn"
+      style="background-color: #673AB7; color: white; height: 50px; padding: 0 20px; border: none; border-radius: 4px; font-size: 1rem; display: inline-flex; align-items: center; cursor: pointer;"
     >
-      <i class="fas fa-list" style="margin-right: 6px;"></i>
-      Registered Learners
+      <i class="fas fa-database" style="margin-right: 8px; font-size: 1.2em;"></i>
+      Learners Database
     </button>
 
-    <button 
-      type="button" 
-      id="toggleFormBtn"
-      style="
-        background-color: #4CAF50; 
-        color: white; 
-        height: 50px; 
-        padding: 0 20px; 
-        border: none; 
-        border-radius: 4px; 
-        font-size: 1rem; 
-        display: inline-flex; 
-        align-items: center; 
-        cursor: pointer;
-      "
+    <div id="learnersButtons" style="display: none; flex-direction: column; gap: 8px; width: 100%;">
+      <button
+        type="button"
+        id="toggleTableBtn"
+        style="background-color: #2196F3; color: white; height: 48px; padding: 0 16px; border: none; border-radius: 4px; font-size: 1rem; display: inline-flex; align-items: center; cursor: pointer;"
+      >
+        <i class="fas fa-list" style="margin-right: 6px;"></i>
+        Registered Learners
+      </button>
+
+      <button
+        type="button"
+        id="toggleFormBtn"
+        style="background-color: #4CAF50; color: white; height: 50px; padding: 0 20px; border: none; border-radius: 4px; font-size: 1rem; display: inline-flex; align-items: center; cursor: pointer;"
+      >
+        <i class="fas fa-user-plus" style="margin-right: 8px;"></i>
+        Register Learner
+      </button>
+    </div>
+  </div>
+
+  <div id="announcement" style="margin: 10px 0; padding: 10px 15px; background-color: #fff3cd; border: 1px solid #ffeeba; color: #856404; border-radius: 4px; font-size: 0.95rem;">
+    📢 <strong>Note:</strong> All new learners must be registered before entering marks.
+  </div>
+
+  <!-- Exam & Marks Controls Master Toggle -->
+  <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 20px;">
+    <button
+      type="button"
+      id="masterReportsBtn"
+      style="background-color: #9C27B0; color: white; height: 48px; padding: 0 20px; border: none; border-radius: 4px; font-size: 1rem; display: inline-flex; align-items: center; cursor: pointer;"
     >
-      <i class="fas fa-user-plus" style="margin-right: 8px;"></i>
-      Register Learner
+      <i class="fas fa-chart-bar" style="margin-right: 8px;"></i>
+      <span class="btn-label">Exam & Marks Controls</span>
     </button>
   </div>
-</div>
-<div 
-  id="announcement" 
-  style="
-    margin: 10px 0; 
-    padding: 10px 15px; 
-    background-color: #fff3cd; 
-    border: 1px solid #ffeeba; 
-    color: #856404; 
-    border-radius: 4px;
-    font-size: 0.95rem;
-  "
->
-  📢 <strong>Note:</strong> All new learners must be registered before entering marks.
-</div>
-<!-- Exam & Marks Controls Master Toggle -->
-<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 20px;">
-  <button 
-    type="button" 
-    id="masterReportsBtn"
-    style="
-      background-color: #9C27B0;
-      color: white;
-      height: 48px;
-      padding: 0 20px;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      display: inline-flex;
-      align-items: center;
-      cursor: pointer;
-    "
-  >
-    <i class="fas fa-chart-bar" style="margin-right: 8px;"></i>
-    <span class="btn-label">Exam & Marks Controls</span>
-  </button>
-</div>
 
-  <div 
-    id="reportsControls" 
-    style="display: none; flex-direction: column; gap: 8px; width: 100%;"
-  >
-    <button class="print-button" id="togglePerformanceReportsBtn" 
-      style="
-        background-color: #03A9F4;
-        color: white;
-        height: 44px;
-        padding: 0 16px;
-        border: none;
-        border-radius: 4px;
-        font-size: 1rem;
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-      "
+  <div id="reportsControls" style="display: none; flex-direction: column; gap: 8px; width: 100%;">
+    <button
+      class="print-button"
+      id="togglePerformanceReportsBtn"
+      style="background-color: #03A9F4; color: white; height: 44px; padding: 0 16px; border: none; border-radius: 4px; font-size: 1rem; display: inline-flex; align-items: center; cursor: pointer;"
     >
       <i class="fas fa-chevron-down" style="margin-right: 6px;"></i>
       Exam Reports
     </button>
 
-    <button class="print-button" id="toggleMarksSectionBtn"
-      style="
-        background-color:#03A9F4;
-        color: white;
-        height: 44px;
-        padding: 0 16px;
-        border: none;
-        border-radius: 4px;
-        font-size: 1rem;
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-      "
+    <button
+      class="print-button"
+      id="toggleMarksSectionBtn"
+      style="background-color: #03A9F4; color: white; height: 44px; padding: 0 16px; border: none; border-radius: 4px; font-size: 1rem; display: inline-flex; align-items: center; cursor: pointer;"
     >
       <i class="fas fa-chevron-down" style="margin-right: 6px;"></i>
-      
-
+      Marks Section
     </button>
-  <!-- Button to Show/Hide Fee Management Menu -->
-  <button onclick="toggleFeeActionsMenu()" style="background-color: #d32f2f; color: purple; border: none; padding: 10px 10px; font-size: 16px; cursor: pointer; border-radius: 5px; margin-bottom: 10px;">
-    <i class="fas fa-cogs"></i> Manage Fees
-  </button>
-
+  
+  <!-- Online Safety Note -->
+  <div id="onlineSafetyNote" style="position: relative; margin: 15px 0; padding: 14px 20px; background-color: #e0f7fa; border-left: 5px solid #00796b; color: #004d40; border-radius: 5px; font-size: 0.95rem; line-height: 1.5;">
+    🔒 <strong>Online Safety Tip:</strong> Always protect your personal information and avoid sharing passwords or sensitive data on public networks.<br><br>
+    🌸 <em>RASM Wishes you a productive and wonderful day ahead!</em>
+    <span onclick="this.parentElement.style.display='none';" style="position: absolute; top: 10px; right: 14px; cursor: pointer; color: #004d40; font-weight: bold;">&times;</span>
   </div>
-</div>
-<div 
-  id="onlineSafetyNote" 
-  style="
-    position: relative;
-    margin: 15px 0; 
-    padding: 14px 20px; 
-    background-color: #e0f7fa; 
-    border-left: 5px solid #00796b; 
-    color: #004d40; 
-    border-radius: 5px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  "
->
-  🔒 <strong>Online Safety Tip:</strong> Always protect your personal information and avoid sharing passwords or sensitive data on public networks.<br><br>
-  🌸 <em>RASM Wishes you a productive and wonderful day ahead!</em>
-
-  <span 
-    onclick="this.parentElement.style.display='none';" 
-    style="
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      cursor: pointer;
-      color: #004d40;
-      font-weight: bold;
-    "
-  >&times;</span>
-</div>
-
 
 </div>
+
 <!-- Wrapped form, hidden by default -->
 <div id="registrationContainer" style="display: none; margin-top: 20px; max-width: 450px; margin: auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
   <h2 style="color: white; background-color: rgba(255, 215, 0, 0.8); padding: 10px 12px; border-radius: 4px; text-align: center;">
@@ -960,7 +852,11 @@ button[onclick^="show"] {
   </div>
 </div>
 
-
+  </h2>
+    <h2 style="background-color: rgba(255, 255, 255, 0.7); padding: 8px 16px; border-radius: 6px; display: inline-block; color: #2c3e50;">
+      <span style="color: #e74c3c;">No More Manual School Management  Crunching!
+Rasm Does It All – Just Click and See It Done!.</span>
+    </h2>
   <!-- Learners Table -->
   <table class="learners-table" style="margin-top: 20px;">
     <thead>
@@ -1012,29 +908,41 @@ button[onclick^="show"] {
   </div>
 </div>
 <!-- Record Marks Section -->
-<div id="recordMarksSection" style="max-width: 400px; margin: auto; display: none; background-color: #8BC34A; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-image: url('https://i.imgur.com/qnmK7CR.jpeg'); background-size: cover; background-position: center;">
-  <h2 style="color: white; background-color: gold; padding: 8px 8px; border-radius: 3px; text-align: center;">
+<div id="recordMarksSection" style="max-width: 400px; margin: auto; display: none; background-color: #8BC34A; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+  background-image: url('https://i.imgur.com/jvsjwnI.jpeg'), url('https://i.imgur.com/L38mwvO.jpeg'); 
+  background-size: cover, cover; 
+  background-position: center, bottom right; 
+  height: auto;">
+
+  <h2 style="color: white; background-color: gold; padding: 8px 8px; border-radius: 3px; text-align: center; font-size: 1.2rem;">
     Record Learner Marks
   </h2>
 
-  <form id="marksForm">
+  <h3 style="background-color: rgba(255, 255, 255, 0.7); padding: 6px 12px; border-radius: 6px; display: inline-block; color: #2c3e50; text-align: center; margin-bottom: 15px;">
+    <span style="color: #e74c3c; font-size: 1rem;">No More Manual Exam Crunching! Rasm Does It All – Just Click and See It Done!</span>
+  </h3>
+
+  <form id="marksForm" style="font-size: 0.9rem;">
+
+    <!-- Grade Selection -->
     <label><strong>Grade:</strong></label>
     <select id="gradeSelect" required 
-      style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px;">
+      style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
       <option value="">Select Grade</option>
     </select><br>
 
+    <!-- Learner Selection -->
     <label><strong>Learner:</strong></label>
     <select id="learnerSelect" required 
-      style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px;">
+      style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
       <option value="">Select Learner</option>
     </select><br>
 
-    <!-- Exam Period Dropdown -->
+    <!-- Exam Period Selection -->
     <div class="form-group">
       <label for="examPeriod"><strong>Select Period</strong></label>
       <select id="examPeriod" required
-        style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px;">
+        style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
         <option value="">-- Select Period --</option>
        <option value="2024, Term 1, Opener Exam">2024, Term 1, Opener Exam</option>
 <option value="2024, Term 1, Midterm Exam">2024, Term 1, Midterm Exam</option>
@@ -1218,20 +1126,40 @@ button[onclick^="show"] {
       </select>
     </div>
 
+    <!-- Marks Inputs with Placeholder Text for Subjects -->
     <div id="marksInputs">
-      <div class="form-group"><label>Eng</label><input type="number" id="eng" required></div>
-      <div class="form-group"><label>Math</label><input type="number" id="math" required></div>
-      <div class="form-group"><label>Pre-Tech</label><input type="number" id="preTech" required></div>
-      <div class="form-group"><label>Kiswahili</label><input type="number" id="kiswahili" required></div>
-      <div class="form-group"><label>Science</label><input type="number" id="science" required></div>
-      <div class="form-group"><label>Social</label><input type="number" id="social" required></div>
-      <div class="form-group"><label>Agriculture</label><input type="number" id="agriculture" required></div>
-      <div class="form-group"><label>CRE</label><input type="number" id="cre" required></div>
-      <div class="form-group"><label>Creative Art</label><input type="number" id="creativeArt" required></div>
+      <div class="form-group">
+        <input type="number" id="eng" required placeholder="Eng" style="width: 100%; padding: 6px;">
+      </div>
+      <div class="form-group">
+        <input type="number" id="math" required placeholder="Math" style="width: 100%; padding: 6px;">
+      </div>
+      <div class="form-group">
+        <input type="number" id="preTech" required placeholder="Pre-Tech" style="width: 100%; padding: 6px;">
+      </div>
+      <div class="form-group">
+        <input type="number" id="kiswahili" required placeholder="Kiswahili" style="width: 100%; padding: 6px;">
+      </div>
+      <div class="form-group">
+        <input type="number" id="science" required placeholder="Science" style="width: 100%; padding: 6px;">
+      </div>
+      <div class="form-group">
+        <input type="number" id="social" required placeholder="Social" style="width: 100%; padding: 6px;">
+      </div>
+      <div class="form-group">
+        <input type="number" id="agriculture" required placeholder="Agriculture" style="width: 100%; padding: 6px;">
+      </div>
+      <div class="form-group">
+        <input type="number" id="cre" required placeholder="CRE" style="width: 100%; padding: 6px;">
+      </div>
+      <div class="form-group">
+        <input type="number" id="creativeArt" required placeholder="Creative Art" style="width: 100%; padding: 6px;">
+      </div>
     </div>
 
-    <div class="form-group">
-      <button type="button" id="saveMarksButton">
+    <!-- Submit Button -->
+    <div class="form-group" style="text-align: center; margin-top: 10px;">
+      <button type="button" id="saveMarksButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; cursor: pointer; font-size: 1rem; border-radius: 4px;">
         <i class="fas fa-save"></i> Save Marks
       </button>
       <div id="marksCountBadge" style="margin: 8px 0; font-weight: bold; color: #333;"></div>
@@ -1239,11 +1167,15 @@ button[onclick^="show"] {
   </form>
 </div>
 
+
+
+
 <!-- Action Box for Marks Display -->
 <div id="marksSection" style="display: none; margin-top: 20px;">
-  <div class="action-box" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background-image: url('https://i.imgur.com/WKwJ73A.jpeg'); background-size: cover; background-position: center; border-radius: 8px; color: white;">
+  <div class="action-box" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background-image: url('https://i.imgur.com/h7ijdv9.jpeg'); background-size: cover; background-position: center; border-radius: 8px; color: white;">
     <h2 style="background-color: rgba(255, 255, 255, 0.7); padding: 8px 16px; border-radius: 6px; display: inline-block; color: #2c3e50;">
-      <span style="color: #e74c3c;">Recorded Learner Marks</span>
+      <span style="color: #e74c3c;">Power Up Your Exams with Rasm!
+Fast, Secure, and Reliable.</span>
     </h2>
 
     <!-- Search Input -->
@@ -1470,6 +1402,10 @@ button[onclick^="show"] {
       </button>
     </div>
   </div>
+    <h2 style="background-color: rgba(255, 255, 255, 0.7); padding: 8px 16px; border-radius: 6px; display: inline-block; color: #2c3e50;">
+      <span style="color: #e74c3c;">Rasm: Redefining Exam Management Through ICT!
+Accuracy and Efficiency in Every Click.</span>
+    </h2>
 
   <!-- Marks Table -->
   <table class="marks-table" style="margin-top: 20px;">
@@ -1524,7 +1460,7 @@ button[onclick^="show"] {
     <strong>RASM Reminder:</strong>&nbsp;Please select  grade,exam period and subject before generating any report ,Thankyou.
   </div>
 <!-- Action Box Container -->
-<div style="background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); max-width: 400px; margin: auto;">
+<div style="background-image: url('https://i.imgur.com/Ax6XN4u.jpeg'); background-size: cover; background-position: center; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); max-width: 400px; margin: auto;">
 
   <!-- Grade Selection Section -->
   <div style="margin-bottom: 16px;">
@@ -1543,7 +1479,7 @@ button[onclick^="show"] {
     <label for="reportExamPeriodSelect" style="font-weight: bold; display: block; margin-bottom: 4px; color: white;">Select Exam Period:</label>
     <select id="reportExamPeriodSelect" style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 100%; background-color: rgba(255, 255, 255, 0.7);">
       <option value="">-- Select Exam Period --</option>
- <option value="2024, Term 1, Opener Exam">2024, Term 1, Opener Exam</option>
+  <option value="2024, Term 1, Opener Exam">2024, Term 1, Opener Exam</option>
 <option value="2024, Term 1, Midterm Exam">2024, Term 1, Midterm Exam</option>
 <option value="2024, Term 1, End Term Exam">2024, Term 1, End Term Exam</option>
 <option value="2024, Term 2, Opener Exam">2024, Term 2, Opener Exam</option>
@@ -1727,7 +1663,7 @@ button[onclick^="show"] {
       <i class="fas fa-info-circle" style="margin-right: 5px; color: #333;"></i>
       Select the exam period for the report generation.
     </div>
- 
+  </div>
 
   <!-- Subject Selection Section -->
   <div style="margin-bottom: 16px;">
@@ -1749,28 +1685,16 @@ button[onclick^="show"] {
       Select the subject you want to analyze performance for.
     </div>
   </div>
-<!-- Merit Grade Selection Section -->
-<div class="form-group" style="margin-top: 20px; background-color: #fff8c6; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 20px auto;">
   
-  <label for="meritGradeSelect" style="font-weight: bold; display: block; margin-bottom: 4px;">Select Grade for Blank Merit List:</label>
-  
-  <select id="meritGradeSelect" 
-    style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 50%; background-color: #fff8c6;">
-    <option value="">Loading grades...</option>
-  </select>
-  
-  <div style="font-size: 13px; color: #555; margin-top: 4px;">
-    <i class="fas fa-info-circle" style="margin-right: 5px; color: #333;"></i>
-    Select the grade for which you want to generate the blank merit list.
-  </div>
-
-</div>
-
+</div> <!-- End of Action Box Container -->
+    <h2 style="background-color: rgba(255, 255, 255, 0.7); padding: 8px 16px; border-radius: 6px; display: inline-block; color: #2c3e50;">
+      <span style="color: #e74c3c;">Say No to Manual Grading!
+Rasm Does It All – One Click and You’re Done!.</span>
+    </h2>
 <!-- Button Container with Two Boxes -->
 <div class="button-container" style="display: flex; gap: 20px; flex-wrap: wrap;">
-
   <!-- First Box with Background Image and Equal Height -->
-  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
+  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/KI9qQYp.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
     
     <button class="report-button red" id="subjectChampionsBtn" style="width: 65%; margin-bottom: 12px;">
       <i class="fas fa-trophy"></i> Subjects Champions
@@ -1800,10 +1724,10 @@ button[onclick^="show"] {
       <i class="fas fa-file-alt"></i> Generate Assessment Reports
     </button>
 
-  </div>
+  </div> <!-- End of First Button Box -->
 
   <!-- Second Box with Background Image and Equal Height -->
-  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
+  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/EJoyk7N.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
     
     <button class="report-button gray" id="subjectRankingReportBtn" style="width: 65%; margin-bottom: 12px;">
       <i class="fas fa-list-ol"></i> Track Learner Progress
@@ -1813,9 +1737,9 @@ button[onclick^="show"] {
       <i class="fas fa-file-alt"></i> Generate Blank Merit Lists
     </button>
 
-   <button onclick="countMarksStatusPerGrade()" style="width: 65%; padding: 10px 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-  <i class="fas fa-file-alt" style="font-size: 16px;"></i> Generate Marks Summary
-</button>
+    <button onclick="countMarksStatusPerGrade()" style="width: 65%; padding: 10px 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <i class="fas fa-file-alt" style="font-size: 16px;"></i> Generate Marks Summary
+    </button>
 
     <button class="print-button" id="generateSubjectRankBtn" style="width: 70%; margin-bottom: 12px;">
       <i class="fas fa-list-ol"></i> Generate Subject Tracker Analysis
@@ -1834,12 +1758,12 @@ button[onclick^="show"] {
       Show Marks Recording Status Per Grade
     </button>
 
+  </div> <!-- End of Second Button Box -->
+</div> <!-- End of Button Container -->
 
-  </div>
-  </div>
-<!-- Output Containers -->
-<div id="reportOutput"></div>
-<div id="assessmentReportsContainer" style="margin-top: 30px;"></div>
+<!-- Output Containers Outside the Button Box (Below the Second Box) -->
+<div id="reportOutput" style="margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;"></div>
+<div id="assessmentReportsContainer" style="margin-top: 30px; max-width: 800px; margin-left: auto; margin-right: auto;"></div>
 
 <!-- Teacher Modal -->
 <div id="teacherModal" class="modal">
@@ -4027,7 +3951,6 @@ function generateReport(reportType, selectedGrade, examPeriod) {
         });
     }
    }
-
 function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
   const marksTableBody = document.getElementById("marksList");
   const learnersTableBody = document.getElementById("learnersList");
@@ -4066,19 +3989,23 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
   const gradeValue = selectedGrade || "All Grades";
   const examPeriodValue = selectedExamPeriod || "All Periods";
 
+  // Get all learners with their grade and gender information
   const learners = Array.from(learnersTableBody.querySelectorAll("tr")).map(row => {
     const cells = row.querySelectorAll("td");
     return {
       name: cells[2]?.textContent.trim(),
       gender: cells[3]?.textContent.trim().toLowerCase(),
+      grade: cells[2]?.textContent.trim() // Capture the grade for each learner
     };
   });
 
+  // Modify the marks filtering to include all streams that start with the same grade prefix (e.g., 8A, 8B, 8C for "8")
   const marks = Array.from(marksTableBody.querySelectorAll("tr"))
     .filter(row => {
       const grade = row.getAttribute("data-grade");
       const period = row.getAttribute("data-exam-period");
-      return (!selectedGrade || grade === selectedGrade) &&
+      // If a grade like "8B" is selected, include all grades starting with "8"
+      return (!selectedGrade || grade.startsWith(selectedGrade.slice(0, -1))) &&
              (!selectedExamPeriod || period === selectedExamPeriod);
     })
     .map(row => {
@@ -4093,7 +4020,6 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
       const cre = parseInt(cells[17]?.textContent.trim()) || 0;
       const art = parseInt(cells[19]?.textContent.trim()) || 0;
 
-      // Calculate totalMarks by summing up individual subject scores
       const totalMarks = english + math + preTech + kiswahili + science + social + agriculture + cre + art;
 
       return {
@@ -4278,6 +4204,7 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
   }, 10000); // Delay male popup by 10 seconds
 
 }
+
 
 function printSection(sectionId, grade, examPeriod) {
   const section = document.getElementById(sectionId);

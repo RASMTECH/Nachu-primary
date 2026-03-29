@@ -2490,6 +2490,29 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
   justify-content:flex-start;
   margin-bottom:15px;
 ">
+ <!-- Learners Database -->
+  <button
+    type="button"
+    id="masterToggleBtn"
+    style="
+      background:linear-gradient(135deg,#673AB7,#5E35B1);
+      color:white;
+      height:48px;
+      padding:0 20px;
+      border:none;
+      border-radius:8px;
+      font-size:1rem;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      white-space:nowrap;
+    ">
+    <i class="fas fa-database"></i>
+    Learners Database
+  </button>
+
+
 
   <!-- Exam & Marks Controls -->
   <button
@@ -2511,28 +2534,6 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
     ">
     <i class="fas fa-chart-bar"></i>
     <span class="btn-label">Exam & Marks Controls</span>
-  </button>
-
-  <!-- Learners Database -->
-  <button
-    type="button"
-    id="masterToggleBtn"
-    style="
-      background:linear-gradient(135deg,#673AB7,#5E35B1);
-      color:white;
-      height:48px;
-      padding:0 20px;
-      border:none;
-      border-radius:8px;
-      font-size:1rem;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      cursor:pointer;
-      white-space:nowrap;
-    ">
-    <i class="fas fa-database"></i>
-    Learners Database
   </button>
 
   <!-- Parent Lookup -->
@@ -2584,15 +2585,8 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
     ">
 
     <!-- Exam Reports -->
-    <button
-      class="print-button blue-btn"
-      id="togglePerformanceReportsBtn"
-      style="min-width:180px; text-align:center;">
-      <i class="fas fa-file-alt"></i>
-      Exam Reports
-    </button>
 
-    <!-- Marks Section -->
+ <!-- Marks Section -->
     <button
       class="print-button blue-btn"
       id="toggleMarksSectionBtn"
@@ -2601,6 +2595,17 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
       Marks Section
     </button>
 
+
+
+    <button
+      class="print-button blue-btn"
+      id="togglePerformanceReportsBtn"
+      style="min-width:180px; text-align:center;">
+      <i class="fas fa-file-alt"></i>
+      Exam Reports
+    </button>
+
+   
     <!-- Record Marks -->
     <button
       class="print-button green-btn"
@@ -4056,10 +4061,13 @@ Rasm Does It All – One Click and You’re Done!.</span>
   appId: "1:986907903758:web:e809b809610d5ef5bcb95f",
   measurementId: "G-0WS8ECZLF5"
   };
+const app = initializeApp(firebaseConfig);
 
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
-  const learnersRef = ref(database, "learners");
+// ✅ renamed from database → db
+const db = getDatabase(app);
+
+// learners reference
+const learnersRef = ref(db, "learners")
 // 🔹 Auto-generate age based on grade (random within range)
 function getRandomAgeByGrade(grade) {
     switch (grade) {

@@ -5609,12 +5609,32 @@ Swal.close();
   });
 }
 
-// BUTTON
+// ===============================
+// 🔘 BUTTON (UNIFIED SAFE LOADER)
+// ===============================
 document.getElementById("loadMarksByPeriodBtn")
-  .addEventListener("click", loadMarksUnified);
+  .addEventListener("click", () => {
+    const selectedExamPeriod = document.getElementById("marksExamPeriodSelect").value;
 
+    if (!selectedExamPeriod) {
+      showToast("Please select an exam period to view marks.", "error");
+      return;
+    }
+
+    loadMarksUnified();
+  });
+
+
+// ===============================
+// 📊 GLOBAL REPORT STORAGE (IMPORTANT FIX)
+// ===============================
+window.reportMarksData = [];
+
+
+// ===============================
+// 📌 POPULATE GRADE SELECTORS
+// ===============================
 function populateGradeSelectors(grades) {
-
   const selectors = [
     document.getElementById("filterMarksGrade"),
     document.getElementById("reportGradeSelect")
@@ -5623,36 +5643,30 @@ function populateGradeSelectors(grades) {
   selectors.forEach(select => {
     if (!select) return;
 
-    // 💾 SAVE CURRENT SELECTION BEFORE RESET
     const previousValue = select.value;
-
     select.innerHTML = `<option value="">Select Grade</option>`;
 
     grades.forEach(grade => {
       const option = document.createElement("option");
 
       const rawGrade = grade.toString().trim();
-
       option.value = rawGrade;
 
-      let formattedGrade = rawGrade;
-      if (!rawGrade.toUpperCase().startsWith("GRADE")) {
-        formattedGrade = "GRADE " + rawGrade;
-      }
-
-      option.textContent = formattedGrade;
+      option.textContent = rawGrade.toUpperCase().startsWith("GRADE")
+        ? rawGrade
+        : "GRADE " + rawGrade;
 
       select.appendChild(option);
     });
 
-    // 🔄 RESTORE PREVIOUS SELECTION
-    if (previousValue) {
-      select.value = previousValue;
-    }
+    if (previousValue) select.value = previousValue;
   });
 }
 
-// Get the level based on the score
+
+// ===============================
+// 🧠 LEVEL CALCULATION
+// ===============================
 function getLevel(score) {
   if (score >= 90) return 8;
   if (score >= 75) return 7;
@@ -5664,25 +5678,23 @@ function getLevel(score) {
   return 1;
 }
 
+
 // ===============================
-// 🔢 UPDATE TOTALS & AVERAGES
+// 🔢 TOTALS & AVERAGES
 // ===============================
 function updateTotalsAndAverages(sums, count) {
   const divisor = count > 0 ? count : 1;
 
-  // 🛑 If no data, clear rows
   if (count === 0) {
     document.getElementById("totalsRow").innerHTML = "";
     document.getElementById("averagesRow").innerHTML = "";
     return;
   }
 
-  // 🔢 TOTALS
   document.getElementById("totalsRow").innerHTML = `
     <td colspan="3"><strong>Totals</strong></td>
     <td>${sums.eng}</td><td></td>
     <td>${sums.math}</td><td></td>
-   
     <td>${sums.kiswahili}</td><td></td>
     <td>${sums.science}</td><td></td>
     <td>${sums.social}</td><td></td>
@@ -5694,12 +5706,10 @@ function updateTotalsAndAverages(sums, count) {
     <td></td>
   `;
 
-  // 📊 AVERAGES
   document.getElementById("averagesRow").innerHTML = `
     <td colspan="3"><strong>Averages</strong></td>
     <td>${(sums.eng / divisor).toFixed(2)}</td><td></td>
     <td>${(sums.math / divisor).toFixed(2)}</td><td></td>
-
     <td>${(sums.kiswahili / divisor).toFixed(2)}</td><td></td>
     <td>${(sums.science / divisor).toFixed(2)}</td><td></td>
     <td>${(sums.social / divisor).toFixed(2)}</td><td></td>
@@ -5714,14 +5724,14 @@ function updateTotalsAndAverages(sums, count) {
 
 
 // ===============================
-// 🎯 FILTER + RECALCULATE
+// 🎯 FILTER TABLE (FIXED SUM BUG)
 // ===============================
 filterMarksGrade.addEventListener("change", () => {
   const selectedGrade = filterMarksGrade.value;
   const rows = marksTableBody.querySelectorAll("tr");
 
   let sums = {
-    eng: 0, math: 0,  kiswahili: 0,
+    eng: 0, math: 0, kiswahili: 0,
     science: 0, social: 0, agriculture: 0,
     cre: 0, creativeArt: 0,
     totalMarks: 0,
@@ -5739,10 +5749,8 @@ filterMarksGrade.addEventListener("change", () => {
     if (visible) {
       const cells = row.querySelectorAll("td");
 
-      // 🧮 MARKS
       const eng = parseFloat(cells[3].textContent) || 0;
       const math = parseFloat(cells[5].textContent) || 0;
-      
       const kiswahili = parseFloat(cells[7].textContent) || 0;
       const science = parseFloat(cells[9].textContent) || 0;
       const social = parseFloat(cells[11].textContent) || 0;
@@ -5751,10 +5759,8 @@ filterMarksGrade.addEventListener("change", () => {
       const creativeArt = parseFloat(cells[17].textContent) || 0;
       const totalMarks = parseFloat(cells[19].textContent) || 0;
 
-      // ➕ SUMS
       sums.eng += eng;
       sums.math += math;
-      sums.preTech += preTech;
       sums.kiswahili += kiswahili;
       sums.science += science;
       sums.social += social;
@@ -5763,11 +5769,9 @@ filterMarksGrade.addEventListener("change", () => {
       sums.creativeArt += creativeArt;
       sums.totalMarks += totalMarks;
 
-      // 🧠 LEVELS (FIXED — no duplication bug)
       sums.totalLevel +=
         getLevel(eng) +
         getLevel(math) +
-    
         getLevel(kiswahili) +
         getLevel(science) +
         getLevel(social) +
@@ -5779,70 +5783,56 @@ filterMarksGrade.addEventListener("change", () => {
     }
   });
 
-  // 🔄 UPDATE UI
   updateTotalsAndAverages(sums, filteredCount);
   renderSubjectAverages(sums, filteredCount);
 });
 
 
-
+// ===============================
+// 🗑 DELETE MARKS (FIXED REFRESH)
+// ===============================
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("deleteMarksBtn")) {
+
     if (!isAdminLoggedIn) {
       Swal.fire({
         icon: "error",
         title: "Access Denied",
-        text: "Only admins can delete learner marks.",
-        confirmButtonColor: "#d33"
+        text: "Only admins can delete learner marks."
       });
       return;
     }
 
-    const button = e.target;
-    const learnerKey = button.getAttribute("data-key");
-    const examPeriod = button.getAttribute("data-exam");
-
-    if (!learnerKey || !examPeriod) {
-      console.warn("Missing learner key or exam period.");
-      return;
-    }
+    const learnerKey = e.target.getAttribute("data-key");
+    const examPeriod = e.target.getAttribute("data-exam");
 
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to delete this learner's marks for this exam?",
+      text: "Delete this learner's marks?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonColor: "#d33"
     }).then((result) => {
       if (result.isConfirmed) {
+
         const learnerMarksRef = ref(database, `learners/${learnerKey}/marks/${examPeriod}`);
 
         set(learnerMarksRef, null)
           .then(() => {
             Swal.fire({
               toast: true,
-              position: 'top-end',
-              icon: 'success',
-              title: "Marks deleted successfully!",
-              showConfirmButton: false,
+              position: "top-end",
+              icon: "success",
+              title: "Marks deleted",
               timer: 3000,
-              timerProgressBar: true
+              showConfirmButton: false
             });
-            loadMarksFromFirebase(); // Refresh table
+
+            // ✅ FIXED REFRESH
+            loadMarksUnified();
           })
           .catch(err => {
-            console.error("Error deleting marks: ", err);
-            Swal.fire({
-              toast: true,
-              position: 'top-end',
-              icon: 'error',
-              title: "Failed to delete marks.",
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true
-            });
+            console.error(err);
           });
       }
     });
@@ -9585,7 +9575,160 @@ function generateSubjectRanking(grade, subjectKey, period) {
   });
 }
 
+document.getElementById("loadMarksByPeriodBtn").addEventListener("click", () => {
+  const selectedExamPeriod = document.getElementById("marksExamPeriodSelect").value;
+  if (!selectedExamPeriod) {
+    showToast("Please select an exam period to view marks.", "error");
+    return;
+  }
+  loadMarksTableForPeriod(selectedExamPeriod);
+});
+function loadMarksTableForPeriod(examPeriod) {
+  marksTableBody.innerHTML = "";
+  const gradeGroups = {};
 
+  let sums = {
+    eng: 0, math: 0,  kiswahili: 0,
+    science: 0, social: 0, agriculture: 0,
+    cre: 0, creativeArt: 0, totalMarks: 0, totalLevels: 0
+  };
+
+  let learnersWithMarks = 0;
+
+  onValue(learnersRef, (snapshot) => {
+    marksTableBody.innerHTML = "";
+
+    snapshot.forEach(childSnapshot => {
+      const data = childSnapshot.val();
+      const marksData = data.marks || {};
+      const marks = marksData[examPeriod] || null;
+
+      if (marks) {
+        const rowTotal =
+          (parseFloat(marks.eng) || 0) +
+          (parseFloat(marks.math) || 0) +
+   
+          (parseFloat(marks.kiswahili) || 0) +
+          (parseFloat(marks.science) || 0) +
+          (parseFloat(marks.social) || 0) +
+          (parseFloat(marks.agriculture) || 0) +
+          (parseFloat(marks.cre) || 0) +
+          (parseFloat(marks.creativeArt) || 0);
+
+        const totalLevel =
+          (parseInt(marks.engLev) || 0) +
+          (parseInt(marks.mathLev) || 0) +
+      
+          (parseInt(marks.kiswahiliLev) || 0) +
+          (parseInt(marks.scienceLev) || 0) +
+          (parseInt(marks.socialLev) || 0) +
+          (parseInt(marks.agricultureLev) || 0) +
+          (parseInt(marks.creLev) || 0) +
+          (parseInt(marks.creativeArtLev) || 0);
+
+        const learnerObj = {
+          key: childSnapshot.key,
+          data,
+          marks,
+          rowTotal,
+          totalLevel
+        };
+
+        const grade = data.grade;
+        if (!gradeGroups[grade]) {
+          gradeGroups[grade] = [];
+        }
+        gradeGroups[grade].push(learnerObj);
+      }
+    });
+
+    Object.keys(gradeGroups).forEach(grade => {
+      const learners = gradeGroups[grade];
+      learners.sort((a, b) => b.rowTotal - a.rowTotal);
+
+      learners.forEach((learner, i) => {
+        learnersWithMarks++;
+
+        const { data, marks, rowTotal, totalLevel } = learner;
+
+        sums.eng += (parseFloat(marks.eng) || 0);
+        sums.math += (parseFloat(marks.math) || 0);
+      
+        sums.kiswahili += (parseFloat(marks.kiswahili) || 0);
+        sums.science += (parseFloat(marks.science) || 0);
+        sums.social += (parseFloat(marks.social) || 0);
+        sums.agriculture += (parseFloat(marks.agriculture) || 0);
+        sums.cre += (parseFloat(marks.cre) || 0);
+        sums.creativeArt += (parseFloat(marks.creativeArt) || 0);
+        sums.totalMarks += rowTotal;
+        sums.totalLevels += totalLevel;
+
+        const row = document.createElement("tr");
+        row.setAttribute("data-grade", data.grade);
+        row.setAttribute("data-exam-period", examPeriod);
+        row.setAttribute("data-key", learner.key);
+
+        row.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${data.name}</td>
+          <td>${data.grade}</td>
+          <td data-editable="true">${marks.eng}</td><td>${marks.engLev || ''}</td>
+          <td data-editable="true">${marks.math}</td><td>${marks.mathLev || ''}</td>
+
+          <td data-editable="true">${marks.kiswahili}</td><td>${marks.kiswahiliLev || ''}</td>
+          <td data-editable="true">${marks.science}</td><td>${marks.scienceLev || ''}</td>
+          <td data-editable="true">${marks.social}</td><td>${marks.socialLev || ''}</td>
+          <td data-editable="true">${marks.agriculture}</td><td>${marks.agricultureLev || ''}</td>
+          <td data-editable="true">${marks.cre}</td><td>${marks.creLev || ''}</td>
+          <td data-editable="true">${marks.creativeArt}</td><td>${marks.creativeArtLev || ''}</td>
+          <td><strong>${rowTotal}</strong></td>
+          <td><strong>${totalLevel}</strong></td>
+          <td>
+            <button class="deleteMarksBtn" data-key="${learner.key}" data-exam="${examPeriod}">Delete</button>
+          </td>
+        `;
+
+        marksTableBody.appendChild(row);
+      });
+    });
+
+    const divisor = learnersWithMarks > 0 ? learnersWithMarks : 1;
+
+    document.getElementById("totalsRow").innerHTML = `
+      <td colspan="3"><strong>Totals</strong></td>
+      <td>${sums.eng}</td><td></td>
+      <td>${sums.math}</td><td></td>
+   
+      <td>${sums.kiswahili}</td><td></td>
+      <td>${sums.science}</td><td></td>
+      <td>${sums.social}</td><td></td>
+      <td>${sums.agriculture}</td><td></td>
+      <td>${sums.cre}</td><td></td>
+      <td>${sums.creativeArt}</td><td></td>
+      <td><strong>${sums.totalMarks}</strong></td>
+      <td><strong>${sums.totalLevels}</strong></td>
+      <td></td>
+    `;
+
+    document.getElementById("averagesRow").innerHTML = `
+      <td colspan="3"><strong>Averages</strong></td>
+      <td>${(sums.eng / divisor).toFixed(2)}</td><td></td>
+      <td>${(sums.math / divisor).toFixed(2)}</td><td></td>
+ 
+      <td>${(sums.kiswahili / divisor).toFixed(2)}</td><td></td>
+      <td>${(sums.science / divisor).toFixed(2)}</td><td></td>
+      <td>${(sums.social / divisor).toFixed(2)}</td><td></td>
+      <td>${(sums.agriculture / divisor).toFixed(2)}</td><td></td>
+      <td>${(sums.cre / divisor).toFixed(2)}</td><td></td>
+      <td>${(sums.creativeArt / divisor).toFixed(2)}</td><td></td>
+      <td><strong>${(sums.totalMarks / divisor).toFixed(2)}</strong></td>
+      <td><strong>${(sums.totalLevels / divisor).toFixed(2)}</strong></td>
+      <td></td>
+    `;
+
+    if (isAdminLoggedIn) enableMarksEditing();
+  });
+}
 
 function showToast(message, type = 'info') {
   const toast = document.getElementById("toast");

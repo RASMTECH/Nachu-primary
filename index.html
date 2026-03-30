@@ -5254,7 +5254,7 @@ document.getElementById("saveMarksButton").addEventListener("click", () => {
   };
 
   // ✅ Save to Firebase
-  set(ref(database, `learners/${learnerKey}/marks/${examPeriod}`), marksData)
+  set(ref(db, `learners/${learnerKey}/marks/${examPeriod}`), marksData)
     .then(() => {
       Swal.fire({
         icon: 'success',

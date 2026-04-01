@@ -5819,7 +5819,7 @@ document.addEventListener("click", function (e) {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        const learnerMarksRef = ref(database, `learners/${learnerKey}/marks/${examPeriod}`);
+        const learnerMarksRef = ref(db, `learners/${learnerKey}/marks/${examPeriod}`);
 
         set(learnerMarksRef, null)
           .then(() => {
@@ -6765,7 +6765,7 @@ function generateReport(reportType, selectedGrade, examPeriod) {
         });
     }
 
-    // Process rows (e.g., marks table or database rows)
+    // Process rows (e.g., marks table or db rows)
     marksTableBody.querySelectorAll("tr").forEach(row => {
         if (selectedGrade && row.getAttribute("data-grade") !== selectedGrade) return;
         if (examPeriod && row.getAttribute("data-period") !== examPeriod) return;
@@ -10286,7 +10286,7 @@ function enableMarksEditing() {
       const total = Object.values(marks).reduce((a,b)=>a+b,0);
       const average = total / Object.values(marks).length;
 
-      const learnerMarksRef = ref(database, `learners/${learnerKey}/marks/${examPeriod}`);
+      const learnerMarksRef = ref(db, `learners/${learnerKey}/marks/${examPeriod}`);
       update(learnerMarksRef, {...marks, total, average})
         .then(() => {
           cellValues.forEach(c => { c.dataset.original = c.innerText.trim(); c.style.border = "2px solid green"; setTimeout(() => {c.style.border="1px solid #ff9800"},1500) });
@@ -10548,7 +10548,7 @@ document.getElementById("bulkDeleteButton").addEventListener("click", async () =
     });
 
     // Delete all selected learners from Firebase
-    const deletePromises = keysToDelete.map(key => remove(ref(database, `learners/${key}`)));
+    const deletePromises = keysToDelete.map(key => remove(ref(db, `learners/${key}`)));
     await Promise.all(deletePromises);
 
     // Update local arrays
@@ -11037,7 +11037,7 @@ document.getElementById("fetchParentResults").addEventListener("click", () => {
     allLearners.sort((a,b) => b.total - a.total);
     const position = allLearners.findIndex(l => l.key === learnerKey) + 1;
 
-    onValue(ref(database, `learners/${learnerKey}/marks/${examPeriod}`), snap => {
+    onValue(ref(db, `learners/${learnerKey}/marks/${examPeriod}`), snap => {
       if (!snap.exists()) {
         Swal.fire({
           icon: "info",

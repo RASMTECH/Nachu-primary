@@ -5676,14 +5676,10 @@ function populateGradeSelectors(grades) {
 // 🧠 LEVEL CALCULATION
 // ===============================
 function getLevel(score) {
-  if (score >= 90) return 8;
-  if (score >= 75) return 7;
-  if (score >= 58) return 6;
-  if (score >= 41) return 5;
-  if (score >= 31) return 4;
-  if (score >= 21) return 3;
-  if (score >= 11) return 2;
-  return 1;
+  if (score >= 70) return 4;  // top level
+  if (score >= 50) return 3;
+  if (score >= 30) return 2;
+  return 1;                     // lowest level
 }
 
 
@@ -5795,108 +5791,57 @@ filterMarksGrade.addEventListener("change", () => {
   renderSubjectAverages(sums, filteredCount);
 });
 
+
 // ===============================
-// 🗑 DELETE MARKS (REAL-TIME FULL REFRESH FIXED)
+// 🗑 DELETE MARKS (FIXED REFRESH)
 // ===============================
 document.addEventListener("click", function (e) {
-
   if (e.target.classList.contains("deleteMarksBtn")) {
 
     if (!isAdminLoggedIn) {
-
       Swal.fire({
         icon: "error",
         title: "Access Denied",
-        text: "Only admins can delete learner marks.",
-        confirmButtonColor: "#d33"
+        text: "Only admins can delete learner marks."
       });
-
       return;
     }
 
-    const button = e.target;
-
-    const learnerKey = button.dataset.key;
-    const examPeriod = button.dataset.exam;
-
-    if (!learnerKey || !examPeriod) {
-
-      console.warn("Missing learner key or exam period.");
-
-      return;
-    }
+    const learnerKey = e.target.getAttribute("data-key");
+    const examPeriod = e.target.getAttribute("data-exam");
 
     Swal.fire({
-
       title: "Are you sure?",
-      text: "You want to delete this learner's marks for this exam?",
+      text: "Delete this learner's marks?",
       icon: "warning",
-
       showCancelButton: true,
-
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-
-      confirmButtonText: "Yes, delete it!"
-
-    }).then(async (result) => {
-
+      confirmButtonColor: "#d33"
+    }).then((result) => {
       if (result.isConfirmed) {
 
-        try {
+        const learnerMarksRef = ref(database, `learners/${learnerKey}/marks/${examPeriod}`);
 
-          const learnerMarksRef =
-            ref(db,
-              `learners/${learnerKey}/marks/${examPeriod}`
-            );
+        set(learnerMarksRef, null)
+          .then(() => {
+            Swal.fire({
+              toast: true,
+              position: "top-end",
+              icon: "success",
+              title: "Marks deleted",
+              timer: 3000,
+              showConfirmButton: false
+            });
 
-          // delete marks
-          await set(learnerMarksRef, null);
-
-          Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title: "Marks deleted successfully!",
-            showConfirmButton: false,
-            timer: 2000
+            // ✅ FIXED REFRESH
+            loadMarksUnified();
+          })
+          .catch(err => {
+            console.error(err);
           });
-
-          // =====================
-          // 🔄 REAL-TIME REFRESH
-          // =====================
-
-          // refresh marks table
-          loadMarksUnified();
-
-          // return learner to dropdown
-          filterLearnersWithMarks();
-
-        }
-
-        catch (err) {
-
-          console.error("Error deleting marks:", err);
-
-          Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "error",
-            title: "Failed to delete marks.",
-            showConfirmButton: false,
-            timer: 3000
-          });
-
-        }
-
       }
-
     });
-
   }
-
 });
-
 
 // Subject Champions button event — optionally toast if no selection
 document.getElementById("subjectChampionsBtn").addEventListener("click", () => {
@@ -6808,7 +6753,7 @@ function generateReport(reportType, selectedGrade, examPeriod) {
         'Agriculture', 'Religious Education', 'Creative Arts & sports '
     ];
 
-    const levels = ['8', '7', '6', '5', '5', '4', '3', '2' ,'1'];
+    const levels = ['4', '3', '2', '1'];
 
     const summary = {};
 
@@ -9177,588 +9122,179 @@ document.querySelectorAll('#marksInputs input[type="number"]').forEach(input => 
     input.addEventListener('blur', () => validateScoreFormat(input));
 });
 
-/* =====================================================
-   CENTER POPUP SYSTEM
-===================================================== */
+function countMarksStatusPerGrade() {
+  if (!isAdminLoggedIn) {
+    Swal.fire("Access Denied", "Only the admin can view this report.", "error");
+    return;
+  }
 
-function showReportPopup(html){
+  const selectedGrade = document.getElementById('filterMarksGrade').value.trim();
+  const selectedPeriod = document.getElementById('marksExamPeriodSelect').value.trim();
 
-let overlay =
-document.getElementById("reportPopupOverlay");
+  if (!selectedGrade || !selectedPeriod || selectedGrade.toLowerCase().includes("select") || selectedPeriod.toLowerCase().includes("select")) {
+    Swal.fire("Missing Filters", "Please select both grade and exam period to view summary.", "warning");
+    return;
+  }
 
-if(!overlay){
+  const gradeCounts = {
+    [selectedGrade]: {
+      recorded: 0,
+      notRecorded: 0,
+      notRecordedNames: []
+    }
+  };
 
-overlay = document.createElement("div");
+  onValue(learnersRef, (snapshot) => {
+    snapshot.forEach(childSnapshot => {
+      const learner = childSnapshot.val();
+      const grade = learner.grade?.trim();
+      const name = learner.name || "Unknown";
+      const marks = learner.marks || {};
 
-overlay.id="reportPopupOverlay";
+      if (grade !== selectedGrade) return;
 
-overlay.style.cssText=`
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-`;
+      const hasMarksForPeriod = marks.hasOwnProperty(selectedPeriod);
 
-overlay.innerHTML=`
+      if (hasMarksForPeriod) {
+        gradeCounts[selectedGrade].recorded++;
+      } else {
+        gradeCounts[selectedGrade].notRecorded++;
+        gradeCounts[selectedGrade].notRecordedNames.push(name);
+      }
+    });
 
-<div id="reportPopupBox"
+    const counts = gradeCounts[selectedGrade];
+    const total = counts.recorded + counts.notRecorded;
+    const remarks = counts.notRecorded === 0
+      ? "All marks recorded"
+      : counts.recorded === 0
+        ? "No marks recorded"
+        : "Partial marks recorded";
 
-style="
-background:white;
-width:90%;
-max-width:900px;
-max-height:90vh;
-overflow:auto;
-border-radius:10px;
-padding:20px;
-position:relative;
-box-shadow:0 5px 25px rgba(0,0,0,0.3);
-">
+    const learnersWithNoMarks = counts.notRecordedNames.join(", ") || "None";
 
-<button id="closePopupBtn"
+    let html = `
+      <h3 style="color: black;">Marks Recording Summary for ${selectedGrade} (${selectedPeriod})</h3>
+      <table id="marksSummaryTable" style="width: 100%; border-collapse: collapse; margin-top: 10px; color: black;">
+        <thead>
+          <tr style="background-color: #007bff; color: white;">
+            <th style="border: 3px solid black; padding: 8px;">No</th>
+            <th style="border: 3px solid black; padding: 8px;">Grade</th>
+            <th style="border: 3px solid black; padding: 8px;">Number of Learners</th>
+            <th style="border: 3px solid black; padding: 8px;">Recorded Marks</th>
+            <th style="border: 3px solid black; padding: 8px;">Not Recorded</th>
+            <th style="border: 3px solid black; padding: 8px;">Learners with No Marks</th>
+            <th style="border: 3px solid black; padding: 8px;">Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 3px solid black; padding: 8px; text-align: center;">1</td>
+            <td style="border: 3px solid black; padding: 8px; text-align: center;">${selectedGrade}</td>
+            <td style="border: 3px solid black; padding: 8px; text-align: center;">${total}</td>
+            <td style="border: 3px solid black; padding: 8px; text-align: center;">${counts.recorded}</td>
+            <td style="border: 3px solid black; padding: 8px; text-align: center;">${counts.notRecorded}</td>
+            <td style="border: 3px solid black; padding: 8px; text-align: center;">${learnersWithNoMarks}</td>
+            <td style="border: 3px solid black; padding: 8px; text-align: center;">${remarks}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button id="printMarksSummaryBtn" style="margin-top: 15px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer;">
+        <i class="fas fa-print"></i> Print Report
+      </button>
+    `;
 
-style="
-position:absolute;
-top:10px;
-right:10px;
-background:#dc3545;
-color:white;
-border:none;
-border-radius:50%;
-width:35px;
-height:35px;
-cursor:pointer;
-font-size:18px;
-">
+    const container = document.getElementById("marksStatusSummary");
+    container.innerHTML = html;
 
-×
-</button>
+    document.getElementById("printMarksSummaryBtn").addEventListener("click", () => {
+      const logoUrl = "https://i.imgur.com/VSAh48K.jpeg";
+      const year = new Date().getFullYear();
+      const tableHTML = document.getElementById("marksSummaryTable").outerHTML;
 
-<div id="reportPopupContent"></div>
-
-</div>
-`;
-
-document.body.appendChild(overlay);
-
-
-/* close popup */
-
-document
-.getElementById("closePopupBtn")
-
-.onclick = ()=>{
-
-overlay.style.display="none";
-
-};
-
-
-/* click outside closes popup */
-
-overlay.onclick=(e)=>{
-
-if(e.target.id==="reportPopupOverlay")
-
-overlay.style.display="none";
-
-};
-
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+        <head>
+          <title>NACHU PRIMARY SCHOOL MARKS CAPTURE Report</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 40px; color: black; }
+            h2, p { text-align: center; margin: 5px 0; color: black; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; color: black; }
+            th, td { border: 3px solid black; padding: 8px; text-align: center; color: black; }
+            th { background-color: #007bff; color: white; }
+            img.logo { display: block; margin: 0 auto 15px; width: 100px; }
+            .stamp {
+              border: 2px solid blue;
+              color: blue;
+              text-align: center;
+              width: 200px;
+              height: 70px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 10px auto;
+              font-weight: bold;
+            }
+          </style>
+        </head>
+        <body>
+          <img src="${logoUrl}" alt="School Logo" class="logo">
+          <h2>NACHU PRIMARY SCHOOL MARKS CAPTURE Report</h2>
+          <p>ADDRESS: P.O. BOX 561-00902 Kikuyu KENYA</p>
+          <p>School Motto: "My Talent My Passion"</p>
+          <p>Year: ${year}</p>
+          ${tableHTML}
+          <div class="stamp">
+            Nachu Primary School<br>
+            Po Box 561-00902<br>
+            Kikuyu...Exam Department
+          </div>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    });
+  });
 }
 
+document.getElementById("showMarksStatusBtn").addEventListener("click", () => {
+  if (!isAdminLoggedIn) {
+    Swal.fire("Access Denied", "Only the admin can view the marks recording status.", "error");
+    return;
+  }
 
-document
-.getElementById("reportPopupContent")
-.innerHTML=html;
+  const summaryDiv = document.getElementById("marksStatusSummary");
+  const toggleButton = document.getElementById("showMarksStatusBtn");
+  const toggleIcon = document.getElementById("toggleIcon");
 
-overlay.style.display="flex";
+  const selectedGrade = document.getElementById('filterMarksGrade').value.trim();
+  const selectedPeriod = document.getElementById('marksExamPeriodSelect').value.trim();
 
-}
+  const invalidGrade = !selectedGrade || selectedGrade.toLowerCase().includes("select");
+  const invalidPeriod = !selectedPeriod || selectedPeriod.toLowerCase().includes("select");
 
+  if (invalidGrade || invalidPeriod) {
+    Swal.fire("Missing Filters", "Please select both grade and exam period to view the summary.", "warning");
+    return;
+  }
 
-
-/* =====================================================
-   MARKS STATUS REPORT
-===================================================== */
-
-async function countMarksStatusPerGrade(){
-
-if(!isAdminLoggedIn){
-
-Swal.fire(
-"Access Denied",
-"Only admin can view report",
-"error"
-);
-
-return;
-
-}
-
-
-const selectedGrade =
-document
-.getElementById("filterMarksGrade")
-.value.trim();
-
-
-const selectedPeriod =
-document
-.getElementById("marksExamPeriodSelect")
-.value.trim();
-
-
-
-if(
-
-!selectedGrade ||
-
-!selectedPeriod ||
-
-selectedGrade.toLowerCase().includes("select") ||
-
-selectedPeriod.toLowerCase().includes("select")
-
-){
-
-Swal.fire(
-
-"Missing Filters",
-
-"Please select grade and exam period",
-
-"warning"
-
-);
-
-return;
-
-}
-
-
-
-Swal.fire({
-
-title:"Analyzing marks...",
-
-allowOutsideClick:false,
-
-didOpen:()=>Swal.showLoading()
-
+  if (summaryDiv.style.display === "none" || !summaryDiv.style.display) {
+    countMarksStatusPerGrade();
+    summaryDiv.style.display = "block";
+    toggleButton.textContent = " Hide Marks Recording Status Per Grade";
+    toggleButton.prepend(toggleIcon);
+    toggleIcon.className = "fas fa-eye-slash";
+  } else {
+    summaryDiv.style.display = "none";
+    toggleButton.textContent = " Show Marks Recording Status Per Grade";
+    toggleButton.prepend(toggleIcon);
+    toggleIcon.className = "fas fa-eye";
+  }
 });
-
-
-
-try{
-
-const snapshot =
-await get(learnersRef);
-
-
-let recorded=0;
-
-let notRecorded=0;
-
-let missingList=[];
-
-
-
-snapshot.forEach(child=>{
-
-const learner =
-child.val();
-
-
-
-if(
-learner.grade?.trim()
-!== selectedGrade
-) return;
-
-
-
-const name =
-learner.name || "Unknown";
-
-
-const marks =
-learner.marks || {};
-
-
-
-if(marks[selectedPeriod]){
-
-recorded++;
-
-}
-
-else{
-
-notRecorded++;
-
-missingList.push(name);
-
-}
-
-});
-
-
-
-missingList.sort();
-
-
-
-const total =
-recorded + notRecorded;
-
-
-
-const percent =
-total===0 ? 0 :
-
-Math.round(
-(recorded/total)*100
-);
-
-
-
-let remark="";
-
-
-if(percent===100)
-remark="Complete";
-
-else if(percent>=80)
-remark="Almost complete";
-
-else if(percent>=40)
-remark="In progress";
-
-else if(percent>0)
-remark="Few marks captured";
-
-else
-remark="No marks captured";
-
-
-
-const today =
-new Date()
-.toLocaleDateString();
-
-
-
-const html = `
-
-<h3>
-
-Marks Capture Status
-
-</h3>
-
-
-<p>
-
-<b>Grade:</b>
-${selectedGrade}
-
-<br>
-
-<b>Exam Period:</b>
-${selectedPeriod}
-
-<br>
-
-<b>Date:</b>
-${today}
-
-</p>
-
-
-
-<div style="
-background:#eee;
-border-radius:20px;
-overflow:hidden;
-margin:10px 0;
-">
-
-<div style="
-width:${percent}%;
-background:#28a745;
-color:white;
-padding:5px;
-text-align:center;
-font-weight:bold;
-">
-
-${percent}%
-
-</div>
-
-</div>
-
-
-
-
-<table
-id="marksSummaryTable"
-
-style="
-width:100%;
-border-collapse:collapse;
-">
-
-<tr style="
-background:#007bff;
-color:white;
-">
-
-<th>Total</th>
-
-<th>Recorded</th>
-
-<th>Missing</th>
-
-<th>Completion</th>
-
-<th>Remark</th>
-
-</tr>
-
-
-
-<tr>
-
-<td>${total}</td>
-
-<td>${recorded}</td>
-
-<td>${notRecorded}</td>
-
-<td>${percent}%</td>
-
-<td>${remark}</td>
-
-</tr>
-
-</table>
-
-
-
-<details style="margin-top:15px;">
-
-<summary style="
-cursor:pointer;
-font-weight:bold;
-">
-
-Learners Without Marks
-
-(${notRecorded})
-
-</summary>
-
-
-
-<div style="
-margin-top:10px;
-border:1px solid #ddd;
-padding:10px;
-max-height:200px;
-overflow:auto;
-">
-
-${missingList.join("<br>")
-|| "All learners captured"}
-
-</div>
-
-</details>
-
-
-
-
-<div style="margin-top:15px;">
-
-<button id="printBtn"
-
-style="
-background:#28a745;
-color:white;
-padding:8px 15px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-">
-
-Print
-
-</button>
-
-
-
-<button id="excelBtn"
-
-style="
-background:#17a2b8;
-color:white;
-padding:8px 15px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-margin-left:10px;
-">
-
-Export Excel
-
-</button>
-
-
-</div>
-
-`;
-
-
-
-Swal.close();
-
-
-
-showReportPopup(html);
-
-
-
-
-/* PRINT */
-
-document
-.getElementById("printBtn")
-
-.onclick=()=>{
-
-const tableHTML =
-document
-.getElementById("marksSummaryTable")
-.outerHTML;
-
-
-const win =
-window.open("");
-
-
-win.document.write(`
-
-<h2>
-Marks Capture Report
-</h2>
-
-<p>
-
-Grade:
-${selectedGrade}
-
-<br>
-
-Exam Period:
-${selectedPeriod}
-
-<br>
-
-Completion:
-${percent}%
-
-</p>
-
-${tableHTML}
-
-`);
-
-
-win.print();
-
-win.close();
-
-};
-
-
-
-
-/* EXPORT */
-
-document
-.getElementById("excelBtn")
-
-.onclick=()=>{
-
-let csv="Name\n";
-
-missingList.forEach(n=>{
-
-csv+=n+"\n";
-
-});
-
-
-const blob=
-new Blob(
-[csv],
-{type:"text/csv"}
-);
-
-
-const a=
-document.createElement("a");
-
-
-a.href=
-URL.createObjectURL(blob);
-
-
-a.download=
-`${selectedGrade}_${selectedPeriod}_missing_marks.csv`;
-
-
-a.click();
-
-};
-
-
-}
-
-
-catch(error){
-
-console.error(error);
-
-Swal.fire(
-"Error",
-"Failed to generate report",
-"error"
-);
-
-}
-
-}
-
-
-
-/* =====================================================
-   BUTTON CLICK
-===================================================== */
-
-document
-.getElementById("showMarksStatusBtn")
-.addEventListener(
-"click",
-countMarksStatusPerGrade
-);
 
 
 // Populate grade dropdown from registered learners in Firebase
@@ -10653,208 +10189,159 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 function enableMarksEditing() {
   if (!isAdminLoggedIn) return;
 
-  const table = document.getElementById("marksList");
-  if (!table) return;
+  const marksExamPeriodSelect = document.getElementById("marksExamPeriodSelect");
+  if (!marksExamPeriodSelect) {
+    console.error("marksExamPeriodSelect not found!");
+    return;
+  }
 
-  if (table.dataset.editingEnabled === "true") return;
-  table.dataset.editingEnabled = "true";
+  const cells = document.querySelectorAll("#marksList td[data-editable='true']");
+  const editedRows = new Set();
 
-  const debounceTimers = new WeakMap();
-  const editQueue = new Map(); // 🔥 bulk save queue
+  // --- Enable editing & track changes ---
+  cells.forEach(cell => {
+    cell.contentEditable = true;
+    cell.style.backgroundColor = "#fff8dc";
+    cell.style.border = "1px solid #ff9800";
 
-  // =========================
-  // FOCUS IN
-  // =========================
-  table.addEventListener("focusin", (e) => {
-    const cell = e.target.closest("td[data-editable='true']");
-    if (!cell) return;
+    if (!cell.dataset.original) cell.dataset.original = cell.innerText.trim();
 
-    cell.contentEditable = "true";
-    cell.classList.add("editing-cell");
+    const updateTotals = () => {
+      const row = cell.closest("tr");
+      if (!row) return;
 
-    if (!cell.dataset.oldValue) {
-      cell.dataset.oldValue = cell.innerText.trim();
-    }
+      // Update total & average instantly
+      const cellValues = row.querySelectorAll("td[data-editable='true']");
+      const marks = Array.from(cellValues).map(c => parseFloat(c.innerText) || 0);
+      const total = marks.reduce((a, b) => a + b, 0);
+      const average = total / marks.length;
+
+      row.querySelector(".total")?.innerText && (row.querySelector(".total").innerText = total.toFixed(2));
+      row.querySelector(".average")?.innerText && (row.querySelector(".average").innerText = average.toFixed(2));
+      row.querySelector(".grandTotal")?.innerText && (row.querySelector(".grandTotal").innerText = total.toFixed(2));
+    };
+
+    const markEdited = () => {
+      const row = cell.closest("tr");
+      if (!row) return;
+      if (cell.innerText.trim() !== (cell.dataset.original || "")) {
+        editedRows.add(row);
+        cell.style.border = "2px dashed #ffa500"; // unsaved
+      }
+      updateTotals(); // ✅ live totals & averages
+    };
+
+    cell.addEventListener("input", markEdited);
+    cell.addEventListener("keyup", markEdited);
+    cell.addEventListener("blur", markEdited);
+    cell.addEventListener("paste", () => setTimeout(markEdited, 50));
   });
 
-  // =========================
-  // KEYBOARD NAVIGATION (EXCEL STYLE)
-  // =========================
-  table.addEventListener("keydown", (e) => {
-    const cell = e.target.closest("td[data-editable='true']");
-    if (!cell) return;
-
-    const row = cell.closest("tr");
-    const cells = [...row.querySelectorAll("td[data-editable='true']")];
-    const index = cells.indexOf(cell);
-
-    if (e.key === "Enter") {
-      e.preventDefault();
-      moveToCell(cells[index + 1] || getNextRowCell(row));
-    }
-
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      moveToCell(cells[index + 1]);
-    }
-
-    if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      moveToCell(cells[index - 1]);
-    }
-
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      moveToCell(getCellBelow(cell));
-    }
-
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      moveToCell(getCellAbove(cell));
-    }
-  });
-
-  function moveToCell(target) {
-    if (!target) return;
-    target.focus();
+  // --- Floating Save Button ---
+  let saveBtn = document.querySelector("#bulkSaveButton");
+  if (!saveBtn) {
+    saveBtn = document.createElement("button");
+    saveBtn.id = "bulkSaveButton";
+    saveBtn.innerText = "💾 Save Changes";
+    saveBtn.style.position = "fixed";
+    saveBtn.style.bottom = "20px";
+    saveBtn.style.right = "20px";
+    saveBtn.style.zIndex = "9999";
+    saveBtn.style.padding = "10px 20px";
+    saveBtn.style.backgroundColor = "#28a745";
+    saveBtn.style.color = "#fff";
+    saveBtn.style.border = "none";
+    saveBtn.style.borderRadius = "8px";
+    saveBtn.style.boxShadow = "0 2px 6px rgba(0,0,0,0.3)";
+    saveBtn.style.cursor = "pointer";
+    document.body.appendChild(saveBtn);
   }
 
-  function getCellBelow(cell) {
-    const row = cell.closest("tr");
-    const nextRow = row?.nextElementSibling;
-    if (!nextRow) return null;
-
-    const index = [...row.children].indexOf(cell);
-    return nextRow.children[index];
-  }
-
-  function getCellAbove(cell) {
-    const row = cell.closest("tr");
-    const prevRow = row?.previousElementSibling;
-    if (!prevRow) return null;
-
-    const index = [...row.children].indexOf(cell);
-    return prevRow.children[index];
-  }
-
-  function getNextRowCell(row) {
-    const nextRow = row?.nextElementSibling;
-    return nextRow?.querySelector("td[data-editable='true']");
-  }
-
-  // =========================
-  // FOCUS OUT (QUEUE SAVE)
-  // =========================
-  table.addEventListener("focusout", (e) => {
-    const cell = e.target.closest("td[data-editable='true']");
-    if (!cell) return;
-
-    if (debounceTimers.has(cell)) {
-      clearTimeout(debounceTimers.get(cell));
-    }
-
-    const timer = setTimeout(() => queueEdit(cell), 250);
-    debounceTimers.set(cell, timer);
-  });
-
-  // =========================
-  // ADD TO BULK QUEUE
-  // =========================
-  function queueEdit(cell) {
-    const newValue = cell.innerText.trim();
-    const oldValue = cell.dataset.oldValue ?? "";
-
-    if (newValue === oldValue) return;
-
-    const row = cell.closest("tr");
-    const learnerKey = row?.dataset.key;
-    const examPeriod = marksExamPeriodSelect.value;
-    const subjectName = cell.dataset.subject;
-
-    if (!learnerKey || !examPeriod) return;
-
-    const numericValue = Number(newValue);
-
-    if (!Number.isFinite(numericValue) || numericValue < 0 || numericValue > 100) {
-      cell.innerText = oldValue;
-      Swal.fire({
-        icon: "warning",
-        title: "Invalid Marks",
-        text: "Enter 0 - 100",
-      });
+  // --- Save Function ---
+  const saveChanges = () => {
+    if (editedRows.size === 0) {
+      Swal.fire({ toast: true, position: "top-end", icon: "info", title: "No changes to save", timer: 1500 });
       return;
     }
 
-    const key = `${learnerKey}_${examPeriod}`;
+    editedRows.forEach(row => {
+      const learnerKey = row.dataset.key;
+      const examPeriod = marksExamPeriodSelect.value;
+      const learnerName = row.querySelector(".learner-name")?.innerText || "Learner";
+      if (!learnerKey || !examPeriod) return;
 
-    if (!editQueue.has(key)) {
-      editQueue.set(key, {
-        learnerKey,
-        examPeriod,
-        marks: {}
-      });
-    }
+      const cellValues = row.querySelectorAll("td[data-editable='true']");
+      const marks = {
+        eng: parseFloat(cellValues[0].innerText) || 0,
+        math: parseFloat(cellValues[1].innerText) || 0,
+        preTech: parseFloat(cellValues[2].innerText) || 0,
+        kiswahili: parseFloat(cellValues[3].innerText) || 0,
+        science: parseFloat(cellValues[4].innerText) || 0,
+        social: parseFloat(cellValues[5].innerText) || 0,
+        agriculture: parseFloat(cellValues[6].innerText) || 0,
+        cre: parseFloat(cellValues[7].innerText) || 0,
+        creativeArt: parseFloat(cellValues[8].innerText) || 0
+      };
 
-    editQueue.get(key).marks[subjectName] = numericValue;
+      const total = Object.values(marks).reduce((a,b)=>a+b,0);
+      const average = total / Object.values(marks).length;
 
-    cell.classList.add("queued-cell");
+      const learnerMarksRef = ref(database, `learners/${learnerKey}/marks/${examPeriod}`);
+      update(learnerMarksRef, {...marks, total, average})
+        .then(() => {
+          cellValues.forEach(c => { c.dataset.original = c.innerText.trim(); c.style.border = "2px solid green"; setTimeout(() => {c.style.border="1px solid #ff9800"},1500) });
+          
+          // Row flash
+          row.style.transition = "background-color 0.3s ease";
+          row.style.backgroundColor = "#d4edda";
+          setTimeout(()=>{row.style.backgroundColor=""},800);
 
-    // 🚀 trigger auto-save
-    processQueue();
-  }
+          Swal.fire({toast:true, position:"top-end", icon:"success", title:`✅ Marks saved for ${learnerName}`, showConfirmButton:false, timer:1500});
+          updateMeritList();
+        })
+        .catch(err=>console.error("Save error", err));
+    });
+    editedRows.clear();
+  };
 
-  // =========================
-  // BULK SAVE PROCESSOR
-  // =========================
-  let isProcessing = false;
+  saveBtn.addEventListener("click", saveChanges);
 
-  async function processQueue() {
-    if (isProcessing || editQueue.size === 0) return;
+  // --- Auto-save every 5 seconds ---
+  setInterval(()=>{if(editedRows.size>0) saveChanges()},5000);
 
-    isProcessing = true;
+  console.log("✅ Real-time marks editor enabled with live totals, averages, and auto-save.");
+}// Update total & average for a single learner row
+function updateRowTotals(row, marks) {
+  const total = Object.values(marks).reduce((sum, val) => sum + val, 0);
+  const avg = total / Object.keys(marks).length;
 
-    for (const [key, data] of editQueue.entries()) {
-      try {
-        Swal.fire({
-          title: "Syncing...",
-          text: "Saving all changes",
-          allowOutsideClick: false,
-          didOpen: () => Swal.showLoading(),
-        });
+  const totalCell = row.querySelector("td.total");
+  const avgCell = row.querySelector("td.average");
 
-        const refPath = ref(
-          database,
-          `learners/${data.learnerKey}/marks/${data.examPeriod}`
-        );
+  if (totalCell) totalCell.innerText = total.toFixed(1);
+  if (avgCell) avgCell.innerText = avg.toFixed(1);
+}
 
-        await update(refPath, data.marks);
-
-        editQueue.delete(key);
-
-      } catch (err) {
-        console.error("Sync failed:", err);
-      }
-    }
-
-    Swal.close();
-    isProcessing = false;
-
-    updateMeritList();
-  }
-
-  // =========================
-  // AUTO SYNC WHEN BACK ONLINE
-  // =========================
-  window.addEventListener("online", () => {
-    processQueue();
+// Recompute merit list (sorting all learners by total)
+function updateMeritList() {
+  const rows = Array.from(document.querySelectorAll("#marksList tbody tr"));
+  rows.sort((a, b) => {
+    const totalA = parseFloat(a.querySelector("td.total")?.innerText) || 0;
+    const totalB = parseFloat(b.querySelector("td.total")?.innerText) || 0;
+    return totalB - totalA; // descending
   });
 
-  // =========================
-  // PERIODIC SYNC (SAFETY NET)
-  // =========================
-  setInterval(processQueue, 10000);
+  const tbody = document.querySelector("#marksList tbody");
+  rows.forEach((row, index) => {
+    // Update rank
+    const rankCell = row.querySelector("td.rank");
+    if (rankCell) rankCell.innerText = index + 1;
 
+    // Re-append rows in correct order
+    tbody.appendChild(row);
+  });
 }
+
 import { get, update } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
 // 🔁 Promote learners in the "learners" node (admin-only)

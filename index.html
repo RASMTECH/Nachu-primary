@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nachu Junior </title>
+    <title>Nachu  </title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -1252,12 +1252,12 @@ button[onclick^="show"] {
   box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 
-/* Dark overlay */
+/* Dark overlay (lighter) */
 .dash-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.25); /* 🔥 reduced from 0.55 → 0.25 */
   border-radius: 12px;
 }
 
@@ -1814,6 +1814,387 @@ button[onclick^="show"] {
   background: #ffebee;
   color: #c62828;
 }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+    justify-items: center;
+  }
+.circle-card {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+}
+
+.circle-card:hover {
+  transform: scale(1.07);
+}
+
+.icon {
+  font-size: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.progress-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: conic-gradient(#2a9d8f 0%, #ddd 0%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-text {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.students { background:#eef2ff; }
+.expected { background:#f1f3f5; }
+.collected { background:#e6f4ea; }
+.balance { background:#fdecea; }
+.leaderboard-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.leaderboard-card h3 {
+  margin-bottom: 10px;
+}
+
+#leaderboardList {
+  list-style: none;
+  padding: 0;
+}
+
+#leaderboardList li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fees-wrapper {
+  padding: 15px;
+}
+
+/* HEADER */
+.fees-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.fees-header input {
+  padding: 8px;
+  width: 260px;
+}
+
+/* FILTER PANEL */
+.fees-panel {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.fees-panel select,
+.fees-panel input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* ACTION BAR */
+.fees-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+/* BUTTONS */
+.primary-btn {
+  background: #2d98da;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+}
+
+.secondary-btn {
+  background: #576574;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+}
+
+.action-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.action-btn.print { background: #6c5ce7; color: white; }
+.action-btn.warning { background: #e17055; color: white; }
+
+/* DASHBOARD */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* LISTS */
+.lists-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* STATEMENT */
+.statement-box {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  min-height: 120px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .fees-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lists-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.learner-uniform-btn {
+  min-width: 180px;
+  text-align: center;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.learner-uniform-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+/* 📊 TITLE */
+.marks-title {
+  text-align: center;
+  margin-top: 25px;
+  color: #b30000;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+
+/* 🧩 BUTTON CONTAINER */
+.marks-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 20px auto;
+  max-width: 900px;
+  padding: 10px;
+}
+
+/* 🎯 BASE BUTTON STYLE */
+.btn {
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+}
+
+/* 🌿 GREEN */
+.btn-green {
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+  color: white;
+}
+
+/* 🔵 BLUE */
+.btn-blue {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+/* 🏅 GOLD (CERTIFICATES) */
+.btn-gold {
+  background: linear-gradient(135deg, #ffd700, #b8860b);
+  color: black;
+  font-weight: 700;
+}
+
+/* ✨ HOVER EFFECT */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* 📱 MOBILE OPTIMIZATION */
+@media (max-width: 600px) {
+  .marks-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===============================
+   🔹 SUBJECT COLUMN COLORS
+=============================== */
+
+/* English */
+#marksList td:nth-child(4),
+#marksList td:nth-child(5) {
+  background-color: #ffe5e5; /* light red */
+}
+
+/* Math */
+#marksList td:nth-child(6),
+#marksList td:nth-child(7) {
+  background-color: #e5f0ff; /* light blue */
+}
+
+/* Kiswahili */
+#marksList td:nth-child(8),
+#marksList td:nth-child(9) {
+  background-color: #e6ffe6; /* light green */
+}
+
+/* Science */
+#marksList td:nth-child(10),
+#marksList td:nth-child(11) {
+  background-color: #fff5e6; /* light orange */
+}
+
+/* Social Studies */
+#marksList td:nth-child(12),
+#marksList td:nth-child(13) {
+  background-color: #f3e6ff; /* light purple */
+}
+
+/* Agriculture */
+#marksList td:nth-child(14),
+#marksList td:nth-child(15) {
+  background-color: #e6fff7; /* aqua */
+}
+
+/* CRE */
+#marksList td:nth-child(16),
+#marksList td:nth-child(17) {
+  background-color: #fff0f5; /* pink */
+}
+
+/* Creative Arts */
+#marksList td:nth-child(18),
+#marksList td:nth-child(19) {
+  background-color: #f0f8ff; /* light sky */
+}
+
+/* Totals */
+#marksList td:nth-child(20) {
+  background-color: #ffe066 !important;
+  font-weight: bold;
+}
+
+/* Levels Total */
+#marksList td:nth-child(21) {
+  background-color: #c3f7c3 !important;
+  font-weight: bold;
+}
+/* Totals row */
+#totalsRow td {
+  background-color: #ffe066 !important;
+  font-weight: bold;
+}
+
+/* Averages row */
+#averagesRow td {
+  background-color: #c3f7c3 !important;
+  font-weight: bold;
+}
+
+/* Strong values */
+#marksList td strong {
+  color: #000;
+}
+
+/* Delete button */
+.deleteMarksBtn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.deleteMarksBtn:hover {
+  background: #a71d2a;
+}
+/* ===============================
+   🔹 NO. COLUMN (Column 1)
+=============================== */
+#marksList td:nth-child(1),
+#marksList th:nth-child(1) {
+  background-color: #343a40; /* dark */
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ===============================
+   🔹 NAME COLUMN (Column 2)
+=============================== */
+#marksList td:nth-child(2),
+#marksList th:nth-child(2) {
+  background-color: #fff3cd; /* light yellow */
+  font-weight: bold;
+}
 </style>
 
 </head>
@@ -1822,7 +2203,7 @@ button[onclick^="show"] {
 <div id="loginSection" style="display: block; text-align: center; margin-top: 50px; background-image: url('https://i.imgur.com/mCN6Ant.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 40px; border-radius: 8px;">
  
   <h1 style="color: white;">RASM SCHOOL MANAGEMENT SYSTEM</h1>
-  <p style="color: red; font-weight: bold; color: white;">NACHU PRIMARY SCHOOL</p>
+  <p style="color: red; font-weight: bold; color: white;">NACHU PRIMARY  SCHOOL  </p>
 
   <form id="loginForm">
     <input type="text" id="username" placeholder="Username" required style="width: 100%; padding: 8px; margin: 6px 0; background-color: rgba(255, 255, 255, 0.7); border: none; border-radius: 4px;"><br><br>
@@ -1848,6 +2229,7 @@ button[onclick^="show"] {
   <br>
   <button onclick="showLoginForm()" style="background: #FF5722; color: white; border: none; border-radius: 4px; padding: 10px 14px; cursor: pointer;">Back to Login</button>
 </div>
+
 
 <!-- MAIN CONTENT SECTION -->
 <div id="mainContent" style="display: none; padding: 20px;">
@@ -1877,6 +2259,9 @@ button[onclick^="show"] {
     <!-- 🟢 School Status -->
     <div id="schoolStatus" class="status-badge">🟢 School Open</div>
   </div>
+
+
+
 
   
   <!-- Logo and Date/Time -->
@@ -1925,8 +2310,6 @@ button[onclick^="show"] {
 ">
   📊 School Dashboard
 </h2>
-
-
 
 
 
@@ -1981,7 +2364,6 @@ button[onclick^="show"] {
 
   </div>
 </div>
-
 <!-- Notifications Bell -->
 <div class="dash-card" 
      style="background-image:url('https://i.imgur.com/cVewWR4.jpeg');
@@ -1995,9 +2377,10 @@ button[onclick^="show"] {
     <i class="fas fa-bell" style="font-size:28px;"></i>
   </div>
 </div>
+
 <!-- ================= STUDENTS PER GRADE ================= -->
 <div style="
-  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://i.imgur.com/paq3Bzz.jpeg');
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://i.imgur.com/v9bRrjG.jpeg');
   background-size: cover;
   background-position: center;
   padding:20px;
@@ -2034,104 +2417,69 @@ button[onclick^="show"] {
 </div>
 
 <div id="floatingNotificationsContainer"></div>
-
-
 <!-- ================= LEARNERS & REPORTS CONTROLS ================= -->
 <div style="display:flex; flex-direction:column; gap:20px; max-width:600px; margin-top:30px;">
 
-<!-- ================= LEARNERS DATABASE ================= --> 
-<div style="max-width:500px; display:flex; flex-direction:column; gap:18px; align-items:center; width:100%;">
+  <!-- ================= LEARNERS DATABASE ================= -->
+  <div style="max-width:500px; display:flex; flex-direction:column; gap:18px; align-items:center; width:100%;">
 
-  <!-- Sub Buttons Container with Background Image -->
-  <div
-    id="learnersButtons"
-    style="
-      display:none;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:15px;
-      width:100%;
-      padding:20px;
-      background:url('https://i.imgur.com/mCN6Ant.jpeg');
-      background-size:cover;
-      background-position:center;
-      border-radius:14px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.08);
-    ">
-
-    <!-- Registered Learners -->
-    <button
-      type="button"
-      id="toggleTableBtn"
-      class="learner-btn"
+    <!-- Sub Buttons Container -->
+    <div
+      id="learnersButtons"
       style="
-        min-width:180px;
-        text-align:center;
-        background:rgba(255,255,255,0.9);
-        color:#0d47a1;
-        border:none;
-        border-radius:8px;
-        padding:10px;
-        font-weight:600;
-        box-shadow:0 2px 6px rgba(0,0,0,0.2);
+        display:none;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+        width:100%;
+        padding:20px;
+        background:url('https://i.imgur.com/mCN6Ant.jpeg');
+        background-size:cover;
+        background-position:center;
+        border-radius:14px;
+        box-shadow:0 6px 18px rgba(0,0,0,0.08);
       ">
-      <i class="fas fa-list"></i>
-      Registered Learners
-    </button>
 
-   
-    <!-- Register Learner -->
-    <button
-      type="button"
-      id="toggleFormBtn"
-      class="learner-btn"
-      style="
-        min-width:180px;
-        text-align:center;
-        background:rgba(255,255,255,0.9);
-        color:#1b5e20;
-        border:none;
-        border-radius:8px;
-        padding:10px;
-        font-weight:600;
-        box-shadow:0 2px 6px rgba(0,0,0,0.2);
-      ">
-      <i class="fas fa-user-plus"></i>
-      Register Learner
-    </button>
+      <!-- ================= REGISTERED LEARNERS ================= -->
+      <button type="button" id="toggleTableBtn" class="learner-uniform-btn"
+        style="background:rgba(255,255,255,0.9); color:#0d47a1;">
+        <i class="fas fa-list"></i>
+        Registered Learners
+      </button>
 
-    <!-- Attendance -->
-    <button
-      class="action-btn"
-      id="toggleAttendanceBtn"
-      style="
-        min-width:180px;
-        text-align:center;
-        background:rgba(255,255,255,0.9);
-        color:#0d47a1;
-        border:none;
-        border-radius:8px;
-        padding:10px;
-        font-weight:600;
-        box-shadow:0 2px 6px rgba(0,0,0,0.2);
-      ">
-      <i class="fas fa-calendar-check"></i>
-      Attendance Register
-    </button>
+      <!-- ================= REGISTER LEARNER ================= -->
+      <button type="button" id="toggleFormBtn" class="learner-uniform-btn"
+        style="background:rgba(255,255,255,0.9); color:#1b5e20;">
+        <i class="fas fa-user-plus"></i>
+        Register Learner
+      </button>
 
+      <!-- ================= ATTENDANCE ================= -->
+      <button type="button" id="toggleAttendanceBtn" class="learner-uniform-btn"
+        style="background:rgba(255,255,255,0.9); color:#0d47a1;">
+        <i class="fas fa-calendar-check"></i>
+        Attendance Register
+      </button>
 
-<!-- 💰 Fees Button -->
-<button class="main-section-btn" data-target="feesSection">
-  <i class="fas fa-chevron-down"></i> 💰 Fee Management
-</button>
+      <!-- ================= FEES ================= -->
+      <button type="button" id="feesBtn" class="learner-uniform-btn"
+        style="background:rgba(255,255,255,0.9); color:#ff9800;">
+        <i class="fas fa-coins"></i>
+        Fee Management
+      </button>
 
-<!-- 💬 Communication Button -->
-<button class="main-section-btn" data-target="communicationCenter">
-  <i class="fas fa-chevron-down"></i> 💬 Communication Center
-</button>
+      <!-- ================= COMMUNICATION ================= -->
+      <button type="button" id="communicationBtn" class="learner-uniform-btn"
+        style="background:rgba(255,255,255,0.9); color:#6a1b9a;">
+        <i class="fas fa-comments"></i>
+        Communication Center
+      </button>
+
+    </div>
+
   </div>
 
-</div>
+
 
 <!-- Toggle Button -->
 <div style="margin-bottom:15px; text-align:center;">
@@ -2147,7 +2495,7 @@ button[onclick^="show"] {
       transform:translate(-50%, -50%) scale(0.8);
       width:90%;
       max-width:800px;
-      background-image: url('https://i.imgur.com/05oiYXz.jpeg');
+      background-image: url('https://i.imgur.com/Ix65TDw.jpeg');
       background-size: cover;
       background-position: center;
       color:#fff;
@@ -2244,6 +2592,7 @@ button[onclick^="show"] {
     </div>
   </div>
 </div>
+
 <div id="attendanceStats" style="margin:10px 0; font-weight:bold;"></div>
 <!-- ================= ATTENDANCE REGISTER ================= -->
 <div id="attendanceSection" class="table-container" style="display:none;">
@@ -2281,18 +2630,25 @@ button[onclick^="show"] {
 
 
 <div id="attendanceSummary" style="margin-top:15px; font-weight:bold;"></div>
-
 <div id="feesSection"
-     class="table-container main-section"
+     class="table-container main-section fees-wrapper"
      style="display:none; margin-top:20px;">
 
-  <h2>💰 Fee Management</h2>
-<input type="text" id="feeSearch" placeholder="🔍 Search by name or grade..." style="margin-bottom:10px; padding:8px; width:250px;">
-  <div class="filter-bar">
+  <!-- HEADER -->
+  <div class="fees-header">
+    <h2>💰 Fee Management</h2>
+
+    <input type="text" id="feeSearch"
+           placeholder="🔍 Search by name or grade...">
+  </div>
+
+  <!-- FILTER PANEL -->
+  <div class="fees-panel">
+
     <select id="feeGrade">
       <option value="">Select Grade</option>
     </select>
-<!-- Year -->
+
     <select id="feeYear">
       <option value="">Select Year</option>
       <option value="2025">2025</option>
@@ -2300,71 +2656,154 @@ button[onclick^="show"] {
       <option value="2027">2027</option>
       <option value="2028">2028</option>
     </select>
+
     <select id="feeStudent">
       <option value="">Select Student</option>
     </select>
-   
-  <select id="feeType">
-  <option value="">Select Fee Type</option>
-  <option value="Tuition Fees">Tuition Fees</option>
-  <option value="Admission Registration Fees">Admission Registration Fees</option>
-  <option value="Boarding Fees">Boarding Fees</option>
-  <option value="Lunch">Lunch</option>
-  <option value="Activity Fees">Activity Fees</option>
-  <option value="Examination Fees">Examination Fees</option>
-  <option value="Development Fees">Development Fees</option>
-  <option value="Maintenance Fees">Maintenance Fees</option>
-  <option value="Uniform Fees">Uniform Fees</option>
-  <option value="Transport Fees">Transport Fees</option>
-  <option value="PTA Fees">PTA Fees</option>
-  <option value="Medical Fees">Medical Fees</option>
-  <option value="Computer ICT Fees">Computer ICT Fees</option>
 
-  <!-- Term Exam Fees -->
-  <option value="Term 1 Midterm Exam">Term 1 Midterm Exam</option>
-  <option value="Term 1 End Term Exam">Term 1 End Term Exam</option>
-  <option value="Term 2 Midterm Exam">Term 2 Midterm Exam</option>
-  <option value="Term 2 End Term Exam">Term 2 End Term Exam</option>
-  <option value="Term 3 Midterm Exam">Term 3 Midterm Exam</option>
-  <option value="Term 3 End Term Exam">Term 3 End Term Exam</option>
+    <select id="feeType">
+      <option value="">Select Fee Type</option>
 
-  <!-- Additional Fees -->
-  <option value="KNEC Project">KNEC Project</option>
-  <option value="Trip">Trip</option>
-  <option value="Others">Others</option>
+      <option value="Tuition Fees">Tuition Fees</option>
+      <option value="Admission Registration Fees">Admission Registration Fees</option>
+      <option value="Boarding Fees">Boarding Fees</option>
+      <option value="Lunch">Lunch</option>
+      <option value="Activity Fees">Activity Fees</option>
+      <option value="Examination Fees">Examination Fees</option>
+      <option value="Development Fees">Development Fees</option>
+      <option value="Maintenance Fees">Maintenance Fees</option>
+      <option value="Uniform Fees">Uniform Fees</option>
+      <option value="Transport Fees">Transport Fees</option>
+      <option value="PTA Fees">PTA Fees</option>
+      <option value="Medical Fees">Medical Fees</option>
+      <option value="Computer ICT Fees">Computer ICT Fees</option>
 
-  <!-- School Support / Operational Fees -->
-  <option value="Security Fees">Security Fees</option>
-  <option value="Boarding Teacher Fees">Boarding Teacher Fees</option>
-  <option value="Cooks Fees">Cooks Fees</option>
-  <option value="Electricity Fees">Electricity Fees</option>
-  <option value="Internet Fees">Internet Fees</option>
+      <option value="Term 1 Midterm Exam">Term 1 Midterm Exam</option>
+      <option value="Term 1 End Term Exam">Term 1 End Term Exam</option>
+      <option value="Term 2 Midterm Exam">Term 2 Midterm Exam</option>
+      <option value="Term 2 End Term Exam">Term 2 End Term Exam</option>
+      <option value="Term 3 Midterm Exam">Term 3 Midterm Exam</option>
+      <option value="Term 3 End Term Exam">Term 3 End Term Exam</option>
 
-  <!-- Activities / Co-curricular -->
-  <option value="Games Fees">Games Fees</option>
-  <option value="Clubs Fees">Clubs Fees</option>
-  <option value="Scouts Fees">Scouts Fees</option>
-</select>
+      <option value="KNEC Project">KNEC Project</option>
+      <option value="Trip">Trip</option>
+      <option value="Others">Others</option>
+
+      <option value="Security Fees">Security Fees</option>
+      <option value="Boarding Teacher Fees">Boarding Teacher Fees</option>
+      <option value="Cooks Fees">Cooks Fees</option>
+      <option value="Electricity Fees">Electricity Fees</option>
+      <option value="Internet Fees">Internet Fees</option>
+
+      <option value="Games Fees">Games Fees</option>
+      <option value="Clubs Fees">Clubs Fees</option>
+      <option value="Scouts Fees">Scouts Fees</option>
+    </select>
 
     <input type="number" id="feeAmount" placeholder="Enter Amount">
 
-    <div id="lastPaymentInfo" style="margin-top:10px; font-size:13px; color:#555;"></div>
-    <button id="payFeeBtn">💵 Record Payment</button>
-<input type="text" id="mpesaPhone" placeholder="Parent Phone (e.g. 2547XXXXXXXX)">
-<button onclick="payWithMpesa()">📲 Pay with M-Pesa</button>
-  </div>
-<button onclick="printFilteredFees()" 
-style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer;">
-🖨 Print Filtered Statement
-</button>
+    <div id="lastPaymentInfo" class="info-box"></div>
 
- <!-- 📊 STATEMENT -->
+    <button id="payFeeBtn" class="primary-btn">💵 Record Payment</button>
+
+    <input type="text" id="mpesaPhone"
+           placeholder="Parent Phone (e.g. 2547XXXXXXXX)">
+
+    <button onclick="payWithMpesa()" class="secondary-btn">
+      📲 Pay with M-Pesa
+    </button>
+
+  </div>
+
+  <!-- ACTION BAR -->
+  <div class="fees-actions">
+    <button onclick="printFilteredFees()" class="action-btn print">
+      🖨 Print Statement
+    </button>
+
+    <button onclick="showOutstanding()" class="action-btn warning">
+      ⚠ Outstanding
+    </button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard-grid">
+
+    <div class="circle-card students">
+      <div class="progress-ring" data-percent="100">
+        <span class="progress-text" id="totallStudents">0</span>
+      </div>
+      <i class="fas fa-user-graduate icon"></i>
+      <div class="circle-title">Students</div>
+    </div>
+
+    <div class="circle-card expected">
+      <div class="progress-ring" data-percent="100">
+        <span class="progress-text" id="totalExpected">0</span>
+      </div>
+      <i class="fas fa-coins icon"></i>
+      <div class="circle-title">Expected</div>
+    </div>
+
+    <div class="circle-card collected">
+      <div class="progress-ring" data-percent="0">
+        <span class="progress-text" id="totalCollected">0</span>
+      </div>
+      <i class="fas fa-check-circle icon"></i>
+      <div class="circle-title">Collected</div>
+    </div>
+
+    <div class="circle-card balance">
+      <div class="progress-ring" data-percent="0">
+        <span class="progress-text" id="totalBalance">0</span>
+      </div>
+      <i class="fas fa-exclamation-triangle icon"></i>
+      <div class="circle-title">Balance</div>
+    </div>
+
+  </div>
+
+  <!-- CHARTS -->
+  <div class="chart-section">
+    <canvas id="feeChart" height="100"></canvas>
+    <canvas id="gradeChart" height="100"></canvas>
+  </div>
+
+  <!-- LISTS SECTION -->
+  <div class="lists-grid">
+
+    <div class="leaderboard-card">
+      <h3>🏆 Top 5 Fee Payers</h3>
+      <ul id="leaderboardList"></ul>
+    </div>
+
+    <div class="defaulter-card">
+      <h3>🚨 Defaulters Alert</h3>
+
+      <button onclick="remindAllDefaulters()" class="danger-btn">
+        📲 Remind All Defaulters
+      </button>
+
+      <ul id="defaulterList"></ul>
+    </div>
+
+  </div>
+
+  <!-- BULK SMS -->
+  <div class="sms-bar">
+    <button onclick="sendBulkSMS()" class="sms-btn">
+      📩 Send SMS to Defaulters
+    </button>
+  </div>
+
+  <!-- STATEMENT -->
   <h3>📊 Fee Statement</h3>
-  <div id="feeStatement" style="background:#f9f9f9; padding:15px; border-radius:8px; min-height:100px;">
+
+  <div id="feeStatement" class="statement-box">
     <!-- Dynamic content -->
   </div>
-</div>
 
+</div>
 <!-- 📅 HISTORY MODAL -->
 <div id="historyModal" 
      style="display:none; position:fixed; top:8%; left:50%; transform:translateX(-50%);
@@ -2389,98 +2828,123 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
      class="controlled-section main-section"
      style="
         display:none;
-        padding:20px;
-        border-radius:12px;
+        padding:25px;
+        border-radius:14px;
         background:url('https://i.imgur.com/Mz0kLRS.jpeg');
         background-size:cover;
         background-position:center;
+        position:relative;
      ">
 
-  <h2 class="section-header"
-      style="
-        color:white;
-        background:rgba(0,0,0,0.4);
-        padding:8px;
-        border-radius:8px;
-        width:fit-content;
-      ">
-    💬 Communication Center
-  </h2>
-
-
-  <!-- Transparent form -->
+  <!-- DARK OVERLAY FOR READABILITY -->
   <div style="
-        background:rgba(255,255,255,0.15);
-        backdrop-filter:blur(4px);
-        padding:15px;
-        border-radius:10px;
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.45);
+      border-radius:14px;
+  "></div>
+
+  <!-- CONTENT WRAPPER -->
+  <div style="position:relative; z-index:2;">
+
+    <!-- HEADER -->
+    <h2 style="
         color:white;
-     ">
+        margin-bottom:15px;
+        background:rgba(0,0,0,0.5);
+        display:inline-block;
+        padding:8px 12px;
+        border-radius:8px;
+        font-size:18px;
+      ">
+      💬 Communication Center
+    </h2>
 
-    <h3 style="margin-top:0;">
-      Send Message to Users
-    </h3>
+    <!-- MAIN CARD -->
+    <div style="
+        background:rgba(255,255,255,0.12);
+        backdrop-filter:blur(6px);
+        border:1px solid rgba(255,255,255,0.2);
+        padding:18px;
+        border-radius:12px;
+        color:white;
+        max-width:700px;
+      ">
 
+      <h3 style="margin-top:0; margin-bottom:15px;">
+        Send Message to Users
+      </h3>
 
-    <div class="form-group">
+      <!-- RECIPIENT -->
+      <div style="margin-bottom:12px;">
+        <label for="messageRecipient" style="display:block; margin-bottom:6px;">
+          Recipient
+        </label>
 
-      <label for="messageRecipient">
-        <strong>Recipient:</strong>
-      </label>
+        <select id="messageRecipient" style="
+            width:100%;
+            padding:10px;
+            border-radius:8px;
+            border:none;
+            outline:none;
+            background:rgba(255,255,255,0.85);
+          ">
+          <option value="all">All Users</option>
+          <option value="teachers">Teachers</option>
+          <option value="parents">Parents</option>
+          <option value="students">Students</option>
+        </select>
+      </div>
 
-      <select id="messageRecipient"
-              style="
-                width:100%;
-                padding:8px;
-                border-radius:6px;
-                border:none;
-                background:rgba(255,255,255,0.6);
-              ">
+      <!-- MESSAGE -->
+      <div style="margin-bottom:12px;">
+        <label for="messageContent" style="display:block; margin-bottom:6px;">
+          Message
+        </label>
 
-        <option value="all">All Users</option>
-        <option value="teachers">Teachers</option>
-        <option value="parents">Parents</option>
-        <option value="students">Students</option>
+        <textarea id="messageContent"
+          rows="4"
+          placeholder="Type your message here..."
+          style="
+            width:100%;
+            padding:10px;
+            border-radius:8px;
+            border:none;
+            outline:none;
+            resize:none;
+            background:rgba(255,255,255,0.85);
+          "></textarea>
+      </div>
 
-      </select>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label for="messageContent">
-        <strong>Message:</strong>
-      </label>
-
-      <textarea
-        id="messageContent"
-        rows="3"
-        placeholder="Type your message here..."
+      <!-- ACTION BUTTON -->
+      <button id="sendMessageBtn"
         style="
           width:100%;
-          padding:8px;
-          border-radius:6px;
+          padding:12px;
           border:none;
-          background:rgba(255,255,255,0.6);
-        ">
-      </textarea>
+          border-radius:8px;
+          background:#1e88e5;
+          color:white;
+          font-weight:600;
+          cursor:pointer;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          gap:8px;
+          transition:0.2s;
+        "
+        onmouseover="this.style.background='#1565c0'"
+        onmouseout="this.style.background='#1e88e5'">
+
+        <i class="fas fa-paper-plane"></i>
+        Send Message
+      </button>
 
     </div>
-
-
-    <button id="sendMessageBtn"
-            class="btn-blue"
-            style="margin-top:10px;">
-
-      <i class="fas fa-paper-plane"></i>
-      Send Message
-
-    </button>
-
+</div>
   </div>
 
-</div>
+
 <!-- ================= EXAM & MARKS CONTROLS ================= -->
 <div style="
   display:flex;
@@ -2490,6 +2954,7 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
   justify-content:flex-start;
   margin-bottom:15px;
 ">
+
  <!-- Learners Database -->
   <button
     type="button"
@@ -2512,29 +2977,84 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
     Learners Database
   </button>
 
+  <!-- ✅ WRAPPED BUTTON + DROPDOWN -->
+  <div style="position:relative; display:inline-block;">
 
+    <!-- Exam & Marks Controls -->
+    <button
+      type="button"
+      id="masterReportsBtn"
+      style="
+        background:#9C27B0;
+        color:white;
+        height:48px;
+        padding:0 20px;
+        border:none;
+        border-radius:8px;
+        font-size:1rem;
+        display:flex;
+        align-items:center;
+        gap:8px;
+        cursor:pointer;
+        white-space:nowrap;
+      ">
+      <i class="fas fa-chart-bar"></i>
+      <span class="btn-label">Exam & Marks Controls</span>
+    </button>
 
-  <!-- Exam & Marks Controls -->
-  <button
-    type="button"
-    id="masterReportsBtn"
-    style="
-      background:#9C27B0;
-      color:white;
-      height:48px;
-      padding:0 20px;
-      border:none;
-      border-radius:8px;
-      font-size:1rem;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      cursor:pointer;
-      white-space:nowrap;
-    ">
-    <i class="fas fa-chart-bar"></i>
-    <span class="btn-label">Exam & Marks Controls</span>
-  </button>
+    <!-- ================= REPORTS CONTROLS (NOW ABOVE BUTTON) ================= -->
+    <div
+      id="reportsControls"
+      style="
+        display:none;
+        position:absolute;
+        bottom:60px; /* 👈 opens ABOVE button */
+        left:100%;
+        transform:translateX(-100%);
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+        width:400px;
+        padding:20px;
+
+        background:url('https://i.imgur.com/paq3Bzz.jpeg');
+        background-size:cover;
+        background-position:center;
+
+        border-radius:14px;
+        box-shadow:0 6px 18px rgba(0,0,0,0.2);
+        z-index:1000;
+      ">
+
+      <!-- Marks Section -->
+      <button
+        class="print-button blue-btn"
+        id="toggleMarksSectionBtn"
+        style="min-width:180px; text-align:center;">
+        <i class="fas fa-list"></i>
+        Marks Section
+      </button>
+
+      <!-- Exam Reports -->
+      <button
+        class="print-button blue-btn"
+        id="togglePerformanceReportsBtn"
+        style="min-width:180px; text-align:center;">
+        <i class="fas fa-file-alt"></i>
+        Exam Reports
+      </button>
+
+      <!-- Record Marks -->
+      <button
+        class="print-button green-btn"
+        id="toggleRecordMarksBtn"
+        style="min-width:180px; text-align:center;">
+        <i class="fas fa-pen"></i>
+        Record Marks
+      </button>
+
+    </div>
+  </div>
 
   <!-- Parent Lookup -->
   <button
@@ -2558,7 +3078,7 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
 
 </div>
 
-<!-- ================= REPORTS DATABASE ================= -->
+   <!-- ================= REPORTS DATABASE ================= -->
 <div style="max-width:500px; display:flex; flex-direction:column; gap:18px; align-items:center; width:100%;">
 
   <!-- Sub Buttons Container -->
@@ -2574,7 +3094,7 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
 
       /* clearer background image */
       background:
-       
+     
         url('https://i.imgur.com/paq3Bzz.jpeg');
 
       background-size:cover;
@@ -2584,7 +3104,7 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
       box-shadow:0 6px 18px rgba(0,0,0,0.08);
     ">
 
-    <!-- Exam Reports -->
+      <!-- Exam Reports -->
 
  <!-- Marks Section -->
     <button
@@ -2623,9 +3143,8 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
 
 
 
-
 <!-- Wrapped form, hidden by default -->
-<div id="registrationContainer" style="display: none; margin-top: 20px; max-width: 450px; margin: auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-image: url('https://i.imgur.com/jixmLF9.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<div id="registrationContainer" style="display: none; margin-top: 20px; max-width: 450px; margin: auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-image: url('https://i.imgur.com/05oiYXz.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
   <h2 style="color: white; background-color: rgba(255, 215, 0, 0.8); padding: 10px 12px; border-radius: 4px; text-align: center;">
     Register Learner
   </h2>
@@ -2670,9 +3189,9 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
 </div>
 
 
-  </div>
+</div>
 <div id="tableContainer" style="display: none; margin-top: 20px;">
-  <h2>Registered Learners</h2>
+ <h2 style="color: red;">Registered Learners</h2>
 
 <!-- Filter Bar Box -->
   <div class="filter-bar" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
@@ -2682,19 +3201,7 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
       placeholder="Search Name / Adm No"
       style="padding: 6px 8px; border: 2px solid #007BFF; border-radius: 5px; background-color: #e9f2ff; color: #333; font-size: 13px; min-width: 180px; outline: none;">
   
-    <select 
-      id="filterGrade"
-      style="padding: 6px 8px; border: 2px solid #28a745; border-radius: 5px; background-color: #e9ffe9; color: #333; font-size: 13px; width: 130px;">
-      <option value="">Filter by Grade</option>
-    </select>
-  
-    <select 
-      id="filterGender"
-      style="padding: 6px 8px; border: 2px solid #ffc107; border-radius: 5px; background-color: #fff8e1; color: #333; font-size: 13px; width: 130px;">
-      <option value="">Filter by Gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-    </select>
+
   </div>
 
 
@@ -2718,10 +3225,11 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
       <i class="fas fa-users"></i> Generate Parents List
     </button>
 
-  <!-- Button -->
+<!-- Button -->
 <button class="action-btn purple-btn" id="toggleClassListSectionBtn">
   <i class="fas fa-chevron-down"></i> Class List Generator
 </button>
+
 
     <button class="action-btn red-btn" onclick="promoteLearners()">
       <i class="fas fa-level-up-alt"></i> Promote Learners
@@ -2734,28 +3242,26 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
     <button class="action-btn gray-btn" onclick="undoPromotion()">
       <i class="fas fa-undo-alt"></i> Undo Promotion
     </button>
-
+ <select 
+      id="filterGrade"
+      style="padding: 6px 8px; border: 2px solid #28a745; border-radius: 5px; background-color: #e9ffe9; color: #333; font-size: 13px; width: 130px;">
+      <option value="">Filter by Grade</option>
+    </select>
+  <select 
+      id="filterGender"
+      style="padding: 6px 8px; border: 2px solid #ffc107; border-radius: 5px; background-color: #fff8e1; color: #333; font-size: 13px; width: 130px;">
+      <option value="">Filter by Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
   </div>
 </div>
 
-
   </h2>
-   <h2 style="
-    background-color: rgba(255, 255, 255, 0.8); /* slightly lighter */
-    padding: 12px 20px;
-    border-radius: 8px;
-    display: inline-block;
-    color: #2c3e50;
-    font-size: 1.5rem;
-    line-height: 1.4;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-">
-    <span style="color: #e74c3c; font-weight:bold;">
-        No More Manual School Management Crunching!<br>
-        RASM Does It All – Just Click and See It Done!
-    </span>
-</h2>
+    <h2 style="background-color: rgba(255, 255, 255, 0.7); padding: 8px 16px; border-radius: 6px; display: inline-block; color: #2c3e50;">
+      <span style="color: #e74c3c;">No More Manual School Management  Crunching!
+Rasm Does It All – Just Click and See It Done!.</span>
+    </h2>
   <!-- Learners Table -->
   <table class="learners-table" style="margin-top: 20px;">
     <thead>
@@ -2783,11 +3289,17 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
 </div>
 
 
-  <!-- Overlay -->
-<div id="overlay" style="display:none;"></div>
 
-<!-- Class List Generator Section -->
+
+<!-- Overlay -->
+<div id="overlay"></div>
+
+<!-- Modal -->
 <div id="classListSection" class="table-container">
+
+  <!-- Close Button -->
+  <span id="closeModalBtn">&times;</span>
+
   <h2 style="background-color: #ffff00; padding: 8px 16px; border-radius: 6px; display: inline-block;">
     Generate Class List per Grade
   </h2>
@@ -2796,6 +3308,7 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
     <select id="classListGradeSelect">
       <option value="">Select Grade</option>
     </select>
+
     <button class="print-button" id="generateClassListBtn">
       <i class="fas fa-list"></i> Generate Class List
     </button>
@@ -2803,16 +3316,21 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
 
   <div id="classListOutput"></div>
 </div>
-
-  </div>
 </div>
 
+<!-- Modal -->
+<div id="learnerModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="modalDetails"></div>
+  </div>
+</div>
 
 <div id="idPrintArea" class="id-print-area"></div>
 
 <!-- Record Marks Section -->
 <div id="recordMarksSection" style="max-width: 400px; margin: auto; display: none; background-color: #8BC34A; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-  background-image: url('https://i.imgur.com/z2Id4hq.jpeg'), url('https://i.imgur.com/L38mwvO.jpeg'); 
+  background-image: url('https://i.imgur.com/TZvzLll.jpeg'), url('https://i.imgur.com/L38mwvO.jpeg'); 
   background-size: cover, cover; 
   background-position: center, bottom right; 
   height: auto;">
@@ -2847,7 +3365,16 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
       <select id="examPeriod" required
         style="width: 100%; padding: 6px; margin: 6px 0; background-color: #fff8c6; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
         <option value="">-- Select Period --</option>
-     
+       <option value="2024, Term 1, Opener Exam">2024, Term 1, Opener Exam</option>
+<option value="2024, Term 1, Midterm Exam">2024, Term 1, Midterm Exam</option>
+<option value="2024, Term 1, End Term Exam">2024, Term 1, End Term Exam</option>
+<option value="2024, Term 2, Opener Exam">2024, Term 2, Opener Exam</option>
+<option value="2024, Term 2, Midterm Exam">2024, Term 2, Midterm Exam</option>
+<option value="2024, Term 2, End Term Exam">2024, Term 2, End Term Exam</option>
+<option value="2024, Term 3, Opener Exam">2024, Term 3, Opener Exam</option>
+<option value="2024, Term 3, Midterm Exam">2024, Term 3, Midterm Exam</option>
+<option value="2024, Term 3, End Term Exam">2024, Term 3, End Term Exam</option>
+
 <option value="2025, Term 1, Opener Exam">2025, Term 1, Opener Exam</option>
 <option value="2025, Term 1, Midterm Exam">2025, Term 1, Midterm Exam</option>
 <option value="2025, Term 1, End Term Exam">2025, Term 1, End Term Exam</option>
@@ -3028,7 +3555,9 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
       <div class="form-group">
         <input type="number" id="math" required placeholder="Math" style="width: 100%; padding: 6px;">
       </div>
-     
+      <div class="form-group">
+        <input type="number" id="preTech" required placeholder="Pre-Tech" style="width: 100%; padding: 6px;">
+      </div>
       <div class="form-group">
         <input type="number" id="kiswahili" required placeholder="Kiswahili" style="width: 100%; padding: 6px;">
       </div>
@@ -3045,7 +3574,7 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
         <input type="number" id="cre" required placeholder="CRE" style="width: 100%; padding: 6px;">
       </div>
       <div class="form-group">
-        <input type="number" id="creativeArt" required placeholder="Creative Arts & sports " style="width: 100%; padding: 6px;">
+        <input type="number" id="creativeArt" required placeholder="Creative Art" style="width: 100%; padding: 6px;">
       </div>
     </div>
 
@@ -3069,7 +3598,7 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
     flex-wrap: wrap;
     align-items: flex-start;
     padding: 12px; /* 🔽 reduced padding */
-    background-image: url('https://i.imgur.com/RftOeJE.jpeg');
+    background-image: url('https://i.imgur.com/5xLycv1.jpeg');
     background-size: cover;
     background-position: center;
     border-radius: 8px;
@@ -3091,7 +3620,6 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
       </span>
     </h2>
 
-  
     <!-- Search Input -->
 <div class="form-group" style="flex: 1; min-width: 220px;">
   
@@ -3123,7 +3651,6 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
         
   </select>
 </div>
-
  <!-- Filter by Exam Period -->
 
 <div class="form-group" style="flex: 1; min-width: 220px;">
@@ -3132,7 +3659,7 @@ style="background:#6c5ce7; color:white; padding:8px 15px; border:none; border-ra
          style="font-weight: bold; color: red;">
          Filter by Exam Period
   </label>
-
+ ⚠ Important note: Kindly start here
   <select id="marksExamPeriodSelect">
         style="width: 100%; background-color: rgba(255, 255, 255, 0.8); border: 1px solid #ccc; padding: 6px; border-radius: 4px; color: #333;">
         <option value="">-- Select Exam Period --</option>
@@ -3426,7 +3953,6 @@ Accuracy and Efficiency in Every Click.</span>
   <h3 class="yellow-title">🏆 Performance Insight</h3>
 </div>
 
-
 <div id="topGradeSection" class="controlled-section" style="display:none;">
 
   <div 
@@ -3539,39 +4065,57 @@ Accuracy and Efficiency in Every Click.</span>
 
 </div>
 
-<h2 style="text-align:center; margin-top:20px; color:red; font-weight:bold;">
-  📊 Marks List
-</h2>
+
+<h2 class="marks-title">📊 Marks List</h2>
+
+<div class="marks-actions">
+
+  <button onclick="sendResultsToParents()" class="btn btn-green">
+    📤 Send All Results
+  </button>
+
+  <button onclick="sendSelectedResults()" class="btn btn-blue">
+    ✅ Send Selected Results
+  </button>
+
+  <button onclick="sendLoadedResults()" class="btn btn-green">
+    📤 Send Results (Loaded Grade)
+  </button>
+
+  <button onclick="generateCertificates()" class="btn btn-gold">
+    🎓 Generate Top 5 Certificates
+  </button>
+
+</div>
+
 
 <!-- Marks Table -->
-<table class="marks-table" style="margin-top: 20px;">
-  <!-- Marks Table -->
-  <table class="marks-table" style="margin-top: 20px;">
-    <thead>
-      <tr>
-        <th>No.</th>
-        <th>Name</th>
-        <th>Grade</th>
-        <th>Eng</th><th>Lev</th>
-        <th>Math</th><th>Lev</th>
+<table class="marks-table" style="margin-top: 10px;">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Name</th>
+      <th>Grade</th>
+      <th>Eng</th><th>Lev</th>
+      <th>Math</th><th>Lev</th>
      
-        <th>Kiswa</th><th>Lev</th>
-        <th>Scie</th><th>Lev</th>
-        <th>Sst</th><th>Lev</th>
-        <th>Agric</th><th>Lev</th>
-        <th>Cre</th><th>Lev</th>
-        <th>C/A</th><th>Lev</th>
-        <th>Total Marks</th>
-         <th>Points</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="marksList"></tbody>
-    <tfoot>
-      <tr id="totalsRow"></tr>
-      <tr id="averagesRow"></tr>
-    </tfoot>
-  </table>
+      <th>Kiswa</th><th>Lev</th>
+      <th>Scie</th><th>Lev</th>
+      <th>Sst</th><th>Lev</th>
+      <th>Agric</th><th>Lev</th>
+      <th>Cre</th><th>Lev</th>
+      <th>C/A</th><th>Lev</th>
+      <th>Total Marks</th>
+      <th>Points</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="marksList"></tbody>
+  <tfoot>
+    <tr id="totalsRow"></tr>
+    <tr id="averagesRow"></tr>
+  </tfoot>
+</table>
 </div>
 
 
@@ -3582,7 +4126,7 @@ Accuracy and Efficiency in Every Click.</span>
     Exam Reports
   </h2>
 
-<!-- RASM Reminder -->
+ <!-- RASM Reminder -->
 <div style="
   background-color:#ff4d4f;
   color:#fff;
@@ -3609,10 +4153,10 @@ Accuracy and Efficiency in Every Click.</span>
     <strong>RASM Reminder:</strong>
     Please select <strong>grade</strong>, <strong>exam period</strong>, and <strong>subject</strong> before generating any report. Thank you.
   </div>
-  </div>
 
+</div>
 <!-- Action Box Container -->
-<div style="background-image: url('https://i.imgur.com/Ax6XN4u.jpeg'); background-size: cover; background-position: center; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); max-width: 400px; margin: auto;">
+<div style="background-image: url('https://i.imgur.com/205wMsl.jpeg'); background-size: cover; background-position: center; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); max-width: 400px; margin: auto;">
 
   <!-- Grade Selection Section -->
   <div style="margin-bottom: 16px;">
@@ -3826,13 +4370,13 @@ Accuracy and Efficiency in Every Click.</span>
       <option value="math">Mathematics</option>
 
       <option value="kiswahili">Kiswahili</option>
-      <option value="science">Science</option>
+      <option value="science">Integrated Science</option>
       <option value="social">Social Studies</option>
       <option value="agriculture">Agriculture</option>
       <option value="cre">Religious Education</option>
-      <option value="creativeArt">Creative Arts & sports </option>
+      <option value="creativeArt">Creative Art</option>
     </select>
-    <div style="font-size: 13px; color: #333; background-color: #fff3cd; padding: 8px 12px; margin-top: 4px; border-radius: 6px;">
+   <div style="font-size: 13px; color: #333; background-color: #fff3cd; padding: 8px 12px; margin-top: 4px; border-radius: 6px;">
   <i class="fas fa-info-circle" style="margin-right: 5px; color: #856404;"></i>
   Select the subject you want to analyze performance for.
 </div>
@@ -3846,7 +4390,7 @@ Rasm Does It All – One Click and You’re Done!.</span>
 <!-- Button Container with Two Boxes -->
 <div class="button-container" style="display: flex; gap: 20px; flex-wrap: wrap;">
   <!-- First Box with Background Image and Equal Height -->
-  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/O65vJEI.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
+  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/ndIXZef.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
     
    <button class="report-button red" id="subjectChampionsBtn">
   <i class="fas fa-trophy"></i> Subjects Champions
@@ -3880,7 +4424,7 @@ Rasm Does It All – One Click and You’re Done!.</span>
   </div> <!-- End of First Button Box -->
 
   <!-- Second Box with Background Image and Equal Height -->
-  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/EJoyk7N.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
+  <div class="button-box" style="flex: 1; background-image: url('https://i.imgur.com/ExP8dDZ.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
     
    <button class="report-button gray" id="subjectRankingReportBtn">
   <i class="fas fa-list-ol"></i> Track Learner Progress
@@ -3922,7 +4466,7 @@ Rasm Does It All – One Click and You’re Done!.</span>
 <!-- Teacher Modal -->
 <div id="teacherModal" class="modal">
   <div class="modal-content" 
-       style="background-image: url('https://i.imgur.com/WKwJ73A.jpeg'); 
+       style="background-image: url('https://i.imgur.com/50WmJPz.jpeg'); 
               background-size: cover; 
               background-position: center; 
               border-radius: 12px; 
@@ -4024,13 +4568,7 @@ Rasm Does It All – One Click and You’re Done!.</span>
 </div>
 
 <div id="toast" class="toast"></div>
-<!-- Full-screen Loading Spinner -->
-<div id="spinnerOverlay" style="display:none;">
-  <div class="spinnerBox">
-    <div class="spinner"></div>
-    <p>Saving Attendance...</p>
-  </div>
-</div>
+
 <div id="spinner" style="
   display: none;
   position: fixed;
@@ -4047,7 +4585,6 @@ Rasm Does It All – One Click and You’re Done!.</span>
   <i class="fas fa-spinner fa-spin fa-3x" style="color:#007bff;"></i>
   <p style="margin-top: 10px;">Generating Report...</p>
 </div>
-
 <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
@@ -4384,7 +4921,7 @@ function showLoadingSpinner() {
   let seconds = 0;
 
   Swal.fire({
-    title: "Loading...",
+    title: "💃Rasm Technologies Kenya 💃...",
     html: `Please wait <b>${seconds}</b>s`,
     allowOutsideClick: false,
     allowEscapeKey: false,
@@ -4427,49 +4964,8 @@ function animateCounter(id, target) {
     }
   }, 20);
 }
-function generateTermComparison() {
-
-  const termTotals = {};
-
-  allLearners.forEach(l => {
-    if (!l.marks) return;
-
-    Object.entries(l.marks).forEach(([term, exam]) => {
-
-      const total =
-        (parseFloat(exam.eng) || 0) +
-        (parseFloat(exam.math) || 0) +
- 
-        (parseFloat(exam.kiswahili) || 0) +
-        (parseFloat(exam.science) || 0) +
-        (parseFloat(exam.social) || 0) +
-        (parseFloat(exam.agriculture) || 0) +
-        (parseFloat(exam.cre) || 0) +
-        (parseFloat(exam.creativeArt) || 0);
-
-      termTotals[term] = (termTotals[term] || 0) + total;
-    });
-  });
-
-  const ctx = document.getElementById("termChart");
-  if (!ctx) return;
-
-  if (termChart) termChart.destroy();
-
-  termChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: Object.keys(termTotals),
-      datasets: [{
-        label: "Total Performance",
-        data: Object.values(termTotals),
-        borderColor: "#ff9800",
-        backgroundColor: "rgba(255,152,0,0.2)",
-        fill: true
-      }]
-    }
-  });
-}
+let topStudentsGlobal = []; // 🌍 store globally
+let currentExamPeriod = ""; // 🌍 GLOBAL
 function calculateTopStudents() {
 
   const studentTotals = [];
@@ -4485,7 +4981,6 @@ function calculateTopStudents() {
       const total =
         (parseFloat(exam.eng) || 0) +
         (parseFloat(exam.math) || 0) +
- 
         (parseFloat(exam.kiswahili) || 0) +
         (parseFloat(exam.science) || 0) +
         (parseFloat(exam.social) || 0) +
@@ -4497,28 +4992,398 @@ function calculateTopStudents() {
       count++;
     });
 
-    if (count > 0) {
+   if (count > 0) {
+      const avg = grandTotal / count;
+
       studentTotals.push({
         name: l.name,
         grade: l.grade,
-        average: grandTotal / count
+        average: avg,
+        level: getPerformanceLevel(avg) // ✅ FIXED HERE
       });
     }
   });
+
 
   studentTotals.sort((a, b) => b.average - a.average);
 
   const top5 = studentTotals.slice(0, 5);
 
+  topStudentsGlobal = top5; // ✅ SAVE HERE
+
   const container = document.getElementById("topStudentsList");
   if (!container) return;
 
-  container.innerHTML = top5.length
-    ? top5.map((s, i) =>
-        `${i + 1}. ${s.name} (${s.grade}) - ${s.average.toFixed(1)}`
-      ).join("<br>")
-    : "No Exam Data Available";
+ container.innerHTML = top5.length
+  ? top5.map((s, i) =>
+      `${i + 1}. ${s.name} (${s.grade}) - ${s.average.toFixed(1)} (${s.level})`
+    ).join("<br>")
+  : "No Exam Data Available";
 }
+window.generateCertificates = function () {
+
+  if (!requireAdminAccess("generate certificates")) return;
+
+  if (!topStudentsGlobal || topStudentsGlobal.length === 0) {
+    Swal.fire({
+      icon: "warning",
+      title: "Generate Report First",
+      text: "You need to generate top students report before creating certificates.",
+      confirmButtonColor: "#b8860b"
+    });
+    return;
+  }
+
+ 
+  const schoolName = document.getElementById("schoolName")?.value || "NACHU PRIMARY SCHOOL";
+ const examPeriod = currentExamPeriod || "Exam Period";
+  const win = window.open("", "_blank");
+
+  if (!win) {
+    alert("🚫 Popup blocked! Please allow popups.");
+    return;
+  }
+
+  let content = `
+  <html>
+  <head>
+    <title>Certificate Preview</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      @page { size: A4; margin: 0; }
+
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 210mm;
+        height: 297mm;
+      }
+
+      body {
+        font-family: 'Georgia', serif;
+        background: white;
+      }
+
+      .toolbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #111;
+        color: white;
+        padding: 12px;
+        text-align: center;
+        z-index: 999;
+      }
+
+      .toolbar button {
+        padding: 10px 18px;
+        margin: 0 5px;
+        border: none;
+        cursor: pointer;
+        border-radius: 6px;
+      }
+
+      .print-btn { background: #28a745; color: white; }
+      .close-btn { background: #dc3545; color: white; }
+
+      .page {
+        width: 210mm;
+        height: 297mm;
+        padding: 25mm;
+        box-sizing: border-box;
+        position: relative;
+        page-break-after: always;
+        break-inside: avoid;
+        overflow: hidden;
+      }
+
+      .cert {
+        width: 100%;
+        height: 100%;
+        border: 14px solid #d4af37;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        background: white;
+      }
+
+      .cert::after {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border: 2px solid rgba(212,175,55,0.6);
+        border-radius: 15px;
+        pointer-events: none;
+      }
+
+      /* 🏛️ WATERMARK */
+      .watermark {
+        position: absolute;
+        inset: 0;
+        opacity: 0.12;
+        background:
+          url('https://i.imgur.com/91hfOYL.png') center no-repeat,
+          repeating-linear-gradient(
+            45deg,
+            transparent 0px,
+            transparent 60px,
+            rgba(0,0,0,0.04) 60px,
+            rgba(0,0,0,0.04) 120px
+          );
+        background-size: 450px, auto;
+        filter: grayscale(100%);
+      }
+
+      .excellence-watermark {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        font-size: 52px;
+        font-weight: 800;
+        letter-spacing: 18px;
+        color: rgba(184, 134, 11, 0.04);
+        transform: rotate(-25deg);
+        line-height: 160px;
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .top-logos {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+
+      .top-logos img {
+        width: 85px;
+      }
+
+      .rank-center {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 18px;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: bold;
+        color: white;
+      }
+
+      .rank-1 { background: linear-gradient(45deg, #ffd700, #b8860b); }
+      .rank-2 { background: linear-gradient(45deg, #d9d9d9, #7d7d7d); }
+      .rank-3 { background: linear-gradient(45deg, #cd7f32, #8b5a2b); }
+      .rank-4, .rank-5 { background: linear-gradient(45deg, #4a90e2, #1f4e79); }
+
+      .school {
+        font-size: 26px;
+        font-weight: bold;
+        color: #003366;
+        margin-top: 10px;
+      }
+
+      h1 {
+        font-size: 38px;
+        color: #b8860b;
+        margin: 10px 0;
+      }
+
+      .name {
+        font-size: 34px;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+
+      .details {
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .seal {
+        position: absolute;
+        right: 30px;
+        bottom: 120px;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #ffd700, #b8860b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 12px;
+      }
+
+      .qr {
+        position: absolute;
+        left: 30px;
+        bottom: 120px;
+      }
+
+      .serial {
+        font-size: 12px;
+        margin-top: 10px;
+        color: #444;
+      }
+
+      .footer {
+        margin-top: 60px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        padding: 0 40px;
+      }
+
+      @media print {
+        .toolbar { display: none !important; }
+        body { margin: 0 !important; }
+        .page { box-shadow: none; }
+      }
+
+/* 🎉 CONGRATULATIONS BANNER */
+.congrats-banner {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #b8860b;
+  text-transform: uppercase;
+  position: relative;
+}
+
+/* decorative lines */
+.congrats-banner::before,
+.congrats-banner::after {
+  content: "";
+  display: inline-block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #b8860b, transparent);
+  margin: 0 12px;
+  vertical-align: middle;
+}
+.system-footer {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+    </style>
+  </head>
+
+  <body>
+
+    <div class="toolbar">
+      <button class="print-btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+      <button class="close-btn" onclick="window.close()">❌ Close</button>
+    </div>
+  `;
+
+  topStudentsGlobal.forEach((s, i) => {
+
+    const position = i + 1;
+    const yearNow = new Date().getFullYear();
+
+    const serial = `CERT-${yearNow}-${String(i + 1).padStart(3, '0')}-${Date.now().toString().slice(-4)}`;
+
+    const qrData = encodeURIComponent(
+      `NAME:${s.name}|GRADE:${s.grade}|POS:${position}|SERIAL:${serial}|SCHOOL:${schoolName}`
+    );
+
+    content += `
+      <div class="page">
+        <div class="cert">
+
+          <div class="watermark"></div>
+
+          <div class="excellence-watermark">
+            EXCELLENCE EXCELLENCE EXCELLENCE EXCELLENCE EXCELLENCE
+          </div>
+
+          <div class="content">
+
+            <div class="top-logos">
+              <img src="https://i.imgur.com/VSAh48K.jpeg">
+
+              <div class="rank-center rank-${position}">
+                🏅 ${position === 1 ? "1ST (GOLD)" :
+                    position === 2 ? "2ND (SILVER)" :
+                    position === 3 ? "3RD (BRONZE)" :
+                    position + "TH POSITION"}
+              </div>
+
+              <img src="https://i.imgur.com/91hfOYL.png">
+            </div>
+
+            <div class="school">${schoolName}</div>
+
+            <h1>Certificate of Excellence</h1>
+
+            <div class="details">This certificate is proudly presented to</div>
+
+            <div class="name">${s.name}</div>
+
+            <div class="details">
+              Grade ${s.grade}<br><br>
+              Position: <b>${position}</b><br>
+              Average Score: <b>${s.average.toFixed(1)}</b><br>
+Performance Level: <b>${s.level || getPerformanceLevel(s.average)}</b><br><br>
+              ${examPeriod}
+            </div>
+
+            <div class="serial">🧾 Serial No: ${serial}</div>
+
+            <div class="qr">
+              <img src="https://chart.googleapis.com/chart?cht=qr&chs=120x120&chl=${qrData}">
+            </div>
+
+            <div class="seal">🏅 OFFICIAL SEAL</div>
+
+        <div class="footer">
+  <div>____________________<br>Class Teacher</div>
+  <div>____________________<br>Principal</div>
+</div>
+
+<div class="congrats-banner">
+  CONGRATULATIONS
+</div>
+
+<div class="system-footer">
+  Generated by RASM School Management System Kenya
+</div>
+
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  content += `</body></html>`;
+
+  win.document.write(content);
+  win.document.close();
+};
 function calculateTopGrade() {
 
   const gradeTotals = {};
@@ -4563,10 +5428,15 @@ function calculateTopGrade() {
       ? `${topGrade} (${highestAvg.toFixed(1)} Avg)`
       : "No Exam Data";
 }
+// ================= LOADING SPINNER =================
 function hideLoadingSpinner() {
   if (!spinnerContainer) return;
+
   spinnerContainer.style.display = "none";
-  clearInterval(countdownInterval);
+
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
 }
 
 // ================= DATA FETCH =================
@@ -4576,31 +5446,33 @@ async function loadLearners() {
 
     const snapshot = await get(learnersRef);
 
-    allLearners = [];
-    const grades = new Set();
+    const learners = [];
+    const gradesSet = new Set();
 
     snapshot.forEach(child => {
       const data = child.val();
       if (!data?.name || !data?.grade) return;
 
-      allLearners.push({
+      learners.push({
         key: child.key,
         ...data
       });
 
-      grades.add(data.grade);
+      gradesSet.add(data.grade);
     });
 
-    setupGradeFilter(grades);
+    // Update global state
+    allLearners = learners;
+    filteredLearners = [...learners];
 
-   filteredLearners = [...allLearners];
-resetPagination();
-updateDashboard();   // 👈 ADD THIS LINE
-hideLoadingSpinner();
+    setupGradeFilter(gradesSet);
+    resetPagination();
+    updateDashboard();
 
-  } catch (err) {
-    console.error("Load error:", err);
+  } catch (error) {
+    console.error("Load learners error:", error);
     showToast("Failed to load learners", "error");
+  } finally {
     hideLoadingSpinner();
   }
 }
@@ -4757,7 +5629,7 @@ function attachDelete(row, data) {
       if (!result.isConfirmed) return;
 
       try {
-        await remove(ref(database, `learners/${data.key}`));
+        await remove(ref(db, `learners/${data.key}`));
         allLearners = allLearners.filter(l => l.key !== data.key);
         filteredLearners = filteredLearners.filter(l => l.key !== data.key);
         resetPagination();
@@ -4799,8 +5671,9 @@ if (searchInput) {
 
 // ================= INIT =================
 loadLearners().then(() => {
-  populateAttendanceGrades();
+populateAttendanceGrades();
 loadFeeStudents();
+buildLearnerPhoneMap(); // 🔥 MUST CALL AGAIN
 });
 printButton.addEventListener('click', () => {
     const schoolName = "NACHU PRIMARY SCHOOL ";
@@ -4921,189 +5794,6 @@ function printRegisteredLearners(schoolName, year, term, learners) {
     printWindow.document.close();
     printWindow.print();
 }
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('learnerModal');
-  const closeBtn = document.querySelector('.close');
-  const modalDetails = document.getElementById('modalDetails');
-
-  // ===== OPEN MODAL WITH SINGLE STUDENT ID CARD =====
-  function openModal(learnerData) {
-    modalDetails.innerHTML = `
-      <div class="id-card">
-
-        <!-- FRONT -->
-        <div class="id-front">
-          <div class="id-header">
-            <img src="https://i.imgur.com/VSAh48K.jpeg" class="school-logo">
-
-            <div class="school-info">
-              <h3>NACHU PRIMARY SCHOOL</h3>
-              <small>Student Identification Card</small>
-            </div>
-          </div>
-
-          <div class="id-body">
-            <img src="${learnerData.photo}" class="id-photo">
-            <h4>${learnerData.name}</h4>
-            <p>${learnerData.grade} • ${learnerData.gender}</p>
-
-            <div class="id-grid">
-              <div><span>Adm No</span>${learnerData.admissionNo}</div>
-              <div><span>Age</span>${learnerData.age}</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- BACK -->
-        <div class="id-back">
-          <div class="id-grid">
-            <div><span>Parent</span>${learnerData.parentName}</div>
-            <div><span>Phone</span>${learnerData.parentPhone}</div>
-            <div><span>Birth Cert</span>${learnerData.birthCert}</div>
-          </div>
-
-          <div id="qrCode" class="qr-box"></div>
-          <p class="id-footer">If found please return to school office</p>
-        </div>
-
-        <button class="print-btn" onclick="printSingleID('${learnerData.name}')">🖨 Print ID Card</button>
-      </div>
-    `;
-
-    // Generate QR code
-    const qrText = 
-      "Name: " + learnerData.name + "\n" +
-      "Gender: " + learnerData.gender + "\n" +
-      "Grade: " + learnerData.grade + "\n" +
-      "Age: " + learnerData.age + "\n" +
-      "Parent Name: " + learnerData.parentName + "\n" +
-      "Parent Phone: " + learnerData.parentPhone + "\n" +
-      "Birth Certificate: " + learnerData.birthCert + "\n" +
-      "Admission Number: " + learnerData.admissionNo;
-
-    new QRCode(document.getElementById("qrCode"), {
-      text: qrText,
-      width: 150,
-      height: 150
-    });
-
-    modal.style.display = "flex";
-  }
-
-  // ===== CLOSE MODAL =====
-  closeBtn.addEventListener('click', () => modal.style.display = "none");
-  window.addEventListener('click', e => { if(e.target === modal) modal.style.display = "none"; });
-
-  // ===== CLICK TABLE ROW TO OPEN MODAL =====
-  tableBody.addEventListener('click', e => {
-    if (e.target && e.target.nodeName === "TD" && e.target.cellIndex === 2) {
-      const row = e.target.closest('tr');
-      const learnerData = {
-        name: row.cells[2].textContent,
-        gender: row.cells[4].textContent,
-        grade: row.cells[5].textContent,
-        age: row.cells[6].textContent,
-        parentName: row.cells[7].textContent,
-        parentPhone: row.cells[8].textContent,
-        birthCert: row.cells[9].textContent,
-        admissionNo: row.cells[10].textContent,
-        photo: row.cells[11].querySelector("img").src
-      };
-      openModal(learnerData);
-    }
-  });
-
-  // ===== PRINT SINGLE ID =====
-  window.printSingleID = function(name) {
-    const card = modalDetails.querySelector('.id-card').cloneNode(true);
-    const printArea = document.createElement('div');
-    printArea.appendChild(card);
-    document.body.appendChild(printArea);
-    window.print();
-    document.body.removeChild(printArea);
-  }
-
-  // ===== BULK PRINT ID CARDS =====
-  document.getElementById("printAllIDsBtn").addEventListener("click", () => {
-    const idPrintArea = document.getElementById("idPrintArea");
-    idPrintArea.innerHTML = "";
-    let count = 0;
-
-    tableBody.querySelectorAll("tr").forEach(row => {
-      if (row.style.display === "none") return;
-
-      const learner = {
-        name: row.cells[2].textContent,
-        gender: row.cells[3].textContent,
-        grade: row.cells[4].textContent,
-        age: row.cells[5].textContent,
-        parentName: row.cells[6].textContent,
-        phone: row.cells[7].textContent,
-        birthCert: row.cells[8].textContent,
-        admissionNo: row.cells[9].textContent,
-        photo: row.cells[1].querySelector("img").src
-      };
-
-      idPrintArea.insertAdjacentHTML("beforeend", generateIDCard(learner));
-      count++;
-
-      // page break every 4 cards (2 per row x 2 rows)
-      if (count % 4 === 0) {
-        idPrintArea.insertAdjacentHTML("beforeend", `<div class="page-break"></div>`);
-      }
-    });
-
-    if (!count) return alert("No learners available for printing");
-
-    setTimeout(() => window.print(), 500);
-  });
-
-  // ===== GENERATE ID CARD HTML =====
-  function generateIDCard(l) {
-    return `
-      <div class="id-card-print">
-
-        <div class="id-front">
-          <div class="id-header">
-            <img src="logo.png" class="school-logo">
-            <div>
-              <h4>NACHU PRIMARY SCHOOL</h4>
-              <small>Student ID Card</small>
-            </div>
-          </div>
-
-          <img src="${l.photo}" class="id-photo">
-          <h5>${l.name}</h5>
-          <p>${l.grade} • ${l.gender}</p>
-
-          <div class="id-mini-grid">
-            <div><span>Adm</span>${l.admissionNo}</div>
-            <div><span>Age</span>${l.age}</div>
-          </div>
-        </div>
-
-        <div class="id-back">
-          <div class="id-mini-grid">
-            <div><span>Parent</span>${l.parentName}</div>
-            <div><span>Phone</span>${l.phone}</div>
-            <div><span>Birth Cert</span>${l.birthCert}</div>
-          </div>
-          <div class="return-text">
-            If found return to school office
-          </div>
-        </div>
-
-      </div>
-    `;
-  }
-
-});
-
-
 // Populate grades and learner dropdowns
 onValue(learnersRef, (snapshot) => {
     const gradeSelect = document.getElementById("gradeSelect");
@@ -5386,9 +6076,9 @@ function updateMarksCoverage(totalLearners, learnersWithMarks) {
     bar.style.background = "linear-gradient(90deg,#43e97b,#38f9d7)";
   }
 }
-
 function loadMarksUnified() {
   const examPeriod = marksExamPeriodSelect.value;
+currentExamPeriod = examPeriod; // ✅ SAVE GLOBALLY
   const selectedGrade = filterMarksGrade.value;
 
   if (!examPeriod) {
@@ -5406,12 +6096,11 @@ function loadMarksUnified() {
   let loadedCount = 0;
   let totalCount = 0;
 
-  // 🔥 SWEETALERT WITH PROGRESS BAR
+  // 🔥 Loader
   Swal.fire({
     title: 'Preparing Marks...',
     html: `
       <div style="font-size:14px;margin-bottom:10px;">Initializing system...</div>
-
       <div style="width:100%;background:#eee;border-radius:10px;height:12px;overflow:hidden;">
         <div id="progressBar" style="
           width:0%;
@@ -5420,7 +6109,6 @@ function loadMarksUnified() {
           transition:width 0.3s ease;
         "></div>
       </div>
-
       <div style="margin-top:8px;">
         <b id="progressText">0%</b>
       </div>
@@ -5434,11 +6122,13 @@ function loadMarksUnified() {
   if (unsubscribeMarks) unsubscribeMarks();
 
   unsubscribeMarks = onValue(learnersRef, (snapshot) => {
+
     marksTableBody.innerHTML = "";
 
-    let noMarksFound = true;
+    const tempStorage = []; // ✅ optimized storage
     const grades = new Set();
     const gradeGroups = {};
+    let noMarksFound = true;
 
     let sums = {
       eng: 0, math: 0,  kiswahili: 0,
@@ -5454,7 +6144,7 @@ function loadMarksUnified() {
     snapshot.forEach(childSnapshot => {
       loadedCount++;
 
-      // 🔥 UPDATE % PROGRESS
+      // 🔥 Progress update
       let percent = totalCount > 0
         ? Math.round((loadedCount / totalCount) * 100)
         : 0;
@@ -5476,7 +6166,7 @@ function loadMarksUnified() {
         const rowTotal =
           (+marks.eng || 0) +
           (+marks.math || 0) +
-         
+       
           (+marks.kiswahili || 0) +
           (+marks.science || 0) +
           (+marks.social || 0) +
@@ -5487,7 +6177,7 @@ function loadMarksUnified() {
         const totalLevel =
           (+marks.engLev || 0) +
           (+marks.mathLev || 0) +
-       
+  
           (+marks.kiswahiliLev || 0) +
           (+marks.scienceLev || 0) +
           (+marks.socialLev || 0) +
@@ -5503,6 +6193,15 @@ function loadMarksUnified() {
           totalLevel
         };
 
+        // ✅ LIGHT STORAGE (FAST)
+        tempStorage.push({
+          key: childSnapshot.key,
+          name: data.name,
+          grade: data.grade,
+          phone: data.phone || "",
+          marks: marks
+        });
+
         if (!gradeGroups[data.grade]) {
           gradeGroups[data.grade] = [];
         }
@@ -5511,11 +6210,16 @@ function loadMarksUnified() {
       }
     });
 
-    // 🔥 PROCESSING MESSAGE
+    // ✅ SAVE ONCE (VERY FAST)
+    window.loadedMarksLearners = tempStorage;
+
     Swal.update({
       title: 'Processing Marks...',
       html: `<div>Calculating totals...</div><b>${loadedCount} students</b>`
     });
+
+    // 🔥 FAST DOM BUILD
+    const fragment = document.createDocumentFragment();
 
     Object.keys(gradeGroups).forEach(grade => {
       const learners = gradeGroups[grade];
@@ -5528,7 +6232,7 @@ function loadMarksUnified() {
 
         sums.eng += (+marks.eng || 0);
         sums.math += (+marks.math || 0);
-    
+       
         sums.kiswahili += (+marks.kiswahili || 0);
         sums.science += (+marks.science || 0);
         sums.social += (+marks.social || 0);
@@ -5547,7 +6251,8 @@ function loadMarksUnified() {
 
           <td data-editable="true">${marks.eng || ''}</td><td>${marks.engLev || ''}</td>
           <td data-editable="true">${marks.math || ''}</td><td>${marks.mathLev || ''}</td>
-         <td data-editable="true">${marks.kiswahili || ''}</td><td>${marks.kiswahiliLev || ''}</td>
+         
+          <td data-editable="true">${marks.kiswahili || ''}</td><td>${marks.kiswahiliLev || ''}</td>
           <td data-editable="true">${marks.science || ''}</td><td>${marks.scienceLev || ''}</td>
           <td data-editable="true">${marks.social || ''}</td><td>${marks.socialLev || ''}</td>
           <td data-editable="true">${marks.agriculture || ''}</td><td>${marks.agricultureLev || ''}</td>
@@ -5564,37 +6269,27 @@ function loadMarksUnified() {
           </td>
         `;
 
-        marksTableBody.appendChild(row);
+        fragment.appendChild(row);
       });
     });
 
-    // 🔥 FINALIZING
-Swal.update({
-  title: 'Finalizing...',
-  html: `<div>Preparing results...</div><b>${learnersCount} students</b>`
-});
+    // ✅ APPEND ONCE (VERY FAST)
+    marksTableBody.appendChild(fragment);
 
-// ✅ FIX TOTAL LEVEL KEY
-sums.totalLevel = sums.totalLevels;
+    // 🔥 Finalizing
+    Swal.update({
+      title: 'Finalizing...',
+      html: `<div>Preparing results...</div><b>${learnersCount} students</b>`
+    });
 
-// ✅ CALCULATE TOTALS & AVERAGES
-updateTotalsAndAverages(sums, learnersCount);
-renderSubjectAverages(sums, learnersCount);
+    sums.totalLevel = sums.totalLevels;
 
-// ✅ OTHER UI
-populateGradeSelectors(grades);
-
-if (isAdminLoggedIn) enableMarksEditing();
-
-// 🟢 COVERAGE
-updateMarksCoverage(totalCount, learnersCount);
-
-// CLOSE LOADER
-Swal.close();
+    updateTotalsAndAverages(sums, learnersCount);
+    renderSubjectAverages(sums, learnersCount);
+    populateGradeSelectors(grades);
 
     if (isAdminLoggedIn) enableMarksEditing();
 
-    // 🟢 UPDATE COVERAGE WIDGET
     updateMarksCoverage(totalCount, learnersCount);
 
     Swal.close();
@@ -5602,9 +6297,9 @@ Swal.close();
     if (!noMarksFound) {
       Swal.fire({
         icon: 'success',
-        title: 'Marks Loaded 🎉Rasm Tech 💃',
+        title: 'Marks Loaded 🎉',
         text: `${learnersCount} students processed`,
-        timer: 4000,
+        timer: 2500,
         showConfirmButton: false
       });
     } else {
@@ -5842,7 +6537,356 @@ document.addEventListener("click", function (e) {
     });
   }
 });
+window.sendResultsToParents = function () {
 
+  // 🔐 ADMIN CHECK
+  if (!requireAdminAccess("send all results")) return;
+
+  const examPeriod = document.getElementById("marksExamPeriodSelect").value;
+
+  // ⚠️ EXAM PERIOD CHECK
+  if (!examPeriod) {
+    return Swal.fire({
+      icon: "warning",
+      title: "Select Exam Period",
+      text: "Please select exam period before sending results.",
+      confirmButtonColor: "#b8860b"
+    });
+  }
+
+  // 🔄 LOADING ALERT
+  Swal.fire({
+    title: "Sending Results...",
+    text: "Please wait while results are being sent.",
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading()
+  });
+
+
+
+  let opened = 0;
+
+  Object.values(allLearners).forEach((learner, index) => {
+
+    let phone = learner.parentPhone;
+    if (!phone) return;
+
+    // ✅ Format Kenyan numbers
+    phone = phone.toString().trim().replace(/^0/, "+254");
+
+    const marks = learner.marks?.[examPeriod];
+    if (!marks) return;
+
+    const message = buildResultMessage(learner, marks, examPeriod);
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    // 🔥 Delay to avoid browser blocking
+    setTimeout(() => {
+      window.open(url, "_blank");
+    }, index * 800);
+
+    opened++;
+  });
+
+  Swal.fire({
+    icon: "success",
+    title: "Results Ready",
+    text: `${opened} WhatsApp chats opened`,
+    timer: 4000,
+    showConfirmButton: false
+  });
+};
+function buildResultMessage(learner, marks, examPeriod) {
+  let total = 0;
+  let count = 0;
+
+  const subjects = [
+    ["English", "eng"],
+    ["Mathematics", "math"],
+    ["Kiswahili", "kiswahili"],
+    ["Science & Tech", "science"],
+    ["Social Studies", "social"],
+    ["Agriculture", "agriculture"],
+    ["CRE", "cre"],
+    ["Creative Arts", "creativeArt"]
+  ];
+
+  // 🔥 CBC LEVEL SYSTEM
+  function getLevel(score) {
+  if (score >= 90) return 4;  // top level
+  if (score >= 50) return 3;
+  if (score >= 30) return 2;
+  return 1;                     // lowest level
+}
+
+  function getMeaning(level) {
+    switch (Number(level)) {
+      case 4: return "Exceeding  Expectations 🌟";
+      case 3: return "Meeting Expectations 👍";
+      case 2: return "Approaching Expectations 🙂";
+      case 1: return "Below Expectations 📚";
+      default: return "Not Assessed";
+    }
+  }
+
+  let msg = `🏫 *NACHU PRIMARY SCHOOL*\n`;
+  msg += `📊 * LEARNER REPORT CARD*\n`;
+  msg += `════════════════════════════\n\n`;
+
+  msg += `👨‍🎓 *Learner:* ${learner.name}\n`;
+  msg += `🏷️ *Grade:* ${learner.grade || "N/A"}\n`;
+  msg += `📅 *Exam:* ${examPeriod}\n`;
+  msg += `════════════════════════════\n\n`;
+
+  msg += `📚 *SUBJECT | SCORE% | LEVEL | INTERPRETATION*\n`;
+  msg += `------------------------------------------------\n`;
+
+  subjects.forEach(([label, key]) => {
+    const score = +marks[key] || 0;
+    const level = getLevel(score);
+    const meaning = getMeaning(level);
+
+    total += score;
+    count++;
+
+    msg += `${label.padEnd(15)} ${String(score).padEnd(7)} L${level}  ${meaning}\n`;
+  });
+
+  const avg = total / count;
+  const avgLevel = getLevel(avg);
+  const avgMeaning = getMeaning(avgLevel);
+
+  msg += `------------------------------------------------\n`;
+  msg += `📈 *TOTAL:* ${total}\n`;
+  msg += `📊 *AVERAGE:* ${avg.toFixed(1)}%\n`;
+  msg += `🏆 *OVERALL LEVEL:* L${avgLevel} (${avgMeaning})\n`;
+
+  // 🔥 CBC COMMENT SYSTEM
+  let remark = "Needs Support 📚";
+
+  if (avgLevel === 4) remark = "Excellent Performance 🌟";
+  else if (avgLevel === 3) remark = "Good Progress 👍";
+  else if (avgLevel === 2) remark = "Fair Progress 🙂";
+
+  msg += `📝 *TEACHER'S COMMENT:* ${remark}\n`;
+
+  // Optional class position
+  if (learner.position) {
+    msg += `🏆 *CLASS POSITION:* ${learner.position}\n`;
+  }
+
+  msg += `\n════════════════════════════\n`;
+  msg += `🙏 Parents are encouraged to support learning at home.\n`;
+  msg += `📡 Sent via Rasm Tech School System`;
+
+  return msg;
+}
+window.sendSelectedResults = function () {
+
+  // 🔐 ADMIN CHECK
+  if (!requireAdminAccess("send selected results")) return;
+
+  const examPeriod = document.getElementById("marksExamPeriodSelect").value;
+
+  // ⚠️ EXAM PERIOD CHECK
+  if (!examPeriod) {
+    return Swal.fire({
+      icon: "warning",
+      title: "Select Exam Period",
+      text: "Please select exam period before sending results.",
+      confirmButtonColor: "#b8860b"
+    });
+  }
+
+  const selected = document.querySelectorAll(".select-learner:checked");
+
+  // ⚠️ NO SELECTION CHECK
+  if (selected.length === 0) {
+    return Swal.fire({
+      icon: "info",
+      title: "No Learners Selected",
+      text: "Please select at least one learner.",
+      confirmButtonColor: "#3085d6"
+    });
+  }
+
+ 
+
+  let opened = 0;
+
+  selected.forEach((cb, index) => {
+    const row = cb.closest("tr");
+    const key = row.dataset.key;
+
+    const learner = allLearners.find(l => l.key === key);
+    if (!learner) return;
+
+    let phone = learner.parentPhone;
+    if (!phone) return;
+
+    phone = phone.toString().trim().replace(/^0/, "+254");
+
+    const marks = learner.marks?.[examPeriod];
+    if (!marks) return;
+
+    const message = buildResultMessage(learner, marks, examPeriod);
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    setTimeout(() => {
+      window.open(url, "_blank");
+    }, index * 800);
+
+    opened++;
+  });
+
+  Swal.fire({
+    icon: "success",
+    title: "Results Ready",
+    text: `${opened} chats opened`,
+    timer: 3500,
+    showConfirmButton: false
+  });
+};
+
+window.sendLoadedResults = function () {
+
+  // 🔐 ADMIN CHECK
+  if (!requireAdminAccess("send loaded results")) return;
+
+  const examPeriod = document.getElementById("marksExamPeriodSelect").value;
+
+  // ⚠️ EXAM PERIOD CHECK
+  if (!examPeriod) {
+    return Swal.fire({
+      icon: "warning",
+      title: "Select Exam Period",
+      text: "Please select exam period before sending results.",
+      confirmButtonColor: "#b8860b"
+    });
+  }
+
+  // ⚠️ DATA CHECK
+  if (!window.loadedMarksLearners || window.loadedMarksLearners.length === 0) {
+    return Swal.fire({
+      icon: "info",
+      title: "No Data Loaded",
+      text: "Please load marks first before sending results.",
+      confirmButtonColor: "#3085d6"
+    });
+  }
+
+  // 🔄 LOADING
+  Swal.fire({
+    title: "Sending Results...",
+    html: `<b>${window.loadedMarksLearners.length}</b> learners being processed`,
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading()
+  });
+
+  // ✅ CONFIRMATION
+  Swal.fire({
+    title: "Send Results?",
+    text: `Results will be sent to ${window.loadedMarksLearners.length} learners`,
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Yes, Send",
+    cancelButtonText: "Cancel"
+  }).then(result => {
+
+    if (!result.isConfirmed) return;
+
+    let sent = 0;
+    let missing = 0;
+    let index = 0;
+
+    const batchSize = 10; // 🔥 send 10 at a time
+
+    // 🔥 PROGRESS UI
+    Swal.fire({
+      title: "Sending Results...",
+      html: `
+        <div style="margin-bottom:10px;">Please wait...</div>
+
+        <div style="width:100%;background:#eee;border-radius:10px;height:12px;">
+          <div id="sendProgressBar" style="
+            width:0%;
+            height:100%;
+            background:linear-gradient(90deg,#4facfe,#00f2fe);
+          "></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <b id="sendProgressText">0%</b>
+        </div>
+      `,
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+
+    function sendBatch() {
+      const batch = window.loadedMarksLearners.slice(index, index + batchSize);
+
+      batch.forEach((learner, i) => {
+
+        let phone = learner.parentPhone;
+
+        if (!phone || phone.trim() === "") {
+          missing++;
+          return;
+        }
+
+        phone = phone.toString().trim().replace(/^0/, "+254");
+
+        const message = buildResultMessage(learner, learner.marks, examPeriod);
+
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+        setTimeout(() => {
+          window.open(url, "_blank");
+        }, i * 1000); // small delay inside batch
+
+        sent++;
+      });
+
+      index += batchSize;
+
+      // 🔥 UPDATE PROGRESS
+      const percent = Math.min(
+        Math.round((index / window.loadedMarksLearners.length) * 100),
+        100
+      );
+
+      const bar = document.getElementById("sendProgressBar");
+      const text = document.getElementById("sendProgressText");
+
+      if (bar) bar.style.width = percent + "%";
+      if (text) text.innerText = percent + "%";
+
+      // 🔁 CONTINUE OR FINISH
+      if (index < window.loadedMarksLearners.length) {
+        setTimeout(sendBatch, 2000); // wait before next batch
+      } else {
+        // ✅ DONE
+        Swal.fire({
+          icon: "success",
+          title: "Results Sending Complete 🎉",
+          html: `
+            <b>✅ Sent:</b> ${sent}<br>
+            <b>⚠️ Missing Phones:</b> ${missing}<br>
+            <b>📊 Total:</b> ${window.loadedMarksLearners.length}
+          `,
+          confirmButtonColor: "#28a745"
+        });
+      }
+    }
+
+    // 🚀 START
+    sendBatch();
+
+  });
+};
 // Subject Champions button event — optionally toast if no selection
 document.getElementById("subjectChampionsBtn").addEventListener("click", () => {
   const grade = document.getElementById("reportGradeSelect").value;
@@ -5881,7 +6925,18 @@ document.getElementById("levelSummaryBtn").addEventListener("click", () => {
     generateLevelSummary(grade, examPeriod);
 });
 function generateSubjectChampionsReport(selectedGrade, selectedExamPeriod) {
-    const subjects = [
+
+    // ===============================
+    // 🔹 AUTO SCROLL HELPER
+    // ===============================
+    function smoothScrollTo(el) {
+        setTimeout(() => {
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 200); // delay ensures DOM is fully rendered
+    }   const subjects = [
         'English', 'Mathematics', 
         'Kiswahili', 'Science', 'Social Studies',
         'Agriculture', 'Religious Education', 'Creative Arts & sports '
@@ -5987,7 +7042,9 @@ html += `</tbody></table>`;
 
 const reportOutput = document.getElementById("reportOutput");
 reportOutput.innerHTML = html;
-
+// ✅ AUTO SCROLL TRIGGER
+    // ===============================
+    smoothScrollTo(reportOutput);
 
     // 🌀 Create animated style (once)
     if (!document.getElementById("celebrationStyles")) {
@@ -6122,6 +7179,18 @@ reportOutput.innerHTML = html;
 
 
 function generateLevelSummary(selectedGrade, selectedExamPeriod) {
+
+ // ===============================
+    // 🔹 AUTO SCROLL HELPER
+    // ===============================
+    function smoothScrollTo(el) {
+        setTimeout(() => {
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 200); // delay ensures DOM is fully rendered
+    }
     const subjects = [
         'English', 'Mathematics', 
         'Kiswahili', 'Science', 'Social Studies',
@@ -6211,6 +7280,14 @@ function generateLevelSummary(selectedGrade, selectedExamPeriod) {
 
     const reportOutput = document.getElementById("reportOutput");
     reportOutput.innerHTML = html;
+   // ===============================
+    // ✅ AUTO SCROLL TRIGGER
+    // ===============================
+    smoothScrollTo(reportOutput);
+
+    // ===============================
+    // 🎇 CELEBRATION
+    // =============================== 
 
     // Celebration Styles
     if (!document.getElementById("levelSummaryStyles")) {
@@ -6332,6 +7409,19 @@ function generateLevelSummary(selectedGrade, selectedExamPeriod) {
 
 
 function showSubjectRanking(selectedGrade, selectedExamPeriod) {
+
+
+    // ===============================
+    // 🔹 AUTO SCROLL HELPER
+    // ===============================
+    function smoothScrollTo(el) {
+        setTimeout(() => {
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 200); // delay ensures DOM is fully rendered
+    }
     const subjects = [
         'English', 'Mathematics', 
         'Kiswahili', 'Science', 'Social Studies',
@@ -6436,7 +7526,14 @@ function getPoints(level) {
 
     const reportDiv = document.getElementById("report");
     reportDiv.innerHTML = rankingsHtml;
+// ===============================
+    // ✅ AUTO SCROLL TRIGGER
+    // ===============================
+    smoothScrollTo(reportOutput);
 
+    // ===============================
+    // 🎇 CELEBRATION
+    // ===============================
     // Celebration popup + emojis
     const styleId = "rankingCelebrationStyle";
     if (!document.getElementById(styleId)) {
@@ -6554,6 +7651,17 @@ function getPoints(level) {
 
 function generateSubjectPerformance(selectedGrade, selectedExamPeriod) {
 
+    // ===============================
+    // 🔹 AUTO SCROLL HELPER
+    // ===============================
+    function smoothScrollTo(el) {
+        setTimeout(() => {
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 200); // delay ensures DOM is fully rendered
+    }
     const subjects = [
         'English', 'Mathematics',
         'Kiswahili', 'Science', 'Social Studies',
@@ -6656,19 +7764,22 @@ function generateSubjectPerformance(selectedGrade, selectedExamPeriod) {
         `;
     });
 
-    html += `
-            </tbody>
-        </table>
-
-        <div style="margin-top:30px;text-align:center;font-weight:bold;">
+     rankingsHtml += `
+        <div class="stamp print-only" style="margin-top: 40px;">
             Nachu Primary School<br>
-            Exam Department — Date: ${printDate}
+            P.O. Box 561-00902, Kikuyu<br>
+            Exam Department<br>
+            Date: ${printDate}
         </div>
     `;
 
-    const out = document.getElementById("reportOutput");
-    if (out) out.innerHTML = html;
+    const reportDiv = document.getElementById("report");
+    reportDiv.innerHTML = rankingsHtml;
 
+    // ===============================
+    // ✅ AUTO SCROLL TRIGGER
+    // ===============================
+    smoothScrollTo(reportOutput);
 
     // 🎨 Styles (once)
     if (!document.getElementById("perfCelebrationStyles")) {
@@ -6872,8 +7983,18 @@ function generateReport(reportType, selectedGrade, examPeriod) {
             printWindow.print();
         });
     }
-   }
+  }
 function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
+
+  // ===============================
+  // 🔹 AUTO SCROLL HELPER
+  // ===============================
+  function smoothScrollTo(el) {
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
+  }
+
   const marksTableBody = document.getElementById("marksList");
   const learnersTableBody = document.getElementById("learnersList");
   const reportOutput = document.getElementById("reportOutput");
@@ -6882,84 +8003,96 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
     alert("Marks or learners table not found.");
     return;
   }
- function getLevel(score) {
-    if (score >= 75) return "EE";
-    if (score >= 50) return "ME";
-    if (score >= 25) return "AE";
-    return "BE";
-}
 
-  function getTotalLevel(entry) {
+  // ===============================
+  // 🔹 LEVEL (1–4 SYSTEM)
+  // ===============================
+  function getLevel(score) {
+    score = parseInt(score) || 0;
+    if (score >= 90) return 4;
+    if (score >= 50) return 3;
+    if (score >= 30) return 2;
+    return 1;
+  }
+
+  // ✅ TOTAL POINTS = SUM OF LEVELS (8 SUBJECTS)
+  function getTotalPoints(entry) {
     return (
-      parseInt(getLevel(entry.english)) +
-      parseInt(getLevel(entry.math)) +
-
-      parseInt(getLevel(entry.kiswahili)) +
-      parseInt(getLevel(entry.science)) +
-      parseInt(getLevel(entry.social)) +
-      parseInt(getLevel(entry.agriculture)) +
-      parseInt(getLevel(entry.cre)) +
-      parseInt(getLevel(entry.art))
+      getLevel(entry.english) +
+      getLevel(entry.math) +
+      getLevel(entry.kiswahili) +
+      getLevel(entry.science) +
+      getLevel(entry.social) +
+      getLevel(entry.agriculture) +
+      getLevel(entry.cre) +
+      getLevel(entry.art)
     );
   }
 
   const gradeValue = selectedGrade || "All Grades";
   const examPeriodValue = selectedExamPeriod || "All Periods";
 
-  // Get all learners with their grade and gender information
+  // ===============================
+  // 🔹 LOAD LEARNERS
+  // ===============================
   const learners = Array.from(learnersTableBody.querySelectorAll("tr")).map(row => {
     const cells = row.querySelectorAll("td");
     return {
       name: cells[3]?.textContent.trim(),
       gender: cells[4]?.textContent.trim().toLowerCase(),
-      grade: cells[5]?.textContent.trim() // Capture the grade for each learner
+      grade: cells[5]?.textContent.trim()
     };
   });
 
-  // Modify the marks filtering to include all streams that start with the same grade prefix (e.g., 8A, 8B, 8C for "8")
+  // ===============================
+  // 🔹 LOAD MARKS
+  // ===============================
   const marks = Array.from(marksTableBody.querySelectorAll("tr"))
     .filter(row => {
       const grade = row.getAttribute("data-grade");
       const period = row.getAttribute("data-exam-period");
-      // If a grade like "8B" is selected, include all grades starting with "8"
+
       return (!selectedGrade || grade.startsWith(selectedGrade.slice(0, -1))) &&
              (!selectedExamPeriod || period === selectedExamPeriod);
     })
     .map(row => {
       const cells = row.querySelectorAll("td");
-      const english = parseInt(cells[3]?.textContent.trim()) || 0;
-      const math = parseInt(cells[5]?.textContent.trim()) || 0;
- 
-      const kiswahili = parseInt(cells[7]?.textContent.trim()) || 0;
-      const science = parseInt(cells[9]?.textContent.trim()) || 0;
-      const social = parseInt(cells[11]?.textContent.trim()) || 0;
-      const agriculture = parseInt(cells[13]?.textContent.trim()) || 0;
-      const cre = parseInt(cells[15]?.textContent.trim()) || 0;
-      const art = parseInt(cells[17]?.textContent.trim()) || 0;
 
-      const totalMarks = english + math + kiswahili + science + social + agriculture + cre + art;
-
-      return {
+      const entry = {
         learner: cells[1]?.textContent.trim(),
         grade: cells[2]?.textContent.trim(),
-        english,
-        math,
-    
-        kiswahili,
-        science,
-        social,
-        agriculture,
-        cre,
-        art,
-        totalMarks,
+        english: parseInt(cells[3]?.textContent) || 0,
+        math: parseInt(cells[5]?.textContent) || 0,
+        kiswahili: parseInt(cells[7]?.textContent) || 0,
+        science: parseInt(cells[9]?.textContent) || 0,
+        social: parseInt(cells[11]?.textContent) || 0,
+        agriculture: parseInt(cells[13]?.textContent) || 0,
+        cre: parseInt(cells[15]?.textContent) || 0,
+        art: parseInt(cells[17]?.textContent) || 0,
       };
+
+      entry.totalMarks =
+        entry.english +
+        entry.math +
+        entry.kiswahili +
+        entry.science +
+        entry.social +
+        entry.agriculture +
+        entry.cre +
+        entry.art;
+
+      return entry;
     });
 
+  // ===============================
+  // 🔹 GROUP BY GENDER
+  // ===============================
   const genderPerformance = { male: [], female: [] };
+
   marks.forEach(entry => {
     const learner = learners.find(l => l.name === entry.learner);
     if (learner) {
-      entry.totalLevel = getTotalLevel(entry); // Add total level to entry
+      entry.totalPoints = getTotalPoints(entry); // ✅ FIXED HERE
       genderPerformance[learner.gender]?.push(entry);
     }
   });
@@ -6970,65 +8103,72 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
   const top5Male = genderPerformance.male.slice(0, 5);
   const top5Female = genderPerformance.female.slice(0, 5);
 
+  // ===============================
+  // 🔹 TABLE BUILDER
+  // ===============================
   function createTable(data, gender, top5) {
-    if (!data.length) return `<h3 style="color:red;">No ${gender} learners found for selected criteria.</h3>`;
+    if (!data.length) {
+      return `<h3 style="color:red;">No ${gender} learners found for selected criteria.</h3>`;
+    }
 
     const color = gender === "male" ? "blue" : "purple";
 
     const totals = {
       english: 0, math: 0, kiswahili: 0,
-      science: 0, social: 0, agriculture: 0, cre: 0,
-      art: 0, totalMarks: 0, totalLevel: 0
+      science: 0, social: 0, agriculture: 0,
+      cre: 0, art: 0, totalMarks: 0, totalPoints: 0
     };
 
     let html = `
       <div id="${gender}-section" style="margin-top:40px;">
       <h2 style="text-align:center; color:${color};">${gender.toUpperCase()} LEARNERS REPORT</h2>
+
       <table style="width:100%; border-collapse:collapse; font-size:15px;">
         <thead>
           <tr style="background:#f4f4f4;">
             <th style="border:2px solid black;">No.</th>
             <th style="border:2px solid black;">Name</th>
             <th style="border:2px solid black;">Grade</th>
-            <th style="border:2px solid black;">Eng</th><th>Lev</th>
-            <th style="border:2px solid black;">Math</th><th>Lev</th>
-      
-            <th style="border:2px solid black;">Kisw</th><th>Lev</th>
-            <th style="border:2px solid black;">Scie</th><th>Lev</th>
-            <th style="border:2px solid black;">SST</th><th>Lev</th>
-            <th style="border:2px solid black;">Agric</th><th>Lev</th>
-            <th style="border:2px solid black;">CRE</th><th>Lev</th>
-            <th style="border:2px solid black;">C/A</th><th>Lev</th>
-            <th style="border:2px solid black;">Total Marks</th>
+            <th style="border:2px solid black;">Eng</th><th style="border:2px solid black;">Lev</th>
+            <th style="border:2px solid black;">Math</th><th style="border:2px solid black;">Lev</th>
+            <th style="border:2px solid black;">Kisw</th><th style="border:2px solid black;">Lev</th>
+            <th style="border:2px solid black;">Scie</th><th style="border:2px solid black;">Lev</th>
+            <th style="border:2px solid black;">SST</th><th style="border:2px solid black;">Lev</th>
+            <th style="border:2px solid black;">Agric</th><th style="border:2px solid black;">Lev</th>
+            <th style="border:2px solid black;">CRE</th><th style="border:2px solid black;">Lev</th>
+            <th style="border:2px solid black;">C/A</th><th style="border:2px solid black;">Lev</th>
+            <th style="border:2px solid black;">Total</th>
             <th style="border:2px solid black;">Points</th>
           </tr>
-        </thead><tbody>`;
+        </thead>
+        <tbody>`;
 
     data.forEach((entry, index) => {
+
       const isTop = top5.find(t => t.learner === entry.learner);
       const rowStyle = isTop ? "background:#FFD700;font-weight:bold;" : "";
-      const totalLevel = entry.totalLevel;
 
-      html += `<tr style="${rowStyle}">
-        <td>${index + 1}</td>
-        <td>${entry.learner}</td>
-        <td>${entry.grade}</td>
-        <td>${entry.english}</td><td>${getLevel(entry.english)}</td>
-        <td>${entry.math}</td><td>${getLevel(entry.math)}</td>
-    
-        <td>${entry.kiswahili}</td><td>${getLevel(entry.kiswahili)}</td>
-        <td>${entry.science}</td><td>${getLevel(entry.science)}</td>
-        <td>${entry.social}</td><td>${getLevel(entry.social)}</td>
-        <td>${entry.agriculture}</td><td>${getLevel(entry.agriculture)}</td>
-        <td>${entry.cre}</td><td>${getLevel(entry.cre)}</td>
-        <td>${entry.art}</td><td>${getLevel(entry.art)}</td>
-        <td><strong>${entry.totalMarks}</strong></td>
-        <td><strong>${totalLevel}</strong></td>
-      </tr>`;
+      html += `
+        <tr style="${rowStyle}">
+          <td style="border:1px solid black;">${index + 1}</td>
+          <td style="border:1px solid black;">${entry.learner}</td>
+          <td style="border:1px solid black;">${entry.grade}</td>
+
+          <td style="border:1px solid black;">${entry.english}</td><td style="border:1px solid black;">${getLevel(entry.english)}</td>
+          <td style="border:1px solid black;">${entry.math}</td><td style="border:1px solid black;">${getLevel(entry.math)}</td>
+          <td style="border:1px solid black;">${entry.kiswahili}</td><td style="border:1px solid black;">${getLevel(entry.kiswahili)}</td>
+          <td style="border:1px solid black;">${entry.science}</td><td style="border:1px solid black;">${getLevel(entry.science)}</td>
+          <td style="border:1px solid black;">${entry.social}</td><td style="border:1px solid black;">${getLevel(entry.social)}</td>
+          <td style="border:1px solid black;">${entry.agriculture}</td><td style="border:1px solid black;">${getLevel(entry.agriculture)}</td>
+          <td style="border:1px solid black;">${entry.cre}</td><td style="border:1px solid black;">${getLevel(entry.cre)}</td>
+          <td style="border:1px solid black;">${entry.art}</td><td style="border:1px solid black;">${getLevel(entry.art)}</td>
+
+          <td style="border:1px solid black;"><strong>${entry.totalMarks}</strong></td>
+          <td style="border:1px solid black;"><strong>${entry.totalPoints}</strong></td>
+        </tr>`;
 
       totals.english += entry.english;
       totals.math += entry.math;
-  
       totals.kiswahili += entry.kiswahili;
       totals.science += entry.science;
       totals.social += entry.social;
@@ -7036,38 +8176,64 @@ function generateGenderPerformance(selectedGrade, selectedExamPeriod) {
       totals.cre += entry.cre;
       totals.art += entry.art;
       totals.totalMarks += entry.totalMarks;
-      totals.totalLevel += totalLevel;
+      totals.totalPoints += entry.totalPoints;
     });
 
     const count = data.length;
+
     html += `
-      <tr style="background:yellow;font-weight:bold;"><td colspan="3">Totals</td>
-        <td>${totals.english}</td><td>-</td><td>${totals.math}</td><td>-</td>
- 
-        <td>${totals.science}</td><td>-</td><td>${totals.social}</td><td>-</td>
-        <td>${totals.agriculture}</td><td>-</td><td>${totals.cre}</td><td>-</td>
-        <td>${totals.art}</td><td>-</td>
-        <td>${totals.totalMarks}</td><td>${totals.totalLevel}</td>
+      <tr style="background:yellow;font-weight:bold;">
+        <td colspan="3" style="border:2px solid black;">Totals</td>
+        <td style="border:2px solid black;">${totals.english}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${totals.math}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${totals.kiswahili}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${totals.science}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${totals.social}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${totals.agriculture}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${totals.cre}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${totals.art}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${totals.totalMarks}</td>
+        <td style="border:2px solid black;">${totals.totalPoints}</td>
       </tr>
-      <tr style="background:lightblue;font-weight:bold;"><td colspan="3">Averages</td>
-        <td>${(totals.english/count).toFixed(1)}</td><td>-</td><td>${(totals.math/count).toFixed(1)}</td><td>-</td>
-  ${(totals.kiswahili/count).toFixed(1)}</td><td>-</td>
-        <td>${(totals.science/count).toFixed(1)}</td><td>-</td><td>${(totals.social/count).toFixed(1)}</td><td>-</td>
-        <td>${(totals.agriculture/count).toFixed(1)}</td><td>-</td><td>${(totals.cre/count).toFixed(1)}</td><td>-</td>
-        <td>${(totals.art/count).toFixed(1)}</td><td>-</td>
-        <td>${(totals.totalMarks/count).toFixed(1)}</td><td>${(totals.totalLevel/count).toFixed(1)}</td>
+
+      <tr style="background:lightblue;font-weight:bold;">
+        <td colspan="3" style="border:2px solid black;">Averages</td>
+        <td style="border:2px solid black;">${(totals.english / count).toFixed(1)}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${(totals.math / count).toFixed(1)}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${(totals.kiswahili / count).toFixed(1)}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${(totals.science / count).toFixed(1)}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${(totals.social / count).toFixed(1)}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${(totals.agriculture / count).toFixed(1)}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${(totals.cre / count).toFixed(1)}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${(totals.art / count).toFixed(1)}</td><td style="border:2px solid black;">-</td>
+        <td style="border:2px solid black;">${(totals.totalMarks / count).toFixed(1)}</td>
+        <td style="border:2px solid black;">${(totals.totalPoints / count).toFixed(1)}</td>
       </tr>
     </tbody></table>
+
     <div style="text-align:center;margin-top:15px;">
-      <button onclick="printSection('${gender}-section','${gradeValue}','${examPeriodValue}')" class="print-button">🖨️ Print ${gender} Report</button>
-    </div></div>`;
+      <button onclick="printSection('${gender}-section','${gradeValue}','${examPeriodValue}')">
+        🖨️ Print ${gender} Report
+      </button>
+    </div>
+    </div>`;
+
     return html;
   }
 
+  // ===============================
+  // 🔹 OUTPUT
+  // ===============================
   reportOutput.innerHTML =
     createTable(genderPerformance.male, "male", top5Male) +
     createTable(genderPerformance.female, "female", top5Female);
 
+
+
+    // ===============================
+    // ✅ AUTO SCROLL TRIGGER
+    // ===============================
+    smoothScrollTo(reportOutput);
   // Celebration styles
   if (!document.getElementById("genderPerfStyles")) {
     const style = document.createElement("style");
@@ -7283,6 +8449,19 @@ function createCustomAlert(message, bgColor, textColor) {
 }
 
 function generateLearnerAssessmentReports(termDetails) {
+
+  // ===============================
+  // 🔹 AUTO SCROLL HELPER
+  // ===============================
+  function smoothScrollTo(el) {
+    setTimeout(() => {
+      el.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 200);
+  }
+
   const { year, term, closingDate, openingDate, classTeacherSignature, principalSignature } = termDetails;
 
   const rows = document.querySelectorAll("#marksList tr");
@@ -7298,35 +8477,87 @@ function generateLearnerAssessmentReports(termDetails) {
 
   const gradeFilter = document.getElementById("reportGradeSelect").value;
 
- function getPoints(level) {
-  switch (level) {
-    case "EE": return 4;
-    case "ME": return 3;
-    case "AE": return 2;
-    case "BE": return 1;
-    default: {
-      const numeric = parseInt(level);
-      return isNaN(numeric) ? 0 : numeric;
+  // ===============================
+  // 🔥 CALCULATE CORRECT TOTAL
+  // ===============================
+  let total = Array.from(rows).filter(row => {
+    const cells = row.querySelectorAll("td");
+    return cells.length >= 22 && cells[2].textContent.trim() === gradeFilter;
+  }).length;
+
+  let processed = 0;
+
+  // ===============================
+  // 🔥 SWEETALERT LOADER
+  // ===============================
+  Swal.fire({
+    title: 'Generating Reports...',
+    html: `
+      <div style="margin-bottom:10px;">Preparing learner reports...</div>
+
+      <div style="width:100%;background:#eee;border-radius:10px;height:12px;overflow:hidden;">
+        <div id="reportProgressBar" style="
+          width:0%;
+          height:100%;
+          background:linear-gradient(90deg,#43cea2,#185a9d);
+          transition:width 0.3s ease;
+        "></div>
+      </div>
+
+      <div style="margin-top:8px;">
+        <b id="reportProgressText">0%</b>
+      </div>
+    `,
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading()
+  });
+
+  function updateProgress() {
+    processed++;
+    let percent = total > 0 ? Math.round((processed / total) * 100) : 0;
+
+    const bar = document.getElementById("reportProgressBar");
+    const text = document.getElementById("reportProgressText");
+
+    if (bar) bar.style.width = percent + "%";
+    if (text) text.innerText = percent + "%";
+  }
+
+  function getPoints(level) {
+    switch (level) {
+      case "EE": return 4;
+      case "ME": return 3;
+      case "AE": return 2;
+      case "BE": return 1;
+      default: {
+        const numeric = parseInt(level);
+        return isNaN(numeric) ? 0 : numeric;
+      }
     }
   }
-}
 
-function getLevelFromPoints(points) {
-  switch (String(points)) {
-    case "4": return "EE";
-    case "3": return "ME";
-    case "2": return "AE";
-    case "1": return "BE";
-    default: return "N/A";
+  function getLevelFromPoints(points) {
+    switch (String(points)) {
+      case "4": return "EE";
+      case "3": return "ME";
+      case "2": return "AE";
+      case "1": return "BE";
+      default: return "N/A";
+    }
   }
-}
+
   rows.forEach(row => {
     const cells = row.querySelectorAll("td");
     if (cells.length < 22) return;
 
     const learnerName = cells[1].textContent.trim();
     const grade = cells[2].textContent.trim();
+
+    // ✅ FILTER FIRST
     if (grade !== gradeFilter) return;
+
+    // ✅ UPDATE ONLY FILTERED
+    updateProgress();
 
     const rawTotalMarks = cells[19].textContent.trim();
     const totalMarks = parseInt(rawTotalMarks) || 0;
@@ -7343,7 +8574,6 @@ function getLevelFromPoints(points) {
     const subjects = [
       { name: "English", mark: cells[3].textContent.trim(), level: cells[4].textContent.trim() },
       { name: "Mathematics", mark: cells[5].textContent.trim(), level: cells[6].textContent.trim() },
-
       { name: "Kiswahili", mark: cells[7].textContent.trim(), level: cells[8].textContent.trim() },
       { name: "Science", mark: cells[9].textContent.trim(), level: cells[10].textContent.trim() },
       { name: "Social Studies", mark: cells[11].textContent.trim(), level: cells[12].textContent.trim() },
@@ -7359,7 +8589,7 @@ function getLevelFromPoints(points) {
       return { ...s, level, points };
     });
 
-    const totalPoints = subjects.reduce((sum, s) => sum + s.points, 0);
+  const totalPoints = subjects.reduce((sum, s) => sum + s.points, 0);
     const maxTotalMarks = subjects.length * 100;
     const maxTotalPoints = subjects.length * 8;
 
@@ -7457,32 +8687,54 @@ function getLevelFromPoints(points) {
 
     container.appendChild(report);
   });
+  // ===============================
+  // 🔥 FINALIZE
+  // ===============================
+  Swal.update({
+    title: 'Finalizing Reports...',
+    html: `<b>${processed} learners processed</b>`
+  });
 
-    // Add Print Button
-    const printButton = document.createElement("button");
-    printButton.textContent = `Print Reports for ${selectedGrade || "All Grades"}`;
-    printButton.style.marginTop = "20px";
-    printButton.style.padding = "10px 20px";
-    printButton.style.background = "#007BFF";
-    printButton.style.color = "#FFF";
-    printButton.style.border = "none";
-    printButton.style.borderRadius = "5px";
-    printButton.style.cursor = "pointer";
+  setTimeout(() => {
+    Swal.close();
 
-    printButton.addEventListener("click", function () {
-        const printContent = container.innerHTML;
-        const originalContent = document.body.innerHTML;
-
-        document.body.innerHTML = printContent;
-        window.print();
-        document.body.innerHTML = originalContent;
-        location.reload(); // Reload to reset the page
+    Swal.fire({
+      icon: 'success',
+      title: 'Reports Ready 🎉',
+      text: `${processed} reports generated`,
+      timer: 4000,
+      showConfirmButton: false
     });
 
-    container.appendChild(printButton);
-    container.scrollIntoView({ behavior: "smooth" });
-}
+    smoothScrollTo(container);
+  }, 500);
 
+  // ===============================
+  // PRINT BUTTON (UNCHANGED)
+  // ===============================
+  const printButton = document.createElement("button");
+  printButton.textContent = `Print Reports for ${gradeFilter || "All Grades"}`;
+  printButton.style.marginTop = "20px";
+  printButton.style.padding = "10px 20px";
+  printButton.style.background = "#007BFF";
+  printButton.style.color = "#FFF";
+  printButton.style.border = "none";
+  printButton.style.borderRadius = "5px";
+  printButton.style.cursor = "pointer";
+
+  printButton.addEventListener("click", function () {
+    const printContent = container.innerHTML;
+    const originalContent = document.body.innerHTML;
+
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = originalContent;
+    location.reload();
+  });
+
+  container.appendChild(printButton);
+  container.scrollIntoView({ behavior: "smooth" });
+}
 
 const subjectList = [
     "English", "Mathematics",  "Kiswahili",
@@ -7684,6 +8936,17 @@ document.getElementById("cancelGradeBtn").addEventListener("click", () => {
     document.getElementById("customPrompt").style.display = "none";
 });
 function combineMarksByGradeWithDetails(mainGrade, selectedPeriod) {
+  // ===============================
+    // 🔹 AUTO SCROLL HELPER
+    // ===============================
+    function smoothScrollTo(el) {
+        setTimeout(() => {
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 200); // delay ensures DOM is fully rendered
+    }
     const rows = document.querySelectorAll("#marksList tr");
     const learnersData = [];
     const totals = {
@@ -7803,7 +9066,10 @@ function combineMarksByGradeWithDetails(mainGrade, selectedPeriod) {
 
     const reportOutput = document.getElementById("reportOutput");
     reportOutput.innerHTML = html;
-
+ // ===============================
+    // ✅ AUTO SCROLL TRIGGER
+    // ===============================
+    smoothScrollTo(reportOutput);
     // Print Button
     let printButton = document.getElementById("printCombinedMarksBtn");
     if (!printButton) {
@@ -8616,8 +9882,19 @@ html += `<div class="stamp print-only">
 }
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
+
+  // ===============================
+  // 🔹 AUTO SCROLL HELPER
+  // ===============================
+  function smoothScrollTo(el) {
+    setTimeout(() => {
+      el.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 100);
+  }
 
   // ===============================
   // 🔹 MAIN SECTIONS (ACCORDION)
@@ -8626,23 +9903,43 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainButtons = document.querySelectorAll(".main-section-btn"); 
 
   function closeAllMainSections() {
-    mainSections.forEach(section => section.style.display = "none");
+    mainSections.forEach(section => {
+      section.style.display = "none";
+      section.classList.remove("active");
+    });
+
     mainButtons.forEach(btn => {
       const icon = btn.querySelector("i");
-      if (icon) { icon.classList.remove("fa-chevron-up"); icon.classList.add("fa-chevron-down"); }
+      if (icon) { 
+        icon.classList.remove("fa-chevron-up"); 
+        icon.classList.add("fa-chevron-down"); 
+      }
     });
   }
 
   mainButtons.forEach(btn => {
     const targetId = btn.dataset.target;
+
     btn.addEventListener("click", () => {
       const section = document.getElementById(targetId);
+      if (!section) return;
+
       const isOpen = section.style.display === "block";
+
       closeAllMainSections();
+
       if (!isOpen) {
         section.style.display = "block";
+        section.classList.add("active");
+
         const icon = btn.querySelector("i");
-        if (icon) { icon.classList.remove("fa-chevron-down"); icon.classList.add("fa-chevron-up"); }
+        if (icon) { 
+          icon.classList.remove("fa-chevron-down"); 
+          icon.classList.add("fa-chevron-up"); 
+        }
+
+        // ✅ AUTO SCROLL
+        smoothScrollTo(section);
       }
     });
   });
@@ -8650,26 +9947,25 @@ document.addEventListener("DOMContentLoaded", function () {
   // ===============================
   // 🔹 SUB-ACCORDION (Dynamic Nested)
   // ===============================
-  const subSections = [
-    // Learners Database sub-buttons
-    { btnId: "toggleFormBtn", sectionId: "registrationContainer" },
-    { btnId: "toggleTableBtn", sectionId: "tableContainer" },
+const subSections = [
+  { btnId: "toggleFormBtn", sectionId: "registrationContainer" },
+  { btnId: "toggleTableBtn", sectionId: "tableContainer" },
+  { btnId: "togglePerformanceReportsBtn", sectionId: "performanceReportsSection" },
+  { btnId: "toggleMarksSectionBtn", sectionId: "marksSection" },
+  { btnId: "toggleRecordMarksBtn", sectionId: "recordMarksSection" },
+  { btnId: "toggleAttendanceBtn", sectionId: "attendanceSection" },
 
-    // Reports sub-buttons
-    { btnId: "togglePerformanceReportsBtn", sectionId: "performanceReportsSection" },
-    { btnId: "toggleMarksSectionBtn", sectionId: "marksSection" },
-    { btnId: "toggleRecordMarksBtn", sectionId: "recordMarksSection" },
-
-    // Attendance sub-button
-    { btnId: "toggleAttendanceBtn", sectionId: "attendanceSection" } // <-- Added attendance section
-  ];
+  // ✅ NEW ADDITIONS
+  { btnId: "feesBtn", sectionId: "feesSection" },
+  { btnId: "communicationBtn", sectionId: "communicationCenter" }
+];
 
   function closeAllSubSections() {
     subSections.forEach(item => {
       const section = document.getElementById(item.sectionId);
       if (section) section.style.display = "none";
     });
-    // Reset icons
+
     subSections.forEach(item => {
       const btn = document.getElementById(item.btnId);
       const icon = btn?.querySelector("i");
@@ -8687,14 +9983,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btn.addEventListener("click", () => {
       const isOpen = section.style.display === "block";
+
       closeAllSubSections();
+
       if (!isOpen) {
         section.style.display = "block";
+
         const icon = btn.querySelector("i");
         if (icon) {
           icon.classList.remove("fa-chevron-down");
           icon.classList.add("fa-chevron-up");
         }
+
+        // ✅ AUTO SCROLL
+        smoothScrollTo(section);
       }
     });
   });
@@ -8719,11 +10021,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btn.addEventListener("click", () => {
       const isOpen = section.style.display === "block";
+
       marksSubSections.forEach(i => {
         const s = document.getElementById(i.sectionId);
         if (s) s.style.display = "none";
       });
-      if (!isOpen) section.style.display = "block";
+
+      if (!isOpen) {
+        section.style.display = "block";
+
+        // ✅ AUTO SCROLL
+        smoothScrollTo(section);
+      }
     });
   });
 
@@ -8737,12 +10046,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   masterBtn?.addEventListener('click', () => {
     const hidden = learnersWrapper.style.display === 'none';
+
     learnersWrapper.style.display = hidden ? 'flex' : 'none';
-    masterBtn.innerHTML = `<i class="fas fa-database" style="margin-right: 8px;"></i> Learners Database`;
 
-    if (!hidden) closeAllSubSections(); // close sub-sections when collapsing
+    masterBtn.innerHTML = `<i class="fas fa-db" style="margin-right: 8px;"></i> Learners Database `;
 
-    // Hide reports if open
+    if (!hidden) closeAllSubSections();
+
     if (reportsWrapper) reportsWrapper.style.display = 'none';
     if (reportsBtn?.querySelector('.btn-label')) {
       reportsBtn.querySelector('.btn-label').textContent = 'Exam & Marks Controls';
@@ -8765,21 +10075,34 @@ document.addEventListener("DOMContentLoaded", function () {
     wrapper.style.display = wrapper.style.display || 'none';
 
     btn.addEventListener('click', () => {
-      const isHidden = wrapper.style.display === 'none';
-      wrapper.style.display = isHidden ? 'block' : 'none';
-      if (label) label.textContent = isHidden ? hideText : showText;
 
-      // Close Learners Database if reports open
+      const isHidden = wrapper.style.display === 'none';
+
+      closeAllMainSections();
+
+      wrapper.style.display = isHidden ? 'block' : 'none';
+
+      if (label) {
+        label.textContent = isHidden ? hideText : showText;
+      }
+
       if (wrapperId === 'reportsControls') {
         if (learnersWrapper) learnersWrapper.style.display = 'none';
-        if (masterBtn) masterBtn.innerHTML = `<i class="fas fa-database" style="margin-right: 8px;"></i> Learners Database`;
+        if (masterBtn) masterBtn.innerHTML = `<i class="fas fa-db" style="margin-right: 8px;"></i> Learners Database`;
         closeAllSubSections();
-     }
+      }
+
+      if (wrapperId === 'learnersButtons') {
+        if (reportsWrapper) reportsWrapper.style.display = 'none';
+        if (reportsBtn?.querySelector('.btn-label')) {
+          reportsBtn.querySelector('.btn-label').textContent = 'Exam & Marks Controls';
+        }
+        closeAllSubSections();
+      }
     });
   }
 
 });
- 
 
 document.getElementById("printFilteredMarksBtn").addEventListener("click", () => {
 
@@ -9355,6 +10678,19 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function generateBlankMeritLists(learnersSnapshot, selectedGrade) {
+  // ===============================
+    // 🔹 AUTO SCROLL HELPER
+    // ===============================
+    function smoothScrollTo(el) {
+        setTimeout(() => {
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 200); // delay ensures DOM is fully rendered
+    }
+
+
     const container = document.createElement("div");
     container.style.marginTop = "20px";
     container.id = "blankMeritOutput";
@@ -9368,8 +10704,20 @@ function generateBlankMeritLists(learnersSnapshot, selectedGrade) {
         }
     });
 
+    // ❌ No learners found → SweetAlert + stop
     if (learners.length === 0) {
-        container.innerHTML = `<h2>Blank Merit List for Grade ${selectedGrade}</h2><p>No learners found.</p>`;
+
+        Swal.fire({
+            icon: "info",
+            title: "No Learners Found",
+            text: `No learners found for Grade ${selectedGrade}.`
+        });
+
+        container.innerHTML = `
+            <h2>Blank Merit List for Grade ${selectedGrade}</h2>
+            <p>No learners found.</p>
+        `;
+
         document.getElementById("reportOutput").innerHTML = "";
         document.getElementById("reportOutput").appendChild(container);
         return;
@@ -9380,16 +10728,17 @@ function generateBlankMeritLists(learnersSnapshot, selectedGrade) {
     const schoolName = "NACHU PRIMARY SCHOOL";
     const logoUrl = "https://i.imgur.com/VSAh48K.jpeg";
 
-    // Print Button
+    // 🖨️ Print Button
     const printButton = document.createElement("button");
     printButton.className = "print-button";
     printButton.style.marginBottom = "10px";
     printButton.style.float = "right";
     printButton.innerHTML = `<i class="fas fa-print"></i> Print Merit List`;
+
     printButton.onclick = () => {
         const tableHTML = container.querySelector("table").outerHTML;
 
-        const printWindow = window.open('', '_blank');
+        const printWindow = window.open("", "_blank");
         printWindow.document.write(`
             <html>
                 <head>
@@ -9397,10 +10746,34 @@ function generateBlankMeritLists(learnersSnapshot, selectedGrade) {
                     <style>
                         body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
                         img { width: 80px; height: auto; margin-bottom: 10px; }
-                        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-                        th, td { border: 1px solid #000; padding: 8px; text-align: center; }
-                        caption { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-                        .header-section p { margin: 4px 0; }
+
+                        table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin-top: 20px;
+                            border: 2px solid black;
+                        }
+
+                        th, td {
+                            border: 1.5px solid black;
+                            padding: 8px;
+                            text-align: center;
+                        }
+
+                        th {
+                            background: #f2f2f2;
+                            font-weight: bold;
+                        }
+
+                        caption {
+                            font-size: 18px;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        }
+
+                        .header-section p {
+                            margin: 4px 0;
+                        }
                     </style>
                 </head>
                 <body>
@@ -9414,28 +10787,33 @@ function generateBlankMeritLists(learnersSnapshot, selectedGrade) {
                 </body>
             </html>
         `);
+
         printWindow.document.close();
         printWindow.focus();
         printWindow.print();
     };
+
     container.appendChild(printButton);
 
-    // Subjects
-    const subjects = [
-        'Eng', 'Math',  'Kisw', 'Scie',
-        'Sst', 'Agric', 'Cre', 'C/A'
-    ];
+    // 📚 Subjects
+    const subjects = ['Eng', 'Math', 'Pre-Tech','Kisw', 'Scie', 'Sst', 'Agric', 'Cre', 'C/A'];
 
     const table = document.createElement("table");
 
-    // Header row: Subject and generic 'Level' column beside it
-    const headerRow = `<tr>
-        <th>No.</th>
-        <th>Name</th>
-        ${subjects.map(subject => `<th>${subject}</th><th>Level</th>`).join('')}
-    </tr>`;
+    // ✅ FORCE SCREEN BORDERS (IMPORTANT FIX)
+    table.style.borderCollapse = "collapse";
+    table.style.width = "100%";
+    table.style.marginTop = "15px";
+    table.style.border = "2px solid black";
 
-    // Data Rows
+    const headerRow = `
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            ${subjects.map(subject => `<th>${subject}</th><th>Level</th>`).join('')}
+        </tr>
+    `;
+
     const bodyRows = learners.map((learner, index) => `
         <tr>
             <td>${index + 1}</td>
@@ -9446,18 +10824,40 @@ function generateBlankMeritLists(learnersSnapshot, selectedGrade) {
 
     table.innerHTML = `
         <caption>Grade ${selectedGrade} - Blank Merit List</caption>
-        <thead>
-            ${headerRow}
-        </thead>
-        <tbody>
-            ${bodyRows}
-        </tbody>
+        <thead>${headerRow}</thead>
+        <tbody>${bodyRows}</tbody>
     `;
+
+    // ✅ FORCE GLOBAL BLACK GRID LINES (SCREEN VIEW)
+    const style = document.createElement("style");
+    style.innerHTML = `
+        #blankMeritOutput table,
+        #blankMeritOutput th,
+        #blankMeritOutput td {
+            border: 1.5px solid black !important;
+        }
+
+        #blankMeritOutput th,
+        #blankMeritOutput td {
+            padding: 6px;
+            text-align: center;
+        }
+
+        #blankMeritOutput th {
+            background: #f2f2f2;
+        }
+    `;
+    document.head.appendChild(style);
 
     container.appendChild(table);
 
     document.getElementById("reportOutput").innerHTML = "";
     document.getElementById("reportOutput").appendChild(container);
+  // ===============================
+    // ✅ AUTO SCROLL TRIGGER
+    // ===============================
+    smoothScrollTo(reportOutput);
+
 }
 document.getElementById("generateSubjectRankBtn").addEventListener("click", () => {
   const selectedGrade = document.getElementById("reportGradeSelect").value;
@@ -9472,6 +10872,17 @@ document.getElementById("generateSubjectRankBtn").addEventListener("click", () =
   generateSubjectRanking(selectedGrade, selectedSubject, selectedPeriod);
 });
 function generateSubjectRanking(grade, subjectKey, period) {
+ // ===============================
+    // 🔹 AUTO SCROLL HELPER
+    // ===============================
+    function smoothScrollTo(el) {
+        setTimeout(() => {
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 200); // delay ensures DOM is fully rendered
+    }
   const subjectNames = {
     eng: "English",
     math: "Mathematics",
@@ -9553,6 +10964,10 @@ function generateSubjectRanking(grade, subjectKey, period) {
     </div>`;
 
   document.getElementById("reportOutput").innerHTML = html;
+ // ===============================
+    // ✅ AUTO SCROLL TRIGGER
+    // ===============================
+    smoothScrollTo(reportOutput);
 
   // Print logic
   document.getElementById("printRankingReportBtn").addEventListener("click", () => {
@@ -9588,11 +11003,32 @@ document.getElementById("loadMarksByPeriodBtn").addEventListener("click", () => 
   loadMarksTableForPeriod(selectedExamPeriod);
 });
 function loadMarksTableForPeriod(examPeriod) {
+
+  // ===============================
+  // 🔹 AUTO SCROLL HELPER
+  // ===============================
+  function smoothScrollTo(el) {
+    setTimeout(() => {
+      el.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      // 🔥 Optional highlight effect
+      el.style.transition = "all 0.4s ease";
+      el.style.boxShadow = "0 0 15px rgba(0,123,255,0.7)";
+      setTimeout(() => {
+        el.style.boxShadow = "none";
+      }, 2000);
+
+    }, 300); // delay for Firebase rendering
+  }
+
   marksTableBody.innerHTML = "";
   const gradeGroups = {};
 
   let sums = {
-    eng: 0, math: 0,  kiswahili: 0,
+    eng: 0, math: 0, kiswahili: 0,
     science: 0, social: 0, agriculture: 0,
     cre: 0, creativeArt: 0, totalMarks: 0, totalLevels: 0
   };
@@ -9600,7 +11036,9 @@ function loadMarksTableForPeriod(examPeriod) {
   let learnersWithMarks = 0;
 
   onValue(learnersRef, (snapshot) => {
+
     marksTableBody.innerHTML = "";
+    window.loadedMarksLearners = []; // reset safely
 
     snapshot.forEach(childSnapshot => {
       const data = childSnapshot.val();
@@ -9608,10 +11046,10 @@ function loadMarksTableForPeriod(examPeriod) {
       const marks = marksData[examPeriod] || null;
 
       if (marks) {
+
         const rowTotal =
           (parseFloat(marks.eng) || 0) +
           (parseFloat(marks.math) || 0) +
-   
           (parseFloat(marks.kiswahili) || 0) +
           (parseFloat(marks.science) || 0) +
           (parseFloat(marks.social) || 0) +
@@ -9622,7 +11060,6 @@ function loadMarksTableForPeriod(examPeriod) {
         const totalLevel =
           (parseInt(marks.engLev) || 0) +
           (parseInt(marks.mathLev) || 0) +
-      
           (parseInt(marks.kiswahiliLev) || 0) +
           (parseInt(marks.scienceLev) || 0) +
           (parseInt(marks.socialLev) || 0) +
@@ -9637,6 +11074,13 @@ function loadMarksTableForPeriod(examPeriod) {
           rowTotal,
           totalLevel
         };
+
+        // ✅ STORE FOR WHATSAPP SENDING
+        window.loadedMarksLearners.push({
+          key: childSnapshot.key,
+          ...data,
+          marks: marks
+        });
 
         const grade = data.grade;
         if (!gradeGroups[grade]) {
@@ -9657,7 +11101,6 @@ function loadMarksTableForPeriod(examPeriod) {
 
         sums.eng += (parseFloat(marks.eng) || 0);
         sums.math += (parseFloat(marks.math) || 0);
-      
         sums.kiswahili += (parseFloat(marks.kiswahili) || 0);
         sums.science += (parseFloat(marks.science) || 0);
         sums.social += (parseFloat(marks.social) || 0);
@@ -9678,7 +11121,6 @@ function loadMarksTableForPeriod(examPeriod) {
           <td>${data.grade}</td>
           <td data-editable="true">${marks.eng}</td><td>${marks.engLev || ''}</td>
           <td data-editable="true">${marks.math}</td><td>${marks.mathLev || ''}</td>
-
           <td data-editable="true">${marks.kiswahili}</td><td>${marks.kiswahiliLev || ''}</td>
           <td data-editable="true">${marks.science}</td><td>${marks.scienceLev || ''}</td>
           <td data-editable="true">${marks.social}</td><td>${marks.socialLev || ''}</td>
@@ -9702,7 +11144,6 @@ function loadMarksTableForPeriod(examPeriod) {
       <td colspan="3"><strong>Totals</strong></td>
       <td>${sums.eng}</td><td></td>
       <td>${sums.math}</td><td></td>
-   
       <td>${sums.kiswahili}</td><td></td>
       <td>${sums.science}</td><td></td>
       <td>${sums.social}</td><td></td>
@@ -9718,7 +11159,6 @@ function loadMarksTableForPeriod(examPeriod) {
       <td colspan="3"><strong>Averages</strong></td>
       <td>${(sums.eng / divisor).toFixed(2)}</td><td></td>
       <td>${(sums.math / divisor).toFixed(2)}</td><td></td>
- 
       <td>${(sums.kiswahili / divisor).toFixed(2)}</td><td></td>
       <td>${(sums.science / divisor).toFixed(2)}</td><td></td>
       <td>${(sums.social / divisor).toFixed(2)}</td><td></td>
@@ -9731,6 +11171,12 @@ function loadMarksTableForPeriod(examPeriod) {
     `;
 
     if (isAdminLoggedIn) enableMarksEditing();
+
+    // ===============================
+    // ✅ AUTO SCROLL AFTER LOAD
+    // ===============================
+    smoothScrollTo(document.getElementById("marksList"));
+
   });
 }
 
@@ -9766,6 +11212,17 @@ document.getElementById("subjectRankingReportBtn").addEventListener("click", () 
 
 
 function generateSubjectRankingPerLearner(selectedGrade, selectedPeriod) {
+ // ===============================
+    // 🔹 AUTO SCROLL HELPER
+    // ===============================
+    function smoothScrollTo(el) {
+        setTimeout(() => {
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 200); // delay ensures DOM is fully rendered
+    }
     const subjects = [
         'English', 'Mathematics', 
         'Kiswahili', 'Science', 'Social Studies',
@@ -9839,7 +11296,10 @@ function generateSubjectRankingPerLearner(selectedGrade, selectedPeriod) {
         </div>`;
 
     document.getElementById("reportOutput").innerHTML = html;
-
+ // ===============================
+    // ✅ AUTO SCROLL TRIGGER
+    // ===============================
+    smoothScrollTo(reportOutput);
     // 🎉 Celebration Styles
     if (!document.getElementById("perfCelebrationStyles")) {
         const s = document.createElement("style");
@@ -10009,7 +11469,9 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     // ==============================
     // 🔹 LOGIN SUCCESS
     // ==============================
-    if (isAdmin) isAdminLoggedIn = true;
+    if (isAdmin || (currentUser && currentUser.role === "admin")) {
+  isAdminLoggedIn = true;
+}
 
     document.getElementById("loginSection").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
@@ -10186,6 +11648,42 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   }
 
 });
+
+function showUserBadge(username, role, isAdmin) {
+  const badge = document.getElementById("userBadge");
+
+  // Reset classes
+  badge.className = "badge";
+
+  if (isAdmin) {
+    badge.textContent = `👑 Admin: ${username}`;
+    badge.classList.add("badge-admin");
+  } else if (role === "teacher") {
+    badge.textContent = `👨‍🏫 Teacher: ${username}`;
+    badge.classList.add("badge-teacher");
+  } else if (role === "parent") {
+    badge.textContent = `👨‍👩‍👧 Parent: ${username}`;
+    badge.classList.add("badge-parent");
+  } else {
+    badge.textContent = `👤 User: ${username}`;
+  }
+}
+function requireAdminAccess(actionName = "perform this action") {
+  if (!isAdminLoggedIn) {
+    if (typeof Swal !== "undefined") {
+      Swal.fire({
+        icon: "error",
+        title: "Access Denied 🚫",
+        text: `You must be an admin to ${actionName}.`,
+        confirmButtonColor: "#d33"
+      });
+    } else {
+      alert("Access denied! Admin only.");
+    }
+    return false;
+  }
+  return true;
+}
 function enableMarksEditing() {
   if (!isAdminLoggedIn) return;
 
@@ -11920,10 +13418,12 @@ function loadFeeStudents() {
 
     allLearners.forEach(l => {
       if (l.grade === gradeSelect.value) {
-        studentSelect.innerHTML += `
-          <option value="${l.key}">
-            ${l.name}
-          </option>`;
+       const phone = l.parentPhone || l.phone || "";
+
+studentSelect.innerHTML += `
+  <option value="${l.key}" data-phone="${phone}">
+    ${l.name} / ${phone}
+  </option>`;
       }
     });
 
@@ -12133,98 +13633,186 @@ document.getElementById("payFeeBtn").onclick = async () => {
 function renderFeeTable(filterText = "", feeData = allFeeData) {
   const container = document.getElementById("feeStatement");
 
-  let html = `<div style="overflow-x:auto;"><table style="width:100%; border-collapse:collapse; font-size:14px; min-width:900px; border:2px solid #000;">`;
+  let html = `<div style="overflow-x:auto;">
+  <table style="width:100%; border-collapse:collapse; font-size:14px; min-width:1000px; border:2px solid #000;">`;
+
+  // ================= HEADER =================
   html += `<thead style="background:#f5f7fa; position:sticky; top:0; z-index:1;">
             <tr>
               <th style="padding:10px; border:1px solid #000;">No.</th>
               <th style="padding:10px; border:1px solid #000;">Name</th>
               <th style="padding:10px; border:1px solid #000;">Grade</th>`;
 
-  allFeeTypes.forEach(type => html += `<th style="padding:10px; border:1px solid #000;">${type}</th>`);
+  allFeeTypes.forEach(type =>
+    html += `<th style="padding:10px; border:1px solid #000;">${type}</th>`
+  );
 
-  html += `<th style="padding:10px; border:1px solid #000;">Total Paid</th>
-           <th style="padding:10px; border:1px solid #000;">Balance</th>
-           <th style="padding:10px; border:1px solid #000;">History</th>
-           <th style="padding:10px; border:1px solid #000;">Actions</th>
-           </tr></thead><tbody>`;
+  html += `
+    <th style="padding:10px; border:1px solid #000;">Total Paid</th>
+    <th style="padding:10px; border:1px solid #000;">Balance</th>
+    <th style="padding:10px; border:1px solid #000;">%</th>
+    <th style="padding:10px; border:1px solid #000;">Status</th>
+    <th style="padding:10px; border:1px solid #000;">History</th>
+    <th style="padding:10px; border:1px solid #000;">Actions</th>
+  </tr></thead><tbody>`;
 
+  // ================= TOTALS =================
   let index = 1;
   let columnTotals = {};
   allFeeTypes.forEach(type => columnTotals[type] = 0);
+
   let grandTotalPaid = 0;
   let grandTotalBalance = 0;
 
+  const expectedTotal = getExpectedTotal ? getExpectedTotal() :
+    Object.values(feeStructure).reduce((a, b) => a + b, 0);
+
+  // ================= ROWS =================
   Object.entries(feeData).forEach(([id, student]) => {
+
     const name = (student.name || "").toLowerCase();
     const studentGrade = (student.grade || "").toLowerCase();
 
-    if (filterText && !name.includes(filterText) && !studentGrade.includes(filterText)) return;
+    if (filterText &&
+        !name.includes(filterText.toLowerCase()) &&
+        !studentGrade.includes(filterText.toLowerCase())) return;
 
     let totalPaid = 0;
-    html += `<tr style="text-align:center;">
-              <td style="padding:8px; border:1px solid #000;">${index++}</td>
-              <td style="padding:8px; border:1px solid #000; text-align:left;">${student.name || ""}</td>
-              <td style="padding:8px; border:1px solid #000;">${student.grade || ""}</td>`;
 
+    html += `<tr style="text-align:center;">`;
+
+    html += `<td style="padding:8px; border:1px solid #000;">${index++}</td>`;
+    html += `<td style="padding:8px; border:1px solid #000; text-align:left;">${student.name || ""}</td>`;
+    html += `<td style="padding:8px; border:1px solid #000;">${student.grade || ""}</td>`;
+
+    // ================= FEE COLUMNS =================
     allFeeTypes.forEach(type => {
-      const amount = student.fees && student.fees[type] ? student.fees[type] : 0;
+      const amount = student.fees?.[type] || 0;
+
       totalPaid += amount;
       columnTotals[type] += amount;
+
       const expected = feeStructure[type] || 0;
-      html += `<td style="padding:8px; border:1px solid #000; font-weight:500; color:${amount < expected ? "#e63946" : "#2a9d8f"};">${amount}</td>`;
+
+      html += `
+        <td style="padding:8px; border:1px solid #000; font-weight:500;
+        color:${amount < expected ? "#e63946" : "#2a9d8f"};">
+        ${amount}
+        </td>`;
     });
 
-    const expectedTotal = Object.values(feeStructure).reduce((a,b)=>a+b,0);
     const balance = expectedTotal - totalPaid;
+    const percent = expectedTotal === 0 ? 0 : ((totalPaid / expectedTotal) * 100).toFixed(1);
+
+    const status =
+      totalPaid === 0 ? "NOT PAID ❌" :
+      totalPaid < expectedTotal ? "PARTIAL ⚠️" :
+      "PAID ✅";
+
     grandTotalPaid += totalPaid;
     grandTotalBalance += balance;
 
+    // ================= SUMMARY COLUMNS =================
     html += `<td style="padding:8px; border:1px solid #000; font-weight:bold;">${totalPaid}</td>`;
-    html += `<td style="padding:8px; border:1px solid #000; font-weight:bold; color:${balance>0?"#e63946":"#2a9d8f"};">${balance}</td>`;
 
+    html += `<td style="padding:8px; border:1px solid #000; font-weight:bold; color:${balance > 0 ? "#e63946" : "#2a9d8f"};">
+      ${balance}
+    </td>`;
+
+    html += `<td style="padding:8px; border:1px solid #000; font-weight:bold;">
+      ${percent}%
+    </td>`;
+
+    html += `<td style="padding:8px; border:1px solid #000; font-weight:bold; color:${
+      status.includes("PAID") ? "#2a9d8f" : "#e63946"
+    };">
+      ${status}
+    </td>`;
+
+    // ================= HISTORY =================
     html += `<td style="padding:8px; border:1px solid #000;">
-               <button onclick="viewHistory('${id}')" style="padding:5px 10px; border:none; background:#457b9d; color:white; border-radius:5px; cursor:pointer;">View</button>
-             </td>`;
-  html += `<td style="padding:8px; border:1px solid #000; display:flex; gap:6px; justify-content:center; flex-wrap:wrap;">
+      <button onclick="viewHistory('${id}')"
+        style="padding:5px 10px; border:none; background:#457b9d; color:white; border-radius:5px; cursor:pointer;">
+        View
+      </button>
+    </td>`;
 
-  <button onclick="printReceipt('${id}')"
-    title="Print Receipt"
-    style="padding:6px 10px; background:#007bff; color:#fff; border:none; border-radius:4px; cursor:pointer;">
-    🧾
-  </button>
+    // ================= ACTIONS (UNCHANGED) =================
+    html += `<td style="padding:8px; border:1px solid #000; display:flex; gap:6px; justify-content:center; flex-wrap:wrap;">
 
-  <button onclick="editFees('${id}')"
-    title="Edit Fee"
-    style="padding:6px 10px; background:#28a745; color:#fff; border:none; border-radius:4px; cursor:pointer;">
-    ✏️
-  </button>
+      <button onclick="printReceipt('${id}')"
+        title="Print Receipt"
+        style="padding:6px 10px; background:#007bff; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+        🧾
+      </button>
 
-  <button onclick="refundFees('${id}')"
-    title="Refund Fee"
-    style="padding:6px 10px; background:#ffc107; color:#000; border:none; border-radius:4px; cursor:pointer;">
-    ↩
-  </button>
+      <button onclick="editFees('${id}')"
+        title="Edit Fee"
+        style="padding:6px 10px; background:#28a745; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+        ✏️
+      </button>
 
-  <button onclick="deleteLearnerFees('${id}')"
-    title="Delete Record"
-    style="padding:6px 10px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer;">
-    🗑
-  </button>
+      <button onclick="refundFees('${id}')"
+        title="Refund Fee"
+        style="padding:6px 10px; background:#ffc107; color:#000; border:none; border-radius:4px; cursor:pointer;">
+        ↩
+      </button>
 
-</td></tr>`;
+      <button onclick="deleteLearnerFees('${id}')"
+        title="Delete Record"
+        style="padding:6px 10px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+        🗑
+      </button>
+
+    </td></tr>`;
   });
 
-  // TOTAL ROW
+  // ================= TOTAL ROW =================
   html += `<tr style="font-weight:bold; background:#f1f3f5; text-align:center;">
-            <td colspan="3" style="border:1px solid #000;">TOTALS</td>`;
-  allFeeTypes.forEach(type => html += `<td style="border:1px solid #000;">${columnTotals[type]}</td>`);
-  html += `<td style="border:1px solid #000;">${grandTotalPaid}</td>
-           <td style="border:1px solid #000;">${grandTotalBalance}</td>
-           <td colspan="2" style="border:1px solid #000;"></td>
-           </tr>`;
+    <td colspan="3" style="border:1px solid #000;">TOTALS</td>`;
+
+  allFeeTypes.forEach(type =>
+    html += `<td style="border:1px solid #000;">${columnTotals[type]}</td>`
+  );
+
+  html += `
+    <td style="border:1px solid #000;">${grandTotalPaid}</td>
+    <td style="border:1px solid #000;">${grandTotalBalance}</td>
+    <td colspan="3" style="border:1px solid #000;"></td>
+  </tr>`;
+
   html += `</tbody></table></div>`;
   container.innerHTML = html;
+loadFeeDashboard(filteredFeeData);
 }
+function showFeeSummary() {
+  const summary = getGradeFeeSummary(allFeeData);
+
+  let html = "";
+  for (let grade in summary) {
+    html += `<div>${grade}: ${summary[grade]}</div>`;
+  }
+
+  Swal.fire({
+    title: "Class Collection Summary",
+    html
+  });
+}
+function showOutstanding() {
+  const data = allFeeData; // your loaded dataset
+
+  const list = getStudentsWithBalance(data);
+
+  Swal.fire({
+    title: "Outstanding Students",
+    html: list.map(([id, s]) =>
+      `<div>${s.name} - ${s.grade}</div>`
+    ).join(""),
+    width: 600
+  });
+}
+
+
 
 document.getElementById("feeSearch").addEventListener("input", function () {
   const value = this.value.toLowerCase();
@@ -12439,68 +14027,180 @@ window.printReceipt = function(studentId) {
 
   win.print();
 };
+function listenMpesaPayments() {
+  const year = document.getElementById("feeYear").value;
 
-async function payWithMpesa() {
-  const phone = document.getElementById("mpesaPhone").value;
-  const amount = Number(document.getElementById("feeAmount").value);
+  const feeRef = ref(db, "fees/" + year);
 
-  if (!phone || !amount) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Missing Details',
-      text: 'Enter phone number and amount'
-    });
+  onValue(feeRef, snapshot => {
+    allFeeData = snapshot.val() || {};
+    loadFeeStatement(); // 🔥 AUTO REFRESH TABLE
+  });
+}
+window.requestMpesaPayment = async function(studentId) {
+
+  const year = document.getElementById("feeYear").value;
+  const feeType = document.getElementById("feeType").value;
+  const student = allLearners.find(l => l.key === studentId);
+
+  // 1. VALIDATE DROPDOWNS
+  if (!year || !feeType || !studentId) {
+    Swal.fire("Missing Info", "Select Year, Student and Fee Type", "warning");
     return;
   }
 
+  // 2. ASK FOR PHONE NUMBER (YOUR REQUEST)
+  const { value: phone } = await Swal.fire({
+    title: "Enter Parent Phone Number",
+    input: "text",
+    inputPlaceholder: "e.g. 254712345678",
+    showCancelButton: true,
+    inputValidator: (value) => {
+      if (!value) return "Phone number is required";
+    }
+  });
+
+  if (!phone) return;
+
+  // 3. GET CURRENT PAYMENT STATUS
+  const feeRef = ref(db, "fees/" + year + "/" + studentId);
+  const snapshot = await get(feeRef);
+  const data = snapshot.val();
+
+  let paidSoFar = data?.fees?.[feeType] || 0;
+  let expected = feeStructure[feeType] || 0;
+
+  let balance = expected - paidSoFar;
+
+  if (balance <= 0) {
+    Swal.fire("Fully Paid", "This fee type is already fully paid", "success");
+    return;
+  }
+
+  // 4. CONFIRM PAYMENT
+  const confirm = await Swal.fire({
+    title: "Confirm M-Pesa Payment",
+    html: `
+      <b>Student:</b> ${student?.name || ""}<br>
+      <b>Fee Type:</b> ${feeType}<br>
+      <b>Amount to Pay:</b> ${balance}<br>
+      <b>Phone:</b> ${phone}
+    `,
+    showCancelButton: true,
+    confirmButtonText: "Send STK Push"
+  });
+
+  if (!confirm.isConfirmed) return;
+
   try {
+
+    // 5. SHOW LOADING
     Swal.fire({
-      title: 'Processing...',
-      text: 'Sending STK Push',
+      title: "Sending M-Pesa Request...",
       allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
+      didOpen: () => Swal.showLoading()
     });
 
-    const response = await fetch("https://your-backend-url.com/stkpush", {
+    // 6. SEND STK PUSH
+    const res = await fetch("http://localhost:3000/mpesa/stkpush", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        phone: phone,
-        amount: amount
+        phone,
+        amount: balance,
+        studentId,
+        feeType,
+        year,
+        name: student?.name || "Student Payment"
       })
     });
 
-    const data = await response.json();
+    const result = await res.json();
 
-    if (data.ResponseCode === "0") {
-      Swal.fire({
-        icon: 'success',
-        title: 'STK Push Sent',
-        text: 'Check your phone to complete payment 📲',
-        timer: 3000,
-        showConfirmButton: false
-      });
+    if (result.success) {
+      Swal.fire("Sent!", "Check phone to complete payment 📲", "success");
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Failed',
-        text: 'Failed to initiate payment'
-      });
+      Swal.fire("Failed", result.message || "STK Push failed", "error");
     }
 
   } catch (err) {
-    console.error(err);
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: 'Error initiating M-Pesa payment'
-    });
+    Swal.fire("Error", err.message, "error");
   }
-}
+};
+window.payFullBalanceMpesa = async function(studentId) {
+
+  const student = allFeeData[studentId] || allLearners.find(l => l.key === studentId);
+
+  if (!student) {
+    Swal.fire("Error", "Student not found", "error");
+    return;
+  }
+
+  const phone = student.parentPhone || student.phone;
+
+  if (!phone) {
+    Swal.fire("Missing Phone", "No parent phone found", "error");
+    return;
+  }
+
+  // 🔥 Calculate total expected
+  const expectedTotal = Object.values(feeStructure || {}).reduce((a, b) => a + b, 0);
+
+  // 🔥 Calculate paid
+  let paid = 0;
+  Object.values(student.fees || {}).forEach(v => paid += Number(v));
+
+  const balance = expectedTotal - paid;
+
+  if (balance <= 0) {
+    Swal.fire("Fully Paid", "This student has no balance", "success");
+    return;
+  }
+
+  const confirm = await Swal.fire({
+    title: "Confirm Payment Request",
+    html: `
+      <b>Student:</b> ${student.name}<br>
+      <b>Balance:</b> ${balance}<br>
+      <b>Phone:</b> ${phone}
+    `,
+    showCancelButton: true,
+    confirmButtonText: "Send M-Pesa Request"
+  });
+
+  if (!confirm.isConfirmed) return;
+
+  try {
+
+    Swal.fire({
+      title: "Sending STK Push...",
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading()
+    });
+
+    const res = await fetch("http://localhost:3000/mpesa/stkpush", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        phone: phone,
+        amount: balance,   // 🔥 AUTO BALANCE
+        studentId: studentId,
+        name: student.name
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      Swal.fire("Sent!", "M-Pesa prompt sent to parent 📲", "success");
+    } else {
+      Swal.fire("Failed", data.message || "Error", "error");
+    }
+
+  } catch (err) {
+    Swal.fire("Error", err.message, "error");
+  }
+};
 const feeGradeSelect = document.getElementById("feeGrade");
 const feeYearSelect = document.getElementById("feeYear");
 
@@ -12751,7 +14451,7 @@ window.printFilteredFees = function () {
       
       <!-- LEFT TEXT -->
       <div>
-        <strong style="font-size: 22px;">NACHU PRIMARY AND JUNIOR SCHOOL</strong><br>
+        <strong style="font-size: 22px;">NACHU PRIMARY SCHOOL</strong><br>
         <strong style="font-size: 20px;">FEE STATEMENT</strong><br>
 
         <div style="margin-top: 5px; font-size: 14px;">
@@ -12886,6 +14586,503 @@ window.printFilteredFees = function () {
     win.focus();
     win.print();
   }, 500);
+};
+
+// ===============================
+// 💰 FEE SYSTEM UPGRADE MODULE
+// ===============================
+
+// 🔧 Fee structure helper
+function getExpectedTotal() {
+  return Object.values(feeStructure || {}).reduce((a, b) => a + b, 0);
+}
+
+// ===============================
+// 📊 1. PAYMENT STATUS
+// ===============================
+function calculateFeeStatus(student) {
+  const expected = getExpectedTotal();
+
+  let paid = 0;
+  Object.values(student.fees || {}).forEach(v => paid += v);
+
+  if (paid === 0) return "NOT PAID ❌";
+  if (paid < expected) return "PARTIAL ⚠️";
+  return "PAID ✅";
+}
+
+// ===============================
+// 📈 2. PAYMENT PERCENTAGE
+// ===============================
+function calculatePaymentPercentage(student) {
+  const expected = getExpectedTotal();
+
+  let paid = 0;
+  Object.values(student.fees || {}).forEach(v => paid += v);
+
+  return expected === 0 ? 0 : ((paid / expected) * 100).toFixed(1);
+}
+
+// ===============================
+// 💸 3. OUTSTANDING STUDENTS
+// ===============================
+function getStudentsWithBalance(feeData) {
+  const expected = getExpectedTotal();
+
+  return Object.entries(feeData || {}).filter(([id, student]) => {
+    let paid = 0;
+    Object.values(student.fees || {}).forEach(v => paid += v);
+    return paid < expected;
+  });
+}
+
+// ===============================
+// 📊 4. CLASS COLLECTION SUMMARY
+// ===============================
+function getGradeFeeSummary(feeData) {
+  const summary = {};
+
+  Object.entries(feeData || {}).forEach(([id, student]) => {
+    const grade = student.grade || "Unknown";
+
+    let total = 0;
+    Object.values(student.fees || {}).forEach(v => total += v);
+
+    if (!summary[grade]) summary[grade] = 0;
+    summary[grade] += total;
+  });
+
+  return summary;
+}
+
+// ===============================
+// 🧾 5. RECEIPT GENERATOR
+// ===============================
+function generateReceiptNumber() {
+  return "RCPT-" + Date.now();
+}
+
+// ===============================
+// 🔍 6. ADVANCED SEARCH
+// ===============================
+function advancedFeeFilter(data, searchText) {
+  searchText = (searchText || "").toLowerCase();
+
+  return Object.fromEntries(
+    Object.entries(data || {}).filter(([id, student]) => {
+
+      const name = student.name?.toLowerCase() || "";
+      const grade = student.grade?.toLowerCase() || "";
+
+      const feeMatch = Object.entries(student.fees || {}).some(([type, amount]) => {
+        return type.toLowerCase().includes(searchText) ||
+               String(amount).includes(searchText);
+      });
+
+      return name.includes(searchText) ||
+             grade.includes(searchText) ||
+             feeMatch;
+    })
+  );
+}
+
+let feeChartInstance = null;
+function updateProgressRing(element, percent) {
+  element.style.background =
+    `conic-gradient(#2a9d8f ${percent}%, #ddd ${percent}%)`;
+}
+
+function loadFeeDashboard(feeData) {
+
+  const expectedPerStudent = Object.values(feeStructure || {})
+    .reduce((a, b) => a + b, 0);
+
+  let studentCount = Object.keys(feeData || {}).length;
+  let totalCollected = 0;
+
+  Object.entries(feeData || {}).forEach(([id, student]) => {
+    let paid = 0;
+    Object.values(student.fees || {}).forEach(v => paid += v);
+    totalCollected += paid;
+  });
+
+  const totalExpected = expectedPerStudent * studentCount;
+  const totalBalance = totalExpected - totalCollected;
+
+  // % PAID
+  const percentPaid = totalExpected > 0
+    ? Math.round((totalCollected / totalExpected) * 100)
+    : 0;
+
+  // UPDATE TEXT
+  document.getElementById("totallStudents").textContent = studentCount;
+  document.getElementById("totalExpected").textContent = totalExpected;
+  document.getElementById("totalCollected").textContent = totalCollected;
+  document.getElementById("totalBalance").textContent = totalBalance;
+
+  // UPDATE RINGS
+  const rings = document.querySelectorAll(".progress-ring");
+
+  updateProgressRing(rings[0], 100); // students
+  updateProgressRing(rings[1], 100); // expected
+  updateProgressRing(rings[2], percentPaid); // collected
+  updateProgressRing(rings[3], percentPaid); // balance inverse feel
+updateLeaderboardAndDefaulters(feeData, expectedPerStudent);
+  // 🔥 LIVE CHART UPDATE
+  updateFeeChart(totalCollected, totalBalance);
+
+  // =========================
+  // 🔥 FIXED CHART SECTION
+  // =========================
+  const ctx = document.getElementById("feeChart");
+
+  if (!ctx) return; // prevent crash if canvas missing
+
+  // 🧹 Destroy previous chart
+  if (feeChartInstance) {
+    feeChartInstance.destroy();
+  }
+
+  feeChartInstance = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Collected", "Balance"],
+      datasets: [{
+        data: [totalCollected, totalBalance],
+        backgroundColor: ["#2a9d8f", "#e63946"]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom"
+        }
+      }
+    }
+  });
+}
+
+function updateLeaderboardAndDefaulters(feeData, expectedPerStudent) {
+
+  const students = [];
+
+
+Object.entries(feeData || {}).forEach(([id, student]) => {
+    let paid = 0;
+    Object.values(student.fees || {}).forEach(v => paid += v);
+
+    const expected = expectedPerStudent;
+    const balance = expected - paid;
+
+students.push({
+  id: id, // ✅ IMPORTANT
+  name: student.name || "Unknown",
+  paid,
+  balance
+});
+  });
+
+  // =========================
+  // 🏆 TOP 5 PAYERS
+  // =========================
+  const top = [...students]
+    .sort((a, b) => b.paid - a.paid)
+    .slice(0, 5);
+
+  const leaderboard = document.getElementById("leaderboardList");
+  leaderboard.innerHTML = "";
+
+  top.forEach((s, i) => {
+    leaderboard.innerHTML += `
+      <li>
+        <span>${i + 1}. ${s.name}</span>
+        <strong>${s.paid}</strong>
+      </li>
+    `;
+  });
+
+  // =========================
+// 🚨 DEFAULTERS (NO / LOW PAYMENT)
+// =========================
+const defaulters = students.filter(s => 
+  s.paid === 0 || s.balance > expectedPerStudent * 0.5
+);
+
+const defaulterList = document.getElementById("defaulterList");
+defaulterList.innerHTML = "";
+
+// 🚨 If empty
+if (defaulters.length === 0) {
+  defaulterList.innerHTML = `
+    <li style="padding:10px; color:green; font-weight:bold;">
+      ✅ No defaulters — all students are doing well!
+    </li>`;
+  return;
+}
+
+defaulters.forEach(s => {
+
+  // ✅ Ensure studentId exists
+  const studentId = s.id || s.key;
+
+  defaulterList.innerHTML += `
+    <li style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:8px;
+      border-bottom:1px solid #ddd;
+      gap:10px;
+      flex-wrap:wrap;
+    ">
+
+      <div>
+        ⚠️ <strong>${s.name}</strong><br>
+        Paid: ${s.paid} |
+        Balance: <span style="color:#e63946;">${s.balance}</span> |
+        Overdue: ${s.overdue || 0} days
+      </div>
+
+      <button onclick="sendReminder('${studentId}', event)"
+        style="
+          background:#e74c3c;
+          color:white;
+          border:none;
+          padding:6px 10px;
+          border-radius:6px;
+          cursor:pointer;
+          font-size:12px;
+        ">
+        📲 Remind
+      </button>
+
+    </li>
+  `;
+});
+}
+
+function getDaysOverdue(lastPaymentDate) {
+
+  if (!lastPaymentDate) return "Never paid";
+
+  const last = new Date(lastPaymentDate);
+  const today = new Date();
+
+  const diff = Math.floor((today - last) / (1000 * 60 * 60 * 24));
+
+  return diff;
+}
+function openStudentProfile(studentName) {
+
+  const student = Object.values(allStudentsData || {})
+    .find(s => s.name === studentName);
+
+  if (!student) {
+    Swal.fire("Not found", "Student data not available", "error");
+    return;
+  }
+
+  Swal.fire({
+    title: student.name,
+    html: `
+      <p><b>Grade:</b> ${student.grade || "N/A"}</p>
+      <p><b>Phone:</b> ${student.phone || "N/A"}</p>
+      <p><b>Guardian:</b> ${student.guardian || "N/A"}</p>
+    `,
+    icon: "info"
+  });
+}
+window.sendReminder = function(studentId, event) {
+
+  if (event) event.stopPropagation();
+
+  // 🔥 Get selected dropdown
+  const studentSelect = document.getElementById("feeStudent");
+  const selectedOption = studentSelect.querySelector(`option[value="${studentId}"]`);
+
+  if (!selectedOption) {
+    Swal.fire("Error", "Student not found in dropdown", "error");
+    return;
+  }
+
+  let phone = selectedOption.getAttribute("data-phone");
+
+  if (!phone) {
+    Swal.fire("Missing Phone", "No parent phone found", "error");
+    return;
+  }
+
+  // ✅ Clean phone (your format already correct: 2547...)
+  phone = phone.toString().trim();
+
+  const name = selectedOption.textContent.split("/")[0].trim();
+
+  const message = `Hello ${name}, your school fees are pending. Kindly clear the balance. Thank you.`;
+
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+  // 🔥 OPEN WHATSAPP
+  window.open(url, "_blank");
+
+  // ✅ Feedback
+  Swal.fire({
+    toast: true,
+    position: "top-end",
+    icon: "success",
+    title: "Opening WhatsApp...",
+    showConfirmButton: false,
+    timer: 1500
+  });
+};
+let learnerPhoneMap = {};
+
+function buildLearnerPhoneMap() {
+  learnerPhoneMap = {};
+
+  const rows = document.querySelectorAll("#learnersList tr");
+
+  rows.forEach(row => {
+    const cells = row.querySelectorAll("td");
+
+    if (cells.length < 11) return;
+
+    const admission = cells[11]?.innerText.trim(); // ✅ Admission No
+    const parentPhone = cells[9]?.innerText.trim(); // ✅ Parent Phone
+    const name = cells[4]?.innerText.trim();
+
+    if (admission && parentPhone) {
+      learnerPhoneMap[admission] = {
+        phone: parentPhone,
+        name: name
+      };
+    }
+  });
+
+  console.log("📲 Admission Map:", learnerPhoneMap);
+}window.remindAllDefaulters = function () {
+
+  if (!filteredFeeData || Object.keys(filteredFeeData).length === 0) {
+    Swal.fire("No Data", "No fee data available", "info");
+    return;
+  }
+
+  const expected = getExpectedTotal();
+
+  const defaulters = Object.entries(filteredFeeData).filter(([id, student]) => {
+    let paid = 0;
+    Object.values(student.fees || {}).forEach(v => paid += v);
+    return paid === 0 || paid < expected;
+  });
+
+  if (defaulters.length === 0) {
+    Swal.fire("Great!", "No defaulters 🎉", "success");
+    return;
+  }
+
+  let opened = 0;
+
+  defaulters.forEach(([id, student], index) => {
+
+    // 🔥 Get phone from dropdown (same method as single reminder)
+    const option = document.querySelector(`#feeStudent option[value="${id}"]`);
+
+    if (!option) return;
+
+    let phone = option.getAttribute("data-phone");
+    if (!phone) return;
+
+    phone = phone.toString().trim();
+
+    const name = student.name || "Parent";
+
+    const message = `Hello ${name}, your school fees are pending. Kindly clear the balance. Thank you.`;
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    // 🔥 Delay opening (prevents browser blocking multiple tabs)
+    setTimeout(() => {
+      window.open(url, "_blank");
+    }, index * 800);
+
+    opened++;
+  });
+
+  // ✅ FEEDBACK
+  Swal.fire({
+    icon: "success",
+    title: "Reminders Sent",
+    text: `${opened} WhatsApp chats opened`,
+    timer: 2500,
+    showConfirmButton: false
+  });
+};
+window.sendBulkSMS = async function () {
+
+  if (!filteredFeeData || Object.keys(filteredFeeData).length === 0) {
+    Swal.fire("No Data", "No fee data available", "info");
+    return;
+  }
+
+  const expected = getExpectedTotal();
+
+  const defaulters = Object.entries(filteredFeeData).filter(([id, student]) => {
+    let paid = 0;
+    Object.values(student.fees || {}).forEach(v => paid += v);
+    return paid === 0 || paid < expected;
+  });
+
+  if (defaulters.length === 0) {
+    Swal.fire("Great!", "No defaulters 🎉", "success");
+    return;
+  }
+
+  let phones = [];
+
+  defaulters.forEach(([id, student]) => {
+
+    const option = document.querySelector(`#feeStudent option[value="${id}"]`);
+    if (!option) return;
+
+    let phone = option.getAttribute("data-phone");
+    if (!phone) return;
+
+    phones.push(phone);
+  });
+
+  const message = `Fee Reminder: Your child has an outstanding balance. Kindly clear ASAP. Thank you.`;
+
+  try {
+
+    Swal.fire({
+      title: "Sending SMS...",
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading()
+    });
+
+    const res = await fetch("http://localhost:3000/send-sms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        phones: phones,
+        message: message
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      Swal.fire("Success", "SMS sent successfully ✅", "success");
+    } else {
+      Swal.fire("Error", "Failed to send SMS", "error");
+    }
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire("Error", "Server error", "error");
+  }
 };
 const floatingContainer = document.getElementById("floatingNotificationsContainer");
 
@@ -13024,6 +15221,7 @@ function setOfflineStatus() {
   el.classList.add("offline");
   el.textContent = "🔴 Offline";
 }
+
 
 // Auto detect connection
 window.addEventListener("online", setOnlineStatus);

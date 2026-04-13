@@ -10293,8 +10293,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // ===============================
   // 🔹 MAIN SECTIONS (ACCORDION)
   // ===============================
-  const mainSections = document.querySelectorAll(".main-section"); 
-  const mainButtons = document.querySelectorAll(".main-section-btn"); 
+  const mainSections = document.querySelectorAll(".main-section");
+  const mainButtons = document.querySelectorAll(".main-section-btn");
 
   function closeAllMainSections() {
     mainSections.forEach(section => {
@@ -10304,9 +10304,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     mainButtons.forEach(btn => {
       const icon = btn.querySelector("i");
-      if (icon) { 
-        icon.classList.remove("fa-chevron-up"); 
-        icon.classList.add("fa-chevron-down"); 
+      if (icon) {
+        icon.classList.remove("fa-chevron-up");
+        icon.classList.add("fa-chevron-down");
       }
     });
   }
@@ -10362,12 +10362,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ===============================
-  // 🔹 GLOBAL RESET
+  // 🔥 SAFE GLOBAL RESET (FIXED)
   // ===============================
-  function closeEverything() {
+  function closeEverything(preserveMarks = false) {
     closeAllMainSections();
     closeAllSubSections();
 
+    // IMPORTANT: do NOT destroy marks UI when switching reports
+    if (!preserveMarks) {
+      closeAllMarksSubSections();
+    }
   }
 
   // ===============================
@@ -10382,16 +10386,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const isOpen = section.style.display === "block";
 
-      closeEverything();
+      closeEverything(false);
 
       if (!isOpen) {
         section.style.display = "block";
         section.classList.add("active");
 
         const icon = btn.querySelector("i");
-        if (icon) { 
-          icon.classList.remove("fa-chevron-down"); 
-          icon.classList.add("fa-chevron-up"); 
+        if (icon) {
+          icon.classList.remove("fa-chevron-down");
+          icon.classList.add("fa-chevron-up");
         }
 
         smoothScrollTo(section);
@@ -10408,12 +10412,16 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!btn || !section) return;
 
     btn.addEventListener("click", () => {
+
       const isOpen = section.style.display === "block";
+
+      const isMarksArea =
+        item.sectionId === "marksSection" ||
+        item.sectionId === "performanceReportsSection";
 
       closeAllSubSections();
 
-      // only reset marks children if NOT opening marks container
-      if (item.sectionId !== "marksSection") {
+      if (!isMarksArea) {
         closeAllMarksSubSections();
       }
 
@@ -10428,7 +10436,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         smoothScrollTo(section);
 
-        // auto show cards when marks opens
         if (item.sectionId === "marksSection") {
           const classMean = document.getElementById("classMeanCard");
           const totalLearners = document.getElementById("totalLearnersCard");
@@ -10504,9 +10511,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     wrapper.style.display = wrapper.style.display || 'none';
 
-    btn.addEventListener('click', () => {
+    btn.addEventListener("click", () => {
 
-      closeEverything();
+      // 🔥 IMPORTANT FIX: preserve marks when switching reports
+      closeEverything(true);
 
       const isHidden = wrapper.style.display === 'none';
 

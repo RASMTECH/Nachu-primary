@@ -10291,6 +10291,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ===============================
+  // 🔥 GLOBAL DATA ENGINE (NEW)
+  // ===============================
+  const MARKS_CACHE = {
+    raw: null,
+    computed: null
+  };
+
+  // ===============================
   // 🔹 MAIN SECTIONS (ACCORDION)
   // ===============================
   const mainSections = document.querySelectorAll(".main-section");
@@ -10362,16 +10370,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ===============================
-  // 🔥 SAFE GLOBAL RESET (FIXED)
+  // 🔥 SAFE RESET (ZERO-RESET ENGINE)
   // ===============================
-  function closeEverything(preserveMarks = false) {
+  function closeEverything(preserveMarks = true) {
+
     closeAllMainSections();
     closeAllSubSections();
 
-    // IMPORTANT: do NOT destroy marks UI when switching reports
+    // NEVER destroy marks UI/data when switching reports
     if (!preserveMarks) {
       closeAllMarksSubSections();
     }
+
+    // always keep marks table visible state safe
+    const table = document.getElementById("marksTable");
+    if (table) table.style.display = "table";
   }
 
   // ===============================
@@ -10513,7 +10526,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btn.addEventListener("click", () => {
 
-      // 🔥 IMPORTANT FIX: preserve marks when switching reports
+      // 🔥 ZERO-RESET MODE (SAFE FOR REPORTS)
       closeEverything(true);
 
       const isHidden = wrapper.style.display === 'none';

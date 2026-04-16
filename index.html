@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -666,262 +666,7 @@ button[onclick^="show"] {
   background-color: #007bff;
   color: #fff;
 }
-/* ================= SINGLE ID CARD (MODAL) ================= */
 
-.id-card {
-  width: 340px;
-  background: linear-gradient(135deg,#4f46e5,#06b6d4);
-  padding: 10px;
-  border-radius: 16px;
-}
-
-.id-front, .id-back {
-  background: white;
-  border-radius: 12px;
-  padding: 10px;
-  margin-bottom: 6px;
-}
-
-.id-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 2px solid #4f46e5;
-  padding-bottom: 6px;
-}
-
-.school-logo {
-  width: 45px;
-  height: 45px;
-}
-
-.school-info h3 {
-  margin: 0;
-  font-size: 14px;
-}
-
-.school-info small {
-  font-size: 10px;
-  color: #555;
-}
-
-.id-body {
-  text-align: center;
-}
-
-.id-photo {
-  width: 90px;
-  height: 90px;
-  border-radius: 12px;
-  border: 3px solid #4f46e5;
-  object-fit: cover;
-  margin: 6px auto;
-}
-
-.id-body h4 {
-  font-size: 14px;
-  margin: 3px 0;
-}
-
-.id-body p {
-  font-size: 11px;
-  color: #555;
-}
-
-.id-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.id-grid div {
-  background: #eef2ff;
-  padding: 5px;
-  border-radius: 6px;
-  font-size: 11px;
-}
-
-.id-grid span {
-  display: block;
-  font-size: 9px;
-  font-weight: bold;
-  color: #4f46e5;
-}
-
-.qr-box {
-  display: flex;
-  justify-content: center;
-  margin-top: 6px;
-}
-
-.id-footer {
-  text-align: center;
-  font-size: 10px;
-  margin-top: 5px;
-  color: #555;
-}
-
-.print-btn {
-  width: 100%;
-  border: none;
-  background: #22c55e;
-  color: white;
-  padding: 6px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.print-btn:hover {
-  background: #16a34a;
-}
-
-
-/* ================= BULK ID CARD ================= */
-
-.id-card-print {
-  width: 8.6cm;
-  height: 5.6cm;
-  background: linear-gradient(135deg,#4f46e5,#06b6d4);
-  padding: 4px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  display: flex;
-  gap: 4px;
-  page-break-inside: avoid;
-  break-inside: avoid;
-  flex-direction: column; /* ensures front/back stack vertically */
-}
-
-.id-card-print .id-front,
-.id-card-print .id-back {
-  width: 100%; /* take full width of card */
-  background: #fff;
-  border-radius: 8px;
-  padding: 5px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-  margin-bottom: 4px; /* spacing between front/back */
-}
-
-.id-card-print .id-header {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  border-bottom: 1px solid #4f46e5;
-  padding-bottom: 3px;
-}
-
-.id-card-print .school-logo {
-  width: 22px;
-  height: 22px;
-}
-
-.id-card-print .id-photo {
-  width: 46px;
-  height: 46px;
-  border-radius: 6px;
-  border: 2px solid #4f46e5;
-  object-fit: cover;
-  margin: 4px auto;
-}
-
-.id-card-print h5 {
-  font-size: 10px;
-  margin: 2px 0;
-  text-align: center;
-  line-height: 1.2;
-}
-
-.id-card-print p {
-  font-size: 9px;
-  margin: 1px 0;
-  text-align: center;
-  color: #555;
-  line-height: 1.2;
-}
-
-.id-mini-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3px;
-  font-size: 8px;
-}
-
-.id-mini-grid div {
-  background: #eef2ff;
-  border-radius: 4px;
-  padding: 2px;
-}
-
-.id-mini-grid span {
-  display: block;
-  font-size: 7px;
-  font-weight: bold;
-  color: #4f46e5;
-}
-
-.return-text {
-  font-size: 7px;
-  text-align: center;
-  border-top: 1px dashed #999;
-  padding-top: 2px;
-  margin-top: 2px;
-}
-
-
-/* ================= BULK PRINT LAYOUT ================= */
-
-.id-print-area {
-  display: none;
-}
-
-@media print {
-
-  @page {
-    size: A4;
-    margin: 8mm;
-  }
-
-  body * {
-    visibility: hidden;
-  }
-
-  .id-print-area,
-  .id-print-area * {
-    visibility: visible;
-  }
-
-  .id-print-area {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
-    grid-auto-rows: min-content; /* auto height for each card */
-    gap: 10mm; /* spacing between cards */
-    justify-items: center;
-    align-items: start;
-  }
-
-  .id-card-print {
-    width: 8.6cm;
-    height: auto; /* let front/back stack naturally */
-    flex-direction: column;
-  }
-
-  .page-break {
-    page-break-after: always;
-  }
-
-  /* hide buttons and modal during print */
-  .print-btn,
-  .close,
-  .bulk-print-btn {
-    display: none !important;
-  }
-}
 
 .report-button {
     width: fit-content;
@@ -1590,7 +1335,7 @@ button[onclick^="show"] {
 /* ===== BASE CHART STYLE (shared look) ===== */
 .chart-container {
   flex: 1;
-  width: 100%;
+  width: 1000%;
   max-width: 420px;
   margin: 20px auto;
   background: #ffffff;
@@ -1606,7 +1351,7 @@ button[onclick^="show"] {
 
 /* ===== GRADE CHART SPECIFIC STYLE ===== */
 .grade-chart-box canvas {
-  height: 320px !important;   /* taller chart */
+  height: 240px !important;   /* taller chart */
 }
 
 /* ===== GENDER CHART SPECIFIC STYLE ===== */
@@ -1716,16 +1461,7 @@ button[onclick^="show"] {
   overflow: hidden;
 }
 
-/* 🎈 Floating glow */
-.floating-bg {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(255,255,255,0.4), transparent);
-  top: -50px;
-  right: -50px;
-  animation: floatGlow 6s infinite ease-in-out;
-}
+
 
 @keyframes floatGlow {
   0%,100% { transform: translateY(0); }
@@ -2196,6 +1932,20 @@ button[onclick^="show"] {
   font-weight: bold;
 }
 
+#subjectAveragesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+.subject-average-item {
+  flex: 1 1 calc(33.333% - 12px);
+  min-width: 240px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
 /* ===============================
    📱 SMALL PHONES
 =============================== */
@@ -2333,6 +2083,68 @@ button[onclick^="show"] {
     height: 50px;
   }
 }
+/* 📱 SMALL SCREEN FIX */
+@media (max-width: 768px) {
+
+  #reportsControls {
+    bottom:55px;
+    width:95vw;
+    left:50%;
+    transform:translateX(-50%);
+  }
+
+  #reportsControls button {
+    width:40%;           /* stack buttons */
+    min-width:unset;
+  }
+}
+
+/* TEXT */
+.vision-text {
+  flex:1;
+  text-align:center;
+  line-height:1.5;
+}
+
+/* AVATAR BASE */
+.avatar {
+  width:55px;
+  height:55px;
+  object-fit:contain;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* LEFT AVATAR WAVE */
+.avatar-left {
+  animation: float 3s ease-in-out infinite, wave 2s infinite;
+}
+
+/* RIGHT AVATAR DELAY (more natural) */
+.avatar-right {
+  animation: float 3s ease-in-out infinite 0.5s, wave 2.5s infinite 0.3s;
+}
+
+/* FLOAT (alive breathing effect) */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+/* WAVE (greeting effect) */
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(12deg); }
+  40% { transform: rotate(-8deg); }
+  60% { transform: rotate(12deg); }
+  80% { transform: rotate(-4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* HOVER = GREETING REACTION */
+#announcement:hover .avatar {
+  transform: scale(1.15);
+  filter: brightness(1.2);
+}
 </style>
 
 </head>
@@ -2407,28 +2219,48 @@ button[onclick^="show"] {
 <div id="userBadgeContainer">
   <span id="userBadge" class="badge">👤 Guest</span>
 </div>
+
 <!-- ================= ANNOUNCEMENT ================= -->
 <div
   id="announcement"
   style="
     padding:10px 16px;
-    background-color:#ff4d4f;
+    background: linear-gradient(135deg, #ff4d4f, #ff7875);
     border:1px solid #d9363e;
     color:#fff;
-    border-radius:8px;
+    border-radius:12px;
     font-size:1rem;
     font-weight:600;
     box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    display:inline-block;
-    text-align:center;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
     margin:20px auto;
+    max-width:750px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   "
-  onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.15)';"
-  onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';"
+  onmouseover="this.style.transform='translateY(-3px) scale(1.01)'; this.style.boxShadow='0 8px 18px rgba(0,0,0,0.2)';"
+  onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';"
 >
-  📢 <strong>Our Vision :</strong> 
-  To revolutionize school management through smart, reliable, and user-friendly technology that enhances learning outcomes and administrative excellence.
+
+  <!-- LEFT AVATAR -->
+  <img 
+    src="https://i.imgur.com/lntl5cx.png" 
+    class="avatar avatar-left"
+  >
+
+  <!-- CENTER TEXT -->
+  <div class="vision-text">
+    📢 <strong>Our Vision :</strong><br>
+    To revolutionize school management through smart, reliable, and user-friendly technology that enhances learning outcomes and administrative excellence.
+  </div>
+
+  <!-- RIGHT AVATAR -->
+  <img 
+    src="https://i.imgur.com/RiHbVCx.png" 
+    class="avatar avatar-right"
+  >
 </div>
 <!-- ================= SCHOOL DASHBOARD ================= -->
 <h2 style="
@@ -3209,7 +3041,7 @@ button[onclick^="show"] {
 
 </div>
 
-   <!-- ================= REPORTS DATABASE ================= -->
+     <!-- ================= REPORTS DATABASE ================= -->
 <div style="max-width:500px; display:flex; flex-direction:column; gap:18px; align-items:center; width:100%;">
 
   <!-- Sub Buttons Container -->
@@ -3226,7 +3058,7 @@ button[onclick^="show"] {
       /* clearer background image */
       background:
      
-        url('https://i.imgur.com/paq3Bzz.jpeg');
+        url('https://i.imgur.com/dHp5PvW.jpeg');
 
       background-size:cover;
       background-position:center;
@@ -3269,6 +3101,7 @@ button[onclick^="show"] {
   </div>
 
 </div>
+
 
 
 
@@ -3461,7 +3294,7 @@ Rasm Does It All – Just Click and See It Done!.</span>
 
 <!-- Record Marks Section -->
 <div id="recordMarksSection" style="max-width: 400px; margin: auto; display: none; background-color: #8BC34A; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-  background-image: url('https://i.imgur.com/TZvzLll.jpeg'), url('https://i.imgur.com/L38mwvO.jpeg'); 
+  background-image: url('https://i.imgur.com/TRtvMZz.jpeg'), url('https://i.imgur.com/rvoDpM7.jpeg'); 
   background-size: cover, cover; 
   background-position: center, bottom right; 
   height: auto;">
@@ -11826,7 +11659,7 @@ function generateSubjectRankingPerLearner(selectedGrade, selectedPeriod) {
 // ==============================
 // 🔹 User & Admin Credentials
 // ==============================
-const adminCredentials = { username: 'admin', password: 'admin123' };
+const adminCredentials = { username: 'admin', password: '1' };
 
 const users = [
   { username: "Nachu", password: "1", role: "parent" },
@@ -11840,360 +11673,191 @@ let isAdminLoggedIn = false;
 // 🔹 Login Form Submission
 // ==============================
 document.getElementById("loginForm").addEventListener("submit", function (e) {
-
   e.preventDefault();
 
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  // check admin credentials
-  const isAdmin =
-    username === adminCredentials.username &&
-    password === adminCredentials.password;
+  // Check admin credentials first
+  const isAdmin = username === adminCredentials.username && password === adminCredentials.password;
 
-  // check users array
-  const currentUser =
-    users.find(u => u.username === username && u.password === password) || null;
-
-  // unified role
-  const role = isAdmin ? "admin" : currentUser?.role;
+  // Check regular users
+  const currentUser = users.find(u => u.username === username && u.password === password);
 
   if (isAdmin || currentUser) {
 
+    let role = isAdmin ? "admin" : currentUser.role;
+    let usernameToShow = isAdmin ? "Admin" : currentUser.username;
+
     // ==============================
-    // 🔹 LOGIN SUCCESS
+    // 🔰 UI UPDATES
     // ==============================
-    if (role === "admin") {
-      isAdminLoggedIn = true;
+
+    showUserBadge(usernameToShow, role, isAdmin);
+    updateGreeting(usernameToShow);
+
+    const profileNameEl = document.getElementById("profileName");
+    if (profileNameEl) {
+      profileNameEl.textContent = usernameToShow;
     }
 
+    // ==============================
+    // 💾 SAVE LOGIN
+    // ==============================
+    const userData = {
+      username: usernameToShow,
+      role: role,
+      isAdmin: isAdmin
+    };
+
+    saveLoginSession(userData);
+
+    if (isAdmin) isAdminLoggedIn = true;
+
+    // Hide login, show main UI
     document.getElementById("loginSection").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
     document.getElementById("loginError").style.display = "none";
 
-    // show badge
-    showUserBadge(username, role, isAdmin);
-
     // ==============================
-    // 🔹 BUTTON ACCESS CONTROL
+    // 🔐 BUTTON ACCESS CONTROL
     // ==============================
-    const allButtons =
-      document.querySelectorAll("#mainContent button");
+   const allButtons = document.querySelectorAll("#mainContent button");
 
-    allButtons.forEach(btn => {
+allButtons.forEach(btn => {
 
-      // ADMIN → sees everything
-      if (role === "admin") {
+  // ==============================
+  // 🔐 ADMIN ONLY BUTTONS (EXPLICIT LOCKS)
+  // ==============================
 
-        btn.style.display = "inline-block";
+  const adminOnlyButtons = [
+    "masterToggleBtn",              // Learners Database
+    "togglePerformanceReportsBtn"   // Exam Reports
+  ];
 
-      }
+  if (adminOnlyButtons.includes(btn.id)) {
+    btn.style.display = isAdmin ? "inline-block" : "none";
+    return; // stop further processing
+  }
 
-      // PARENT → limited buttons
-      else if (role === "parent") {
+  // ==============================
+  // ADMIN → sees everything
+  // ==============================
+  if (isAdmin) {
+    btn.style.display = "inline-block";
+  }
 
-        if (
-          btn.id === "toggleParentLookupBtn" ||
-          btn.id === "fetchParentResults"
-        ) {
+  // ==============================
+  // PARENT → limited buttons
+  // ==============================
+  else if (currentUser.role === "parent") {
+    if (
+      btn.id === "toggleParentLookupBtn" ||
+      btn.id === "fetchParentResults"
+    ) {
+      btn.style.display = "inline-block";
+    } else {
+      btn.style.display = "none";
+    }
+  }
 
-          btn.style.display = "inline-block";
+  // ==============================
+  // TEACHER → most buttons
+  // ==============================
+  else {
+    btn.style.display = "inline-block";
+  }
 
-        } else {
-
-          btn.style.display = "none";
-
-        }
-
-      }
-
-      // TEACHER → most buttons
-      else if (role === "teacher") {
-
-        btn.style.display = "inline-block";
-
-      }
-
-    });
-
+});
     // ==============================
-    // 🔹 REPORTS SECTION ACCESS
+    // 🔹 ADMIN-ONLY BUTTONS
     // ==============================
-    const reportsControls =
-      document.getElementById("reportsControls");
+    if (isAdmin) {
+      document.querySelectorAll(".admin-only")
+        .forEach(btn => btn.style.display = "inline-block");
 
-    const examReportsBtn =
-      document.getElementById("togglePerformanceReportsBtn");
-
-    const marksSectionBtn =
-      document.getElementById("toggleMarksSectionBtn");
-
-    const recordMarksBtn =
-      document.getElementById("toggleRecordMarksBtn");
-
-    if (reportsControls) {
-
-      // hide first
-      reportsControls.style.display = "none";
-
-      if (examReportsBtn)
-        examReportsBtn.style.display = "none";
-
-      if (marksSectionBtn)
-        marksSectionBtn.style.display = "none";
-
-      if (recordMarksBtn)
-        recordMarksBtn.style.display = "none";
-
-      // ADMIN → everything
-      if (role === "admin") {
-
-        reportsControls.style.display = "flex";
-
-        if (examReportsBtn)
-          examReportsBtn.style.display = "inline-block";
-
-        if (marksSectionBtn)
-          marksSectionBtn.style.display = "inline-block";
-
-        if (recordMarksBtn)
-          recordMarksBtn.style.display = "inline-block";
-
-      }
-
-      // TEACHER → marks + record
-      else if (role === "teacher") {
-
-        reportsControls.style.display = "flex";
-
-        if (marksSectionBtn)
-          marksSectionBtn.style.display = "inline-block";
-
-        if (recordMarksBtn)
-          recordMarksBtn.style.display = "inline-block";
-
-      }
-
-      // PARENT → no reports access
-      else {
-
-        reportsControls.style.display = "none";
-
-      }
-
+      const saveBtn = document.getElementById("saveEditedMarksBtn");
+      if (saveBtn) saveBtn.style.display = "inline-block";
     }
 
     // ==============================
-    // 🔹 ADMIN ONLY BUTTONS
-    // ==============================
-    if (role === "admin") {
-
-      const adminBtns =
-        document.querySelectorAll(".admin-only");
-
-      adminBtns.forEach(btn =>
-        btn.style.display = "inline-block"
-      );
-
-      const saveBtn =
-        document.getElementById("saveEditedMarksBtn");
-
-      if (saveBtn)
-        saveBtn.style.display = "inline-block";
-
-    }
-
-    // ==============================
-    // 🔹 SWEET ALERT MESSAGES
+    // 🔔 SWEETALERTS
     // ==============================
     if (typeof Swal !== "undefined") {
 
-      // ADMIN MESSAGE
-      if (role === "admin") {
-
+      if (isAdmin) {
         Swal.fire({
-          icon: "success",
-          title: "Login Successful",
-          text: "Welcome, Admin!",
+          icon: 'success',
+          title: 'Login Successful',
+          text: 'Welcome, Admin!',
           timer: 1500,
           showConfirmButton: false
         });
 
-      }
-
-      // PARENT MESSAGE
-      else if (role === "parent") {
-
-        if (typeof openModal === "function") {
-          openModal();
-        }
+      } else if (currentUser.role === "parent") {
+        openModal();
 
         Swal.fire({
-
-          title: `Welcome, ${username}!`,
-
+          title: `Welcome, ${currentUser.username}!`,
           html: `
             <p>🎉 Login Successful!</p>
-
             <p>Here's how to fetch your child's results:</p>
-
             <ol style="text-align:left;">
-              <li>Open Parent Lookup</li>
-              <li>Select your child</li>
+              <li>Use Parent Lookup</li>
               <li>Click Fetch Results</li>
+              <li>View results</li>
             </ol>
           `,
-
           icon: "success",
-          confirmButtonText: "OK"
-
+          confirmButtonText: "Got it!"
         });
 
-      }
-
-      // TEACHER MESSAGE
-      else if (role === "teacher") {
-
+      } else {
         Swal.fire({
-
-          icon: "success",
           title: "Login Successful",
-          text: `Welcome ${username}`,
+          text: `Welcome, ${currentUser.username}!`,
+          icon: "success",
           confirmButtonText: "Continue"
-
         });
-
       }
-
     }
 
+  } else {
+
+    const loginError = document.getElementById("loginError");
+    if (loginError) loginError.style.display = "block";
+
+    Swal?.fire({
+      icon: 'error',
+      title: 'Login Failed',
+      text: 'Incorrect username or password'
+    }) || alert("Login failed");
   }
-
-  // ==============================
-  // 🔹 LOGIN FAILED
-  // ==============================
-  else {
-
-    const loginError =
-      document.getElementById("loginError");
-
-    if (loginError)
-      loginError.style.display = "block";
-
-    if (typeof Swal !== "undefined") {
-
-      Swal.fire({
-
-        icon: "error",
-        title: "Login Failed",
-        text: "Incorrect username or password"
-
-      });
-
-    }
-
-    else {
-
-      alert("Login failed");
-
-    }
-
-  }
-
 });
-
 
 // ==============================
 // 🔹 USER BADGE
 // ==============================
 function showUserBadge(username, role, isAdmin) {
-
-  const badge =
-    document.getElementById("userBadge");
-
-  if (!badge) return;
+  const badge = document.getElementById("userBadge");
 
   badge.className = "badge";
 
-  if (role === "admin") {
-
-    badge.textContent =
-      `👑 Admin: ${username}`;
-
+  if (isAdmin) {
+    badge.textContent = `👑 Admin: ${username}`;
     badge.classList.add("badge-admin");
 
-  }
-
-  else if (role === "teacher") {
-
-    badge.textContent =
-      `👨‍🏫 Teacher: ${username}`;
-
+  } else if (role === "teacher") {
+    badge.textContent = `👨‍🏫 Teacher: ${username}`;
     badge.classList.add("badge-teacher");
 
-  }
-
-  else if (role === "parent") {
-
-    badge.textContent =
-      `👨‍👩‍👧 Parent: ${username}`;
-
+  } else if (role === "parent") {
+    badge.textContent = `👨‍👩‍👧 Parent: ${username}`;
     badge.classList.add("badge-parent");
 
+  } else {
+    badge.textContent = `👤 User: ${username}`;
   }
-
-  else {
-
-    badge.textContent =
-      `👤 User: ${username}`;
-
-  }
-
-}
-
-window.onload = function () {
-  const savedUser = JSON.parse(localStorage.getItem("loggedInUser"));
-
-  if (savedUser) {
-    document.getElementById("loginSection").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-
-    showUserBadge(savedUser.username, savedUser.role, savedUser.isAdmin);
-    updateGreeting(savedUser.username);
-
-    // Update profile name
-    document.getElementById("profileName").textContent = savedUser.username;
-  }
-};
-
-function logout() {
-  // 🧹 Clear storage
-  localStorage.removeItem("loggedInUser");
-
-  // 🧹 Reset UI sections
-  document.getElementById("loginSection").style.display = "block";
-  document.getElementById("mainContent").style.display = "none";
-
-  // 🧹 Reset badge
-  const badge = document.getElementById("userBadge");
-  if (badge) {
-    badge.textContent = "👤 Guest";
-    badge.className = "badge";
-  }
-
-  // 🧹 Reset greeting
-  const greet = document.getElementById("greetingText");
-  if (greet) greet.textContent = "👋 Welcome!";
-
-  // 🧹 Hide profile menu
-  const menu = document.getElementById("profileMenu");
-  if (menu) menu.style.display = "none";
-
-  // 🧹 Reset online status
-  setOfflineStatus();
-
-  // Optional reload for clean state
-  location.reload();
 }
 function requireAdminAccess(actionName = "perform this action") {
   if (!isAdminLoggedIn) {
@@ -15817,6 +15481,124 @@ function updateSchoolStatus() {
 updateSchoolStatus();
 setInterval(updateSchoolStatus, 60000);
 
+updateSchoolStatus();
+setInterval(updateSchoolStatus, 60000);
+// ===============================
+// 🔐 PAGE LOAD (SESSION CHECK)
+// ===============================
+window.onload = function () {
+  const savedSession = JSON.parse(localStorage.getItem("loggedInUser"));
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  // ✅ Check if session exists
+  if (savedSession && savedSession.user && savedSession.expires) {
+
+    // ⏰ Check expiry
+    if (Date.now() > savedSession.expires) {
+      logout();
+      return;
+    }
+
+    const user = savedSession.user;
+
+    // ✅ Show main content
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+
+    // ✅ Show floating logout button
+    if (logoutBtn) logoutBtn.classList.remove("hidden");
+
+    // ✅ Restore user info
+    showUserBadge(user.username, user.role, user.isAdmin);
+    updateGreeting(user.username);
+
+    document.getElementById("profileName").textContent = user.username;
+
+    // ⏳ Auto logout after remaining time
+    const remainingTime = savedSession.expires - Date.now();
+    setTimeout(() => {
+      logout();
+    }, remainingTime);
+
+  } else {
+    // ❌ No session → force login
+    document.getElementById("loginSection").style.display = "block";
+    document.getElementById("mainContent").style.display = "none";
+
+    // ❌ Hide logout button
+    if (logoutBtn) logoutBtn.classList.add("hidden");
+  }
+};
+
+
+// ===============================
+// 🔓 LOGIN (SAVE SESSION)
+// ===============================
+function saveLoginSession(userData) {
+  const session = {
+    user: userData,
+    expires: Date.now() + (60 * 1000) // ⏰ 1 minute expiry
+  };
+
+  localStorage.setItem("loggedInUser", JSON.stringify(session));
+
+  // ✅ Show logout button immediately after login
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) logoutBtn.classList.remove("hidden");
+}
+
+
+// ===============================
+// 🚪 LOGOUT FUNCTION
+// ===============================
+function logout() {
+  // 🧹 Clear session
+  localStorage.removeItem("loggedInUser");
+
+  // 🧹 Reset UI
+  document.getElementById("loginSection").style.display = "block";
+  document.getElementById("mainContent").style.display = "none";
+
+  // ❌ Hide floating logout button
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) logoutBtn.classList.add("hidden");
+
+  // 🧹 Reset badge
+  const badge = document.getElementById("userBadge");
+  if (badge) {
+    badge.textContent = "👤 Guest";
+    badge.className = "badge";
+  }
+
+  // 🧹 Reset greeting
+  const greet = document.getElementById("greetingText");
+  if (greet) greet.textContent = "👋 Welcome!";
+
+  // 🧹 Hide profile menu
+  const menu = document.getElementById("profileMenu");
+  if (menu) menu.style.display = "none";
+
+  // 🧹 Offline status
+  if (typeof setOfflineStatus === "function") {
+    setOfflineStatus();
+  }
+
+  // 🔔 Optional alert
+  if (typeof Swal !== "undefined") {
+    Swal.fire({
+      icon: "success",
+      title: "Logged Out",
+      text: "Session ended.",
+      timer: 1500,
+      showConfirmButton: false
+    });
+  }
+
+  // 🔄 Clean reload
+  setTimeout(() => {
+    location.reload();
+  }, 1500);
+}
 // 🟢 Set online
 function setOnlineStatus() {
   const el = document.getElementById("onlineStatus");

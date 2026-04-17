@@ -2145,6 +2145,28 @@ button[onclick^="show"] {
   transform: scale(1.15);
   filter: brightness(1.2);
 }
+
+.action-btn,
+.print-button {
+  padding: 6px 12px;       /* reduces height */
+  font-size: 14px;         /* keeps text compact */
+  line-height: 1.2;
+  border-radius: 8px;
+  min-height: 32px;        /* consistent button height */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Mobile tuning */
+@media (max-width: 600px) {
+  .action-btn,
+  .print-button {
+    padding: 5px 10px;
+    font-size: 13px;
+    min-height: 30px;
+  }
+}
 </style>
 
 </head>
@@ -2225,7 +2247,7 @@ button[onclick^="show"] {
   id="announcement"
   style="
     padding:10px 16px;
-    background: linear-gradient(135deg, #ff4d4f, #ff7875);
+    background: linear-gradient(135deg, #1e3c72, #2a5298, #4facfe);
     border:1px solid #d9363e;
     color:#fff;
     border-radius:12px;
@@ -3033,28 +3055,32 @@ button[onclick^="show"] {
 
     <!-- ================= REPORTS CONTROLS (NOW ABOVE BUTTON) ================= -->
     <div
-      id="reportsControls"
-      style="
-        display:none;
-        position:absolute;
-        bottom:60px; /* 👈 opens ABOVE button */
-        left:100%;
-        transform:translateX(-100%);
-        flex-wrap:wrap;
-        justify-content:center;
-        gap:15px;
-        width:400px;
-        padding:20px;
+    <div
+  id="reportsControls"
+  style="
+    display:none;
+    position:absolute;
 
-        background:url('https://i.imgur.com/paq3Bzz.jpeg');
-        background-size:cover;
-        background-position:center;
+    bottom:60px;
+    left:50%;
+    transform:translateX(-50%);
 
-        border-radius:14px;
-        box-shadow:0 6px 18px rgba(0,0,0,0.2);
-        z-index:1000;
-      ">
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
 
+    width:90vw;          /* responsive width */
+    max-width:420px;     /* limit on large screens */
+    padding:15px;
+
+    background:url('https://i.imgur.com/XV57Zya.jpeg');
+    background-size:cover;
+    background-position:center;
+
+    border-radius:14px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    z-index:1000;
+  ">
       <!-- Marks Section -->
       <button
         class="print-button blue-btn"
@@ -3106,8 +3132,7 @@ button[onclick^="show"] {
   </button>
 
 </div>
-
-     <!-- ================= REPORTS DATABASE ================= -->
+  <!-- ================= REPORTS DATABASE ================= -->
 <div style="max-width:500px; display:flex; flex-direction:column; gap:18px; align-items:center; width:100%;">
 
   <!-- Sub Buttons Container -->
@@ -3165,8 +3190,6 @@ button[onclick^="show"] {
     </button>
 
   </div>
-
-</div>
 
 
 
